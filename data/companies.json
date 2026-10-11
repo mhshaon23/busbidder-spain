@@ -1,0 +1,37 @@
+[
+  {
+    "name": "SolRuta",
+    "code": "SR",
+    "profile": "Low-cost daytime services with frequent departures and budget fares.",
+    "default_cancellation_policy": "Non-refundable, changes permitted for a fee.",
+    "eco_certified": false
+  },
+  {
+    "name": "Camino Express",
+    "code": "CE",
+    "profile": "Fast direct connections between major cities with premium comfort.",
+    "default_cancellation_policy": "Fully changeable up to 2 hours before departure.",
+    "eco_certified": false
+  },
+  {
+    "name": "CostaLink",
+    "code": "CL",
+    "profile": "Strong coverage of coastal destinations with tourist luggage allowances.",
+    "default_cancellation_policy": "Moderate cancellation fees, free 20kg luggage.",
+    "eco_certified": false
+  },
+  {
+    "name": "VerdeBus",
+    "code": "VB",
+    "profile": "Environment-focused services, electric and modern low-emission fleet.",
+    "default_cancellation_policy": "Flexible and eco-conscious rebooking policies.",
+    "eco_certified": true
+  },
+  {
+    "name": "NocheVia",
+    "code": "NV",
+    "profile": "Overnight and late-evening services with sleeper seats and zero daytime hotel cost.",
+    "default_cancellation_policy": "Standard flexibility, free ticket alterations.",
+    "eco_certified": false
+  }
+]

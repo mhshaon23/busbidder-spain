@@ -1,0 +1,17 @@
+[
+  {"name": "Barcelona", "distance_km": 625, "region": "Catalonia", "is_coastal": true},
+  {"name": "Valencia", "distance_km": 355, "region": "Valencian Community", "is_coastal": true},
+  {"name": "Seville", "distance_km": 535, "region": "Andalusia", "is_coastal": false},
+  {"name": "Malaga", "distance_km": 530, "region": "Andalusia", "is_coastal": true},
+  {"name": "Granada", "distance_km": 420, "region": "Andalusia", "is_coastal": false},
+  {"name": "Cordoba", "distance_km": 395, "region": "Andalusia", "is_coastal": false},
+  {"name": "Bilbao", "distance_km": 400, "region": "Basque Country", "is_coastal": true},
+  {"name": "San Sebastian", "distance_km": 455, "region": "Basque Country", "is_coastal": true},
+  {"name": "Zaragoza", "distance_km": 315, "region": "Aragon", "is_coastal": false},
+  {"name": "Alicante", "distance_km": 425, "region": "Valencian Community", "is_coastal": true},
+  {"name": "Murcia", "distance_km": 400, "region": "Region of Murcia", "is_coastal": false},
+  {"name": "Salamanca", "distance_km": 215, "region": "Castile and Leon", "is_coastal": false},
+  {"name": "Toledo", "distance_km": 73, "region": "Castilla-La Mancha", "is_coastal": false},
+  {"name": "Santiago de Compostela", "distance_km": 600, "region": "Galicia", "is_coastal": false},
+  {"name": "Cadiz", "distance_km": 650, "region": "Andalusia", "is_coastal": true}
+]

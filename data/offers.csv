@@ -1,0 +1,226 @@
+offer_id,company,origin,destination,travel_date,departure_time,arrival_time,duration_minutes,price,transfers,luggage_kg,is_changeable,is_refundable,available_seats,customer_rating,co2_kg_per_passenger
+OFF-SR-1001,SolRuta,Madrid,Barcelona,2026-07-12,07:45,16:57,552,39.38,1,12,False,False,15,3.9,23.8
+OFF-SR-1002,SolRuta,Madrid,Barcelona,2026-07-13,11:30,20:42,552,39.38,1,12,False,False,22,3.9,23.8
+OFF-SR-1003,SolRuta,Madrid,Barcelona,2026-07-14,15:15,00:27,552,39.38,1,12,False,False,29,3.9,23.8
+OFF-CE-1004,Camino Express,Madrid,Barcelona,2026-07-12,08:30,16:06,456,59.38,0,20,True,True,36,4.7,20.0
+OFF-CE-1005,Camino Express,Madrid,Barcelona,2026-07-13,14:00,21:36,456,59.38,0,20,True,True,43,4.7,20.0
+OFF-CE-1006,Camino Express,Madrid,Barcelona,2026-07-14,17:30,01:06,456,59.38,0,20,True,True,15,4.7,20.0
+OFF-CL-1007,CostaLink,Madrid,Barcelona,2026-07-12,09:15,17:39,504,42.5,0,25,True,False,22,4.3,21.9
+OFF-CL-1008,CostaLink,Madrid,Barcelona,2026-07-13,13:45,22:09,504,42.5,0,25,True,False,29,4.3,21.9
+OFF-CL-1009,CostaLink,Madrid,Barcelona,2026-07-14,16:30,00:54,504,42.5,0,25,True,False,36,4.3,21.9
+OFF-VB-1010,VerdeBus,Madrid,Barcelona,2026-07-12,10:00,18:09,489,46.88,0,18,True,True,43,4.8,8.8
+OFF-VB-1011,VerdeBus,Madrid,Barcelona,2026-07-13,15:00,23:09,489,46.88,0,18,True,True,15,4.8,8.8
+OFF-VB-1012,VerdeBus,Madrid,Barcelona,2026-07-14,10:00,18:09,489,46.88,0,18,True,True,22,4.8,8.8
+OFF-NV-1013,NocheVia,Madrid,Barcelona,2026-07-12,22:30,07:18,528,40.62,0,20,True,False,29,4.2,18.8
+OFF-NV-1014,NocheVia,Madrid,Barcelona,2026-07-13,23:45,08:33,528,40.62,0,20,True,False,36,4.2,18.8
+OFF-NV-1015,NocheVia,Madrid,Barcelona,2026-07-14,22:30,07:18,528,40.62,0,20,True,False,43,4.2,18.8
+OFF-SR-1016,SolRuta,Madrid,Valencia,2026-07-12,07:45,12:58,313,19.52,0,12,False,False,15,3.9,13.5
+OFF-SR-1017,SolRuta,Madrid,Valencia,2026-07-13,11:30,16:43,313,19.52,0,12,False,False,22,3.9,13.5
+OFF-SR-1018,SolRuta,Madrid,Valencia,2026-07-14,15:15,20:28,313,19.52,0,12,False,False,29,3.9,13.5
+OFF-CE-1019,Camino Express,Madrid,Valencia,2026-07-12,08:30,12:49,259,33.73,0,20,True,True,36,4.7,11.4
+OFF-CE-1020,Camino Express,Madrid,Valencia,2026-07-13,14:00,18:19,259,33.73,0,20,True,True,43,4.7,11.4
+OFF-CE-1021,Camino Express,Madrid,Valencia,2026-07-14,17:30,21:49,259,33.73,0,20,True,True,15,4.7,11.4
+OFF-CL-1022,CostaLink,Madrid,Valencia,2026-07-12,09:15,14:01,286,24.14,0,25,True,False,22,4.3,12.4
+OFF-CL-1023,CostaLink,Madrid,Valencia,2026-07-13,13:45,18:31,286,24.14,0,25,True,False,29,4.3,12.4
+OFF-CL-1024,CostaLink,Madrid,Valencia,2026-07-14,16:30,21:16,286,24.14,0,25,True,False,36,4.3,12.4
+OFF-VB-1025,VerdeBus,Madrid,Valencia,2026-07-12,10:00,14:38,278,26.62,0,18,True,True,43,4.8,5.0
+OFF-VB-1026,VerdeBus,Madrid,Valencia,2026-07-13,15:00,19:38,278,26.62,0,18,True,True,15,4.8,5.0
+OFF-VB-1027,VerdeBus,Madrid,Valencia,2026-07-14,10:00,14:38,278,26.62,0,18,True,True,22,4.8,5.0
+OFF-NV-1028,NocheVia,Madrid,Valencia,2026-07-12,22:30,03:30,300,23.07,0,20,True,False,29,4.2,10.7
+OFF-NV-1029,NocheVia,Madrid,Valencia,2026-07-13,23:45,04:45,300,23.07,0,20,True,False,36,4.2,10.7
+OFF-NV-1030,NocheVia,Madrid,Valencia,2026-07-14,22:30,03:30,300,23.07,0,20,True,False,43,4.2,10.7
+OFF-SR-1031,SolRuta,Madrid,Seville,2026-07-12,07:45,15:37,472,34.42,1,12,False,False,15,3.9,20.3
+OFF-SR-1032,SolRuta,Madrid,Seville,2026-07-13,11:30,19:22,472,34.42,1,12,False,False,22,3.9,20.3
+OFF-SR-1033,SolRuta,Madrid,Seville,2026-07-14,15:15,23:07,472,34.42,1,12,False,False,29,3.9,20.3
+OFF-CE-1034,Camino Express,Madrid,Seville,2026-07-12,08:30,15:00,390,50.83,0,20,True,True,36,4.7,17.1
+OFF-CE-1035,Camino Express,Madrid,Seville,2026-07-13,14:00,20:30,390,50.83,0,20,True,True,43,4.7,17.1
+OFF-CE-1036,Camino Express,Madrid,Seville,2026-07-14,17:30,00:00,390,50.83,0,20,True,True,15,4.7,17.1
+OFF-CL-1037,CostaLink,Madrid,Seville,2026-07-12,09:15,16:26,431,48.87,1,25,True,False,22,4.3,18.7
+OFF-CL-1038,CostaLink,Madrid,Seville,2026-07-13,13:45,20:56,431,48.87,1,25,True,False,29,4.3,18.7
+OFF-CL-1039,CostaLink,Madrid,Seville,2026-07-14,16:30,23:41,431,48.87,1,25,True,False,36,4.3,18.7
+OFF-VB-1040,VerdeBus,Madrid,Seville,2026-07-12,10:00,16:59,419,40.12,0,18,True,True,43,4.8,7.5
+OFF-VB-1041,VerdeBus,Madrid,Seville,2026-07-13,15:00,21:59,419,40.12,0,18,True,True,15,4.8,7.5
+OFF-VB-1042,VerdeBus,Madrid,Seville,2026-07-14,10:00,16:59,419,40.12,0,18,True,True,22,4.8,7.5
+OFF-NV-1043,NocheVia,Madrid,Seville,2026-07-12,22:30,06:02,452,34.77,0,20,True,False,29,4.2,16.1
+OFF-NV-1044,NocheVia,Madrid,Seville,2026-07-13,23:45,07:17,452,34.77,0,20,True,False,36,4.2,16.1
+OFF-NV-1045,NocheVia,Madrid,Seville,2026-07-14,22:30,06:02,452,34.77,0,20,True,False,43,4.2,16.1
+OFF-SR-1046,SolRuta,Madrid,Malaga,2026-07-12,07:45,15:33,468,34.15,1,12,False,False,15,3.9,20.1
+OFF-SR-1047,SolRuta,Madrid,Malaga,2026-07-13,11:30,19:18,468,34.15,1,12,False,False,22,3.9,20.1
+OFF-SR-1048,SolRuta,Madrid,Malaga,2026-07-14,15:15,23:03,468,34.15,1,12,False,False,29,3.9,20.1
+OFF-CE-1049,Camino Express,Madrid,Malaga,2026-07-12,08:30,14:56,386,50.35,0,20,True,True,36,4.7,17.0
+OFF-CE-1050,Camino Express,Madrid,Malaga,2026-07-13,14:00,20:26,386,50.35,0,20,True,True,43,4.7,17.0
+OFF-CE-1051,Camino Express,Madrid,Malaga,2026-07-14,17:30,23:56,386,50.35,0,20,True,True,15,4.7,17.0
+OFF-CL-1052,CostaLink,Madrid,Malaga,2026-07-12,09:15,16:22,427,36.04,0,25,True,False,22,4.3,18.6
+OFF-CL-1053,CostaLink,Madrid,Malaga,2026-07-13,13:45,20:52,427,36.04,0,25,True,False,29,4.3,18.6
+OFF-CL-1054,CostaLink,Madrid,Malaga,2026-07-14,16:30,23:37,427,36.04,0,25,True,False,36,4.3,18.6
+OFF-VB-1055,VerdeBus,Madrid,Malaga,2026-07-12,10:00,16:55,415,39.75,0,18,True,True,43,4.8,7.4
+OFF-VB-1056,VerdeBus,Madrid,Malaga,2026-07-13,15:00,21:55,415,39.75,0,18,True,True,15,4.8,7.4
+OFF-VB-1057,VerdeBus,Madrid,Malaga,2026-07-14,10:00,16:55,415,39.75,0,18,True,True,22,4.8,7.4
+OFF-NV-1058,NocheVia,Madrid,Malaga,2026-07-12,22:30,05:57,447,34.45,0,20,True,False,29,4.2,15.9
+OFF-NV-1059,NocheVia,Madrid,Malaga,2026-07-13,23:45,07:12,447,34.45,0,20,True,False,36,4.2,15.9
+OFF-NV-1060,NocheVia,Madrid,Malaga,2026-07-14,22:30,05:57,447,34.45,0,20,True,False,43,4.2,15.9
+OFF-SR-1061,SolRuta,Madrid,Granada,2026-07-12,07:45,13:56,371,23.1,0,12,False,False,15,3.9,16.0
+OFF-SR-1062,SolRuta,Madrid,Granada,2026-07-13,11:30,17:41,371,23.1,0,12,False,False,22,3.9,16.0
+OFF-SR-1063,SolRuta,Madrid,Granada,2026-07-14,15:15,21:26,371,23.1,0,12,False,False,29,3.9,16.0
+OFF-CE-1064,Camino Express,Madrid,Granada,2026-07-12,08:30,13:36,306,39.9,0,20,True,True,36,4.7,13.4
+OFF-CE-1065,Camino Express,Madrid,Granada,2026-07-13,14:00,19:06,306,39.9,0,20,True,True,43,4.7,13.4
+OFF-CE-1066,Camino Express,Madrid,Granada,2026-07-14,17:30,22:36,306,39.9,0,20,True,True,15,4.7,13.4
+OFF-CL-1067,CostaLink,Madrid,Granada,2026-07-12,09:15,14:54,339,39.44,1,25,True,False,22,4.3,14.7
+OFF-CL-1068,CostaLink,Madrid,Granada,2026-07-13,13:45,19:24,339,39.44,1,25,True,False,29,4.3,14.7
+OFF-CL-1069,CostaLink,Madrid,Granada,2026-07-14,16:30,22:09,339,39.44,1,25,True,False,36,4.3,14.7
+OFF-VB-1070,VerdeBus,Madrid,Granada,2026-07-12,10:00,15:29,329,31.5,0,18,True,True,43,4.8,5.9
+OFF-VB-1071,VerdeBus,Madrid,Granada,2026-07-13,15:00,20:29,329,31.5,0,18,True,True,15,4.8,5.9
+OFF-VB-1072,VerdeBus,Madrid,Granada,2026-07-14,10:00,15:29,329,31.5,0,18,True,True,22,4.8,5.9
+OFF-NV-1073,NocheVia,Madrid,Granada,2026-07-12,22:30,04:25,355,27.3,0,20,True,False,29,4.2,12.6
+OFF-NV-1074,NocheVia,Madrid,Granada,2026-07-13,23:45,05:40,355,27.3,0,20,True,False,36,4.2,12.6
+OFF-NV-1075,NocheVia,Madrid,Granada,2026-07-14,22:30,04:25,355,27.3,0,20,True,False,43,4.2,12.6
+OFF-SR-1076,SolRuta,Madrid,Cordoba,2026-07-12,07:45,13:33,348,21.73,0,12,False,False,15,3.9,15.0
+OFF-SR-1077,SolRuta,Madrid,Cordoba,2026-07-13,11:30,17:18,348,21.73,0,12,False,False,22,3.9,15.0
+OFF-SR-1078,SolRuta,Madrid,Cordoba,2026-07-14,15:15,21:03,348,21.73,0,12,False,False,29,3.9,15.0
+OFF-CE-1079,Camino Express,Madrid,Cordoba,2026-07-12,08:30,13:17,287,37.52,0,20,True,True,36,4.7,12.6
+OFF-CE-1080,Camino Express,Madrid,Cordoba,2026-07-13,14:00,18:47,287,37.52,0,20,True,True,43,4.7,12.6
+OFF-CE-1081,Camino Express,Madrid,Cordoba,2026-07-14,17:30,22:17,287,37.52,0,20,True,True,15,4.7,12.6
+OFF-CL-1082,CostaLink,Madrid,Cordoba,2026-07-12,09:15,14:33,318,32.39,0,25,True,False,22,4.3,13.8
+OFF-CL-1083,CostaLink,Madrid,Cordoba,2026-07-13,13:45,19:03,318,32.39,0,25,True,False,29,4.3,13.8
+OFF-CL-1084,CostaLink,Madrid,Cordoba,2026-07-14,16:30,21:48,318,32.39,0,25,True,False,36,4.3,13.8
+OFF-VB-1085,VerdeBus,Madrid,Cordoba,2026-07-12,10:00,15:09,309,29.62,0,18,True,True,43,4.8,5.5
+OFF-VB-1086,VerdeBus,Madrid,Cordoba,2026-07-13,15:00,20:09,309,29.62,0,18,True,True,15,4.8,5.5
+OFF-VB-1087,VerdeBus,Madrid,Cordoba,2026-07-14,10:00,15:09,309,29.62,0,18,True,True,22,4.8,5.5
+OFF-NV-1088,NocheVia,Madrid,Cordoba,2026-07-12,22:30,04:03,333,25.68,0,20,True,False,29,4.2,11.8
+OFF-NV-1089,NocheVia,Madrid,Cordoba,2026-07-13,23:45,05:18,333,25.68,0,20,True,False,36,4.2,11.8
+OFF-NV-1090,NocheVia,Madrid,Cordoba,2026-07-14,22:30,04:03,333,25.68,0,20,True,False,43,4.2,11.8
+OFF-SR-1091,SolRuta,Madrid,Bilbao,2026-07-12,07:45,13:38,353,22.0,0,12,False,False,15,3.9,15.2
+OFF-SR-1092,SolRuta,Madrid,Bilbao,2026-07-13,11:30,17:23,353,22.0,0,12,False,False,22,3.9,15.2
+OFF-SR-1093,SolRuta,Madrid,Bilbao,2026-07-14,15:15,21:08,353,22.0,0,12,False,False,29,3.9,15.2
+OFF-CE-1094,Camino Express,Madrid,Bilbao,2026-07-12,08:30,13:21,291,38.0,0,20,True,True,36,4.7,12.8
+OFF-CE-1095,Camino Express,Madrid,Bilbao,2026-07-13,14:00,18:51,291,38.0,0,20,True,True,43,4.7,12.8
+OFF-CE-1096,Camino Express,Madrid,Bilbao,2026-07-14,17:30,22:21,291,38.0,0,20,True,True,15,4.7,12.8
+OFF-CL-1097,CostaLink,Madrid,Bilbao,2026-07-12,09:15,14:37,322,27.2,0,25,True,False,22,4.3,14.0
+OFF-CL-1098,CostaLink,Madrid,Bilbao,2026-07-13,13:45,19:07,322,27.2,0,25,True,False,29,4.3,14.0
+OFF-CL-1099,CostaLink,Madrid,Bilbao,2026-07-14,16:30,21:52,322,27.2,0,25,True,False,36,4.3,14.0
+OFF-VB-1100,VerdeBus,Madrid,Bilbao,2026-07-12,10:00,15:13,313,30.0,0,18,True,True,43,4.8,5.6
+OFF-VB-1101,VerdeBus,Madrid,Bilbao,2026-07-13,15:00,20:13,313,30.0,0,18,True,True,15,4.8,5.6
+OFF-VB-1102,VerdeBus,Madrid,Bilbao,2026-07-14,10:00,15:13,313,30.0,0,18,True,True,22,4.8,5.6
+OFF-NV-1103,NocheVia,Madrid,Bilbao,2026-07-12,22:30,04:07,337,26.0,0,20,True,False,29,4.2,12.0
+OFF-NV-1104,NocheVia,Madrid,Bilbao,2026-07-13,23:45,05:22,337,26.0,0,20,True,False,36,4.2,12.0
+OFF-NV-1105,NocheVia,Madrid,Bilbao,2026-07-14,22:30,04:07,337,26.0,0,20,True,False,43,4.2,12.0
+OFF-SR-1106,SolRuta,Madrid,San Sebastian,2026-07-12,07:45,14:27,402,30.02,1,12,False,False,15,3.9,17.3
+OFF-SR-1107,SolRuta,Madrid,San Sebastian,2026-07-13,11:30,18:12,402,30.02,1,12,False,False,22,3.9,17.3
+OFF-SR-1108,SolRuta,Madrid,San Sebastian,2026-07-14,15:15,21:57,402,30.02,1,12,False,False,29,3.9,17.3
+OFF-CE-1109,Camino Express,Madrid,San Sebastian,2026-07-12,08:30,14:02,332,43.23,0,20,True,True,36,4.7,14.6
+OFF-CE-1110,Camino Express,Madrid,San Sebastian,2026-07-13,14:00,19:32,332,43.23,0,20,True,True,43,4.7,14.6
+OFF-CE-1111,Camino Express,Madrid,San Sebastian,2026-07-14,17:30,23:02,332,43.23,0,20,True,True,15,4.7,14.6
+OFF-CL-1112,CostaLink,Madrid,San Sebastian,2026-07-12,09:15,15:22,367,30.94,0,25,True,False,22,4.3,15.9
+OFF-CL-1113,CostaLink,Madrid,San Sebastian,2026-07-13,13:45,19:52,367,30.94,0,25,True,False,29,4.3,15.9
+OFF-CL-1114,CostaLink,Madrid,San Sebastian,2026-07-14,16:30,22:37,367,30.94,0,25,True,False,36,4.3,15.9
+OFF-VB-1115,VerdeBus,Madrid,San Sebastian,2026-07-12,10:00,15:57,357,34.12,0,18,True,True,43,4.8,6.4
+OFF-VB-1116,VerdeBus,Madrid,San Sebastian,2026-07-13,15:00,20:57,357,34.12,0,18,True,True,15,4.8,6.4
+OFF-VB-1117,VerdeBus,Madrid,San Sebastian,2026-07-14,10:00,15:57,357,34.12,0,18,True,True,22,4.8,6.4
+OFF-NV-1118,NocheVia,Madrid,San Sebastian,2026-07-12,22:30,04:55,385,29.57,0,20,True,False,29,4.2,13.7
+OFF-NV-1119,NocheVia,Madrid,San Sebastian,2026-07-13,23:45,06:10,385,29.57,0,20,True,False,36,4.2,13.7
+OFF-NV-1120,NocheVia,Madrid,San Sebastian,2026-07-14,22:30,04:55,385,29.57,0,20,True,False,43,4.2,13.7
+OFF-SR-1121,SolRuta,Madrid,Zaragoza,2026-07-12,07:45,12:23,278,17.32,0,12,False,False,15,3.9,12.0
+OFF-SR-1122,SolRuta,Madrid,Zaragoza,2026-07-13,11:30,16:08,278,17.32,0,12,False,False,22,3.9,12.0
+OFF-SR-1123,SolRuta,Madrid,Zaragoza,2026-07-14,15:15,19:53,278,17.32,0,12,False,False,29,3.9,12.0
+OFF-CE-1124,Camino Express,Madrid,Zaragoza,2026-07-12,08:30,12:19,229,29.93,0,20,True,True,36,4.7,10.1
+OFF-CE-1125,Camino Express,Madrid,Zaragoza,2026-07-13,14:00,17:49,229,29.93,0,20,True,True,43,4.7,10.1
+OFF-CE-1126,Camino Express,Madrid,Zaragoza,2026-07-14,17:30,21:19,229,29.93,0,20,True,True,15,4.7,10.1
+OFF-CL-1127,CostaLink,Madrid,Zaragoza,2026-07-12,09:15,13:29,254,25.83,0,25,True,False,22,4.3,11.0
+OFF-CL-1128,CostaLink,Madrid,Zaragoza,2026-07-13,13:45,17:59,254,25.83,0,25,True,False,29,4.3,11.0
+OFF-CL-1129,CostaLink,Madrid,Zaragoza,2026-07-14,16:30,20:44,254,25.83,0,25,True,False,36,4.3,11.0
+OFF-VB-1130,VerdeBus,Madrid,Zaragoza,2026-07-12,10:00,14:06,246,23.62,0,18,True,True,43,4.8,4.4
+OFF-VB-1131,VerdeBus,Madrid,Zaragoza,2026-07-13,15:00,19:06,246,23.62,0,18,True,True,15,4.8,4.4
+OFF-VB-1132,VerdeBus,Madrid,Zaragoza,2026-07-14,10:00,14:06,246,23.62,0,18,True,True,22,4.8,4.4
+OFF-NV-1133,NocheVia,Madrid,Zaragoza,2026-07-12,22:30,02:56,266,20.48,0,20,True,False,29,4.2,9.4
+OFF-NV-1134,NocheVia,Madrid,Zaragoza,2026-07-13,23:45,04:11,266,20.48,0,20,True,False,36,4.2,9.4
+OFF-NV-1135,NocheVia,Madrid,Zaragoza,2026-07-14,22:30,02:56,266,20.48,0,20,True,False,43,4.2,9.4
+OFF-SR-1136,SolRuta,Madrid,Alicante,2026-07-12,07:45,13:59,374,23.38,0,12,False,False,15,3.9,16.1
+OFF-SR-1137,SolRuta,Madrid,Alicante,2026-07-13,11:30,17:44,374,23.38,0,12,False,False,22,3.9,16.1
+OFF-SR-1138,SolRuta,Madrid,Alicante,2026-07-14,15:15,21:29,374,23.38,0,12,False,False,29,3.9,16.1
+OFF-CE-1139,Camino Express,Madrid,Alicante,2026-07-12,08:30,13:39,309,40.38,0,20,True,True,36,4.7,13.6
+OFF-CE-1140,Camino Express,Madrid,Alicante,2026-07-13,14:00,19:09,309,40.38,0,20,True,True,43,4.7,13.6
+OFF-CE-1141,Camino Express,Madrid,Alicante,2026-07-14,17:30,22:39,309,40.38,0,20,True,True,15,4.7,13.6
+OFF-CL-1142,CostaLink,Madrid,Alicante,2026-07-12,09:15,14:57,342,28.9,0,25,True,False,22,4.3,14.9
+OFF-CL-1143,CostaLink,Madrid,Alicante,2026-07-13,13:45,19:27,342,28.9,0,25,True,False,29,4.3,14.9
+OFF-CL-1144,CostaLink,Madrid,Alicante,2026-07-14,16:30,22:12,342,28.9,0,25,True,False,36,4.3,14.9
+OFF-VB-1145,VerdeBus,Madrid,Alicante,2026-07-12,10:00,15:32,332,31.88,0,18,True,True,43,4.8,6.0
+OFF-VB-1146,VerdeBus,Madrid,Alicante,2026-07-13,15:00,20:32,332,31.88,0,18,True,True,15,4.8,6.0
+OFF-VB-1147,VerdeBus,Madrid,Alicante,2026-07-14,10:00,15:32,332,31.88,0,18,True,True,22,4.8,6.0
+OFF-NV-1148,NocheVia,Madrid,Alicante,2026-07-12,22:30,04:28,358,27.62,0,20,True,False,29,4.2,12.8
+OFF-NV-1149,NocheVia,Madrid,Alicante,2026-07-13,23:45,05:43,358,27.62,0,20,True,False,36,4.2,12.8
+OFF-NV-1150,NocheVia,Madrid,Alicante,2026-07-14,22:30,04:28,358,27.62,0,20,True,False,43,4.2,12.8
+OFF-SR-1151,SolRuta,Madrid,Murcia,2026-07-12,07:45,13:38,353,22.0,0,12,False,False,15,3.9,15.2
+OFF-SR-1152,SolRuta,Madrid,Murcia,2026-07-13,11:30,17:23,353,22.0,0,12,False,False,22,3.9,15.2
+OFF-SR-1153,SolRuta,Madrid,Murcia,2026-07-14,15:15,21:08,353,22.0,0,12,False,False,29,3.9,15.2
+OFF-CE-1154,Camino Express,Madrid,Murcia,2026-07-12,08:30,13:21,291,38.0,0,20,True,True,36,4.7,12.8
+OFF-CE-1155,Camino Express,Madrid,Murcia,2026-07-13,14:00,18:51,291,38.0,0,20,True,True,43,4.7,12.8
+OFF-CE-1156,Camino Express,Madrid,Murcia,2026-07-14,17:30,22:21,291,38.0,0,20,True,True,15,4.7,12.8
+OFF-CL-1157,CostaLink,Madrid,Murcia,2026-07-12,09:15,14:37,322,32.8,0,25,True,False,22,4.3,14.0
+OFF-CL-1158,CostaLink,Madrid,Murcia,2026-07-13,13:45,19:07,322,32.8,0,25,True,False,29,4.3,14.0
+OFF-CL-1159,CostaLink,Madrid,Murcia,2026-07-14,16:30,21:52,322,32.8,0,25,True,False,36,4.3,14.0
+OFF-VB-1160,VerdeBus,Madrid,Murcia,2026-07-12,10:00,15:13,313,30.0,0,18,True,True,43,4.8,5.6
+OFF-VB-1161,VerdeBus,Madrid,Murcia,2026-07-13,15:00,20:13,313,30.0,0,18,True,True,15,4.8,5.6
+OFF-VB-1162,VerdeBus,Madrid,Murcia,2026-07-14,10:00,15:13,313,30.0,0,18,True,True,22,4.8,5.6
+OFF-NV-1163,NocheVia,Madrid,Murcia,2026-07-12,22:30,04:07,337,26.0,0,20,True,False,29,4.2,12.0
+OFF-NV-1164,NocheVia,Madrid,Murcia,2026-07-13,23:45,05:22,337,26.0,0,20,True,False,36,4.2,12.0
+OFF-NV-1165,NocheVia,Madrid,Murcia,2026-07-14,22:30,04:07,337,26.0,0,20,True,False,43,4.2,12.0
+OFF-SR-1166,SolRuta,Madrid,Salamanca,2026-07-12,07:45,10:54,189,14.0,0,12,False,False,15,3.9,8.2
+OFF-SR-1167,SolRuta,Madrid,Salamanca,2026-07-13,11:30,14:39,189,14.0,0,12,False,False,22,3.9,8.2
+OFF-SR-1168,SolRuta,Madrid,Salamanca,2026-07-14,15:15,18:24,189,14.0,0,12,False,False,29,3.9,8.2
+OFF-CE-1169,Camino Express,Madrid,Salamanca,2026-07-12,08:30,11:06,156,20.43,0,20,True,True,36,4.7,6.9
+OFF-CE-1170,Camino Express,Madrid,Salamanca,2026-07-13,14:00,16:36,156,20.43,0,20,True,True,43,4.7,6.9
+OFF-CE-1171,Camino Express,Madrid,Salamanca,2026-07-14,17:30,20:06,156,20.43,0,20,True,True,15,4.7,6.9
+OFF-CL-1172,CostaLink,Madrid,Salamanca,2026-07-12,09:15,12:08,173,17.63,0,25,True,False,22,4.3,7.5
+OFF-CL-1173,CostaLink,Madrid,Salamanca,2026-07-13,13:45,16:38,173,17.63,0,25,True,False,29,4.3,7.5
+OFF-CL-1174,CostaLink,Madrid,Salamanca,2026-07-14,16:30,19:23,173,17.63,0,25,True,False,36,4.3,7.5
+OFF-VB-1175,VerdeBus,Madrid,Salamanca,2026-07-12,10:00,12:48,168,16.12,0,18,True,True,43,4.8,3.0
+OFF-VB-1176,VerdeBus,Madrid,Salamanca,2026-07-13,15:00,17:48,168,16.12,0,18,True,True,15,4.8,3.0
+OFF-VB-1177,VerdeBus,Madrid,Salamanca,2026-07-14,10:00,12:48,168,16.12,0,18,True,True,22,4.8,3.0
+OFF-NV-1178,NocheVia,Madrid,Salamanca,2026-07-12,22:30,01:31,181,14.0,0,20,True,False,29,4.2,6.5
+OFF-NV-1179,NocheVia,Madrid,Salamanca,2026-07-13,23:45,02:46,181,14.0,0,20,True,False,36,4.2,6.5
+OFF-NV-1180,NocheVia,Madrid,Salamanca,2026-07-14,22:30,01:31,181,14.0,0,20,True,False,43,4.2,6.5
+OFF-SR-1181,SolRuta,Madrid,Toledo,2026-07-12,07:45,08:49,64,14.0,0,12,False,False,15,3.9,2.8
+OFF-SR-1182,SolRuta,Madrid,Toledo,2026-07-13,11:30,12:34,64,14.0,0,12,False,False,22,3.9,2.8
+OFF-SR-1183,SolRuta,Madrid,Toledo,2026-07-14,15:15,16:19,64,14.0,0,12,False,False,29,3.9,2.8
+OFF-CE-1184,Camino Express,Madrid,Toledo,2026-07-12,08:30,09:23,53,14.0,0,20,True,True,36,4.7,2.3
+OFF-CE-1185,Camino Express,Madrid,Toledo,2026-07-13,14:00,14:53,53,14.0,0,20,True,True,43,4.7,2.3
+OFF-CE-1186,Camino Express,Madrid,Toledo,2026-07-14,17:30,18:23,53,14.0,0,20,True,True,15,4.7,2.3
+OFF-CL-1187,CostaLink,Madrid,Toledo,2026-07-12,09:15,10:13,58,14.0,0,25,True,False,22,4.3,2.6
+OFF-CL-1188,CostaLink,Madrid,Toledo,2026-07-13,13:45,14:43,58,14.0,0,25,True,False,29,4.3,2.6
+OFF-CL-1189,CostaLink,Madrid,Toledo,2026-07-14,16:30,17:28,58,14.0,0,25,True,False,36,4.3,2.6
+OFF-VB-1190,VerdeBus,Madrid,Toledo,2026-07-12,10:00,10:57,57,14.0,0,18,True,True,43,4.8,1.0
+OFF-VB-1191,VerdeBus,Madrid,Toledo,2026-07-13,15:00,15:57,57,14.0,0,18,True,True,15,4.8,1.0
+OFF-VB-1192,VerdeBus,Madrid,Toledo,2026-07-14,10:00,10:57,57,14.0,0,18,True,True,22,4.8,1.0
+OFF-NV-1193,NocheVia,Madrid,Toledo,2026-07-12,22:30,23:31,61,14.0,0,20,True,False,29,4.2,2.2
+OFF-NV-1194,NocheVia,Madrid,Toledo,2026-07-13,23:45,00:46,61,14.0,0,20,True,False,36,4.2,2.2
+OFF-NV-1195,NocheVia,Madrid,Toledo,2026-07-14,22:30,23:31,61,14.0,0,20,True,False,43,4.2,2.2
+OFF-SR-1196,SolRuta,Madrid,Santiago de Compostela,2026-07-12,07:45,16:35,530,38.0,1,12,False,False,15,3.9,22.8
+OFF-SR-1197,SolRuta,Madrid,Santiago de Compostela,2026-07-13,11:30,20:20,530,38.0,1,12,False,False,22,3.9,22.8
+OFF-SR-1198,SolRuta,Madrid,Santiago de Compostela,2026-07-14,15:15,00:05,530,38.0,1,12,False,False,29,3.9,22.8
+OFF-CE-1199,Camino Express,Madrid,Santiago de Compostela,2026-07-12,08:30,15:47,437,57.0,0,20,True,True,36,4.7,19.2
+OFF-CE-1200,Camino Express,Madrid,Santiago de Compostela,2026-07-13,14:00,21:17,437,57.0,0,20,True,True,43,4.7,19.2
+OFF-CE-1201,Camino Express,Madrid,Santiago de Compostela,2026-07-14,17:30,00:47,437,57.0,0,20,True,True,15,4.7,19.2
+OFF-CL-1202,CostaLink,Madrid,Santiago de Compostela,2026-07-12,09:15,17:19,484,54.2,1,25,True,False,22,4.3,21.0
+OFF-CL-1203,CostaLink,Madrid,Santiago de Compostela,2026-07-13,13:45,21:49,484,54.2,1,25,True,False,29,4.3,21.0
+OFF-CL-1204,CostaLink,Madrid,Santiago de Compostela,2026-07-14,16:30,00:34,484,54.2,1,25,True,False,36,4.3,21.0
+OFF-VB-1205,VerdeBus,Madrid,Santiago de Compostela,2026-07-12,10:00,17:50,470,45.0,0,18,True,True,43,4.8,8.4
+OFF-VB-1206,VerdeBus,Madrid,Santiago de Compostela,2026-07-13,15:00,22:50,470,45.0,0,18,True,True,15,4.8,8.4
+OFF-VB-1207,VerdeBus,Madrid,Santiago de Compostela,2026-07-14,10:00,17:50,470,45.0,0,18,True,True,22,4.8,8.4
+OFF-NV-1208,NocheVia,Madrid,Santiago de Compostela,2026-07-12,22:30,06:57,507,39.0,0,20,True,False,29,4.2,18.0
+OFF-NV-1209,NocheVia,Madrid,Santiago de Compostela,2026-07-13,23:45,08:12,507,39.0,0,20,True,False,36,4.2,18.0
+OFF-NV-1210,NocheVia,Madrid,Santiago de Compostela,2026-07-14,22:30,06:57,507,39.0,0,20,True,False,43,4.2,18.0
+OFF-SR-1211,SolRuta,Madrid,Cadiz,2026-07-12,07:45,17:20,575,40.75,1,12,False,False,15,3.9,24.7
+OFF-SR-1212,SolRuta,Madrid,Cadiz,2026-07-13,11:30,21:05,575,40.75,1,12,False,False,22,3.9,24.7
+OFF-SR-1213,SolRuta,Madrid,Cadiz,2026-07-14,15:15,00:50,575,40.75,1,12,False,False,29,3.9,24.7
+OFF-CE-1214,Camino Express,Madrid,Cadiz,2026-07-12,08:30,16:25,475,61.75,0,20,True,True,36,4.7,20.8
+OFF-CE-1215,Camino Express,Madrid,Cadiz,2026-07-13,14:00,21:55,475,61.75,0,20,True,True,43,4.7,20.8
+OFF-CE-1216,Camino Express,Madrid,Cadiz,2026-07-14,17:30,01:25,475,61.75,0,20,True,True,15,4.7,20.8
+OFF-CL-1217,CostaLink,Madrid,Cadiz,2026-07-12,09:15,18:00,525,44.2,0,25,True,False,22,4.3,22.8
+OFF-CL-1218,CostaLink,Madrid,Cadiz,2026-07-13,13:45,22:30,525,44.2,0,25,True,False,29,4.3,22.8
+OFF-CL-1219,CostaLink,Madrid,Cadiz,2026-07-14,16:30,01:15,525,44.2,0,25,True,False,36,4.3,22.8
+OFF-VB-1220,VerdeBus,Madrid,Cadiz,2026-07-12,10:00,18:30,510,48.75,0,18,True,True,43,4.8,9.1
+OFF-VB-1221,VerdeBus,Madrid,Cadiz,2026-07-13,15:00,23:30,510,48.75,0,18,True,True,15,4.8,9.1
+OFF-VB-1222,VerdeBus,Madrid,Cadiz,2026-07-14,10:00,18:30,510,48.75,0,18,True,True,22,4.8,9.1
+OFF-NV-1223,NocheVia,Madrid,Cadiz,2026-07-12,22:30,07:40,550,42.25,0,20,True,False,29,4.2,19.5
+OFF-NV-1224,NocheVia,Madrid,Cadiz,2026-07-13,23:45,08:55,550,42.25,0,20,True,False,36,4.2,19.5
+OFF-NV-1225,NocheVia,Madrid,Cadiz,2026-07-14,22:30,07:40,550,42.25,0,20,True,False,43,4.2,19.5

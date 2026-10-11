@@ -1,0 +1,6 @@
+offer_id,company,origin,destination,travel_date,departure_time,arrival_time,duration_minutes,price,transfers,luggage_kg,is_changeable,is_refundable,available_seats,customer_rating,co2_kg_per_passenger,expected_error
+OFF-SR-9991,SolRuta,Madrid,Barcelona,2026-07-12,08:00,14:00,360,-25.5,0,15,True,False,20,4.1,15.0,Negative price
+OFF-CE-9992,Camino Express,Madrid,Atlantis,2026-07-12,09:00,13:00,240,45.0,0,20,True,True,10,4.8,12.0,Unknown destination
+INVALID-ID,CostaLink,Madrid,Valencia,2026-07-12,10:00,14:30,270,30.0,0,20,True,False,15,4.0,14.0,Regex ID mismatch
+OFF-VB-9994,VerdeBus,Madrid,Seville,2026-07-12,10:00,15:00,300,35.0,0,18,True,True,25,7.5,6.0,Rating exceeds bounds
+OFF-NV-9995,NocheVia,Madrid,Malaga,2026-07-12,23:00,05:00,120,32.0,0,20,True,False,30,4.2,15.0,Temporal discrepancy
