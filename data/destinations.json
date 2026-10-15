@@ -15,3 +15,4 @@
   {"name": "Santiago de Compostela", "distance_km": 600, "region": "Galicia", "is_coastal": false},
   {"name": "Cadiz", "distance_km": 650, "region": "Andalusia", "is_coastal": true}
 ]
+

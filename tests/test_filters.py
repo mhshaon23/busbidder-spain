@@ -72,3 +72,4 @@ def test_filter_mandatory_flexibility(all_offers):
     for o in result.accepted_offers:
         assert o.is_refundable is True
     assert result.rejection_counts["missing_refundability"] > 0
+

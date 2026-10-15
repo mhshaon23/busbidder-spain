@@ -61,3 +61,4 @@ def test_missing_file_raises():
     non_existent = Path("non_existent_offers.csv")
     with pytest.raises(FileNotFoundError):
         loader.load_offers(file_path=non_existent)
+

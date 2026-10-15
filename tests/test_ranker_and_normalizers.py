@@ -123,3 +123,4 @@ def test_ranking_and_explanation():
     assert "fastest journey" in explanation.lower() or "swift transit" in explanation.lower()
     assert "Trade-offs" in explanation
     assert "This offer is not objectively superior" in explanation
+

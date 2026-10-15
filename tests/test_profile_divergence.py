@@ -68,3 +68,4 @@ def test_profile_divergence_on_identical_destination(catalog_offers):
 
     # Crucially, top business is different from top budget
     assert top_business.offer_id != top_budget.offer_id
+

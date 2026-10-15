@@ -1,6 +1,12 @@
 """
-User interface and presentation module for BusBidder Spain.
-Provides both rich formatted tables and clear command-line navigation.
+interface.py
+Terminal display functions for BusBidder Spain.
+Uses Rich (if installed) or clean standard ASCII tables as a fallback.
+Shows:
+- Welcome banner
+- Table of top ranked bus offers
+- Table of individual normalized scores (0-100)
+- Natural language explanation of the winner
 """
 
 from typing import List, Optional
@@ -19,6 +25,7 @@ from src.profiles.archetypes import (
     create_eco_traveller_request,
 )
 
+# Optional rich formatting for nice colors
 try:
     from rich.console import Console
     from rich.table import Table
@@ -32,6 +39,7 @@ except ImportError:
 
 
 def print_banner():
+    """Prints a friendly header banner."""
     title = (
         "=========================================================================\n"
         "                  BUSBIDDER SPAIN - TRAVEL PLATFORM                      \n"
@@ -46,6 +54,7 @@ def print_banner():
 
 
 def display_ranked_offers_table(ranked_offers: List[RankedOffer], limit: int = 10):
+    """Prints the top ranked offers in a nice table."""
     if not ranked_offers:
         print("\nNo offers met the specified criteria.\n")
         return
@@ -89,15 +98,20 @@ def display_ranked_offers_table(ranked_offers: List[RankedOffer], limit: int = 1
             )
         console.print(table)
     else:
+        # Standard ASCII table fallback
         print(f"\n--- Top {min(len(ranked_offers), limit)} Ranked Offers ---")
-        print(f"{'Rank':<5} {'ID':<15} {'Company':<16} {'Depart':<8} {'Duration':<10} {'Price':<10} {'Score':<8}")
+        print(f"{'Rank':<5} {'ID':<15} {'Company':<16} {'Depart':<8} {'Duration':<10} {'Price':<12} {'Score':<8}")
+        print("-" * 75)
         for ro in ranked_offers[:limit]:
             o = ro.offer
-            dur_str = f"{o.duration_minutes // 60}h {o.duration_minutes % 60}m"
-            print(f"{ro.rank:<5} {o.offer_id:<15} {o.company:<16} {o.departure_time_str:<8} {dur_str:<10} €{o.price:<8.2f} {ro.weighted_total_score:<8.1f}")
+            dur_hours = int(o.duration_minutes // 60)
+            dur_mins = int(o.duration_minutes % 60)
+            dur_str = f"{dur_hours}h {dur_mins:02d}m"
+            print(f"{ro.rank:<5} {o.offer_id:<15} {o.company:<16} {o.departure_time_str:<8} {dur_str:<10} EUR {o.price:<8.2f} {ro.weighted_total_score:<8.1f}")
 
 
 def display_criteria_breakdown_table(ranked_offers: List[RankedOffer], limit: int = 5):
+    """Shows the individual 0-100 scores for each active criterion."""
     if not ranked_offers:
         return
 
@@ -124,12 +138,25 @@ def display_criteria_breakdown_table(ranked_offers: List[RankedOffer], limit: in
             row_vals.append(f"{ro.weighted_total_score:.1f}")
             table.add_row(*row_vals)
         console.print(table)
+    else:
+        print("\n--- Criteria Breakdown (0-100) ---")
+        header = f"{'Rank':<5} {'ID':<15} {'Company':<16} " + " ".join(f"{c[:8]:>8}" for c in active_criteria) + " {'Total':>8}"
+        print(header)
+        print("-" * len(header))
+        for ro in ranked_offers[:limit]:
+            scores = ro.criterion_scores
+            row_str = f"{ro.rank:<5} {ro.offer.offer_id:<15} {ro.offer.company:<16} "
+            for crit in active_criteria:
+                row_str += f"{scores.get(crit, 0):8.1f} "
+            row_str += f"{ro.weighted_total_score:8.1f}"
+            print(row_str)
 
 
 def run_demonstration():
     """
-    Executes a multi-profile sensitivity demonstration on Madrid -> Malaga,
-    showing how Budget, Business, and Eco profiles produce distinct recommendations.
+    Runs the sensitivity demonstration required by Section 6:
+    Compares 4 different profiles on Madrid -> Malaga to show that different
+    user preferences produce different winning offers!
     """
     print_banner()
     loader = DataLoader()

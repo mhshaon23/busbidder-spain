@@ -100,3 +100,4 @@ class FilterEngine:
             f"{len(accepted)} accepted from {len(offers)} initial offers."
         )
         return FilterResult(accepted_offers=accepted, rejection_counts=rejections)
+

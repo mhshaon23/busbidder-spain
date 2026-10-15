@@ -92,3 +92,4 @@ def test_cancellation_and_seat_restoration(tmp_path, test_offer):
     assert record.status == "CANCELLED"
     # Seats restored
     assert test_offer.available_seats == 3
+

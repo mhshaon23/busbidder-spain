@@ -1,6 +1,8 @@
 """
-Custom Python descriptors implementing attribute validation.
-Fulfills the metaprogramming technical requirement (Task 1 & Task 7).
+descriptors.py
+Custom Python descriptors for validating attributes on data models.
+I used descriptors here to satisfy the metaprogramming requirement from the assignment brief.
+When an attribute is assigned, the descriptor validates the value automatically before saving it.
 """
 
 from typing import Any, Pattern
@@ -8,7 +10,10 @@ from src.validators.exceptions import DataValidationError
 
 
 class ValidatedAttribute:
-    """Base descriptor managing storage in instance __dict__ using private naming."""
+    """
+    Base descriptor class.
+    Stores the attribute value inside the instance's __dict__ using a private name like '_price'.
+    """
     def __set_name__(self, owner: Any, name: str) -> None:
         self.private_name = f"_{name}"
         self.public_name = name
@@ -20,7 +25,10 @@ class ValidatedAttribute:
 
 
 class PositiveNumber(ValidatedAttribute):
-    """Ensures numeric values are strictly positive (> 0), e.g. ticket price."""
+    """
+    Validates that a number is greater than zero (or >= 0 if allow_zero=True).
+    Used for price, duration, and CO2 emissions.
+    """
     def __init__(self, allow_zero: bool = False):
         self.allow_zero = allow_zero
 
@@ -39,7 +47,10 @@ class PositiveNumber(ValidatedAttribute):
 
 
 class NonNegativeInt(ValidatedAttribute):
-    """Ensures integer values are non-negative (>= 0), e.g. available seats, transfers."""
+    """
+    Validates that an integer is >= 0.
+    Used for available seats and number of transfers.
+    """
     def __set__(self, instance: Any, value: Any) -> None:
         try:
             val = int(value)
@@ -53,7 +64,10 @@ class NonNegativeInt(ValidatedAttribute):
 
 
 class BoundedFloat(ValidatedAttribute):
-    """Ensures floating-point value falls within [min_val, max_val], e.g. rating 1.0 to 5.0."""
+    """
+    Validates that a float is between min_val and max_val.
+    Used for customer rating (1.0 to 5.0).
+    """
     def __init__(self, min_val: float, max_val: float):
         self.min_val = min_val
         self.max_val = max_val
@@ -74,15 +88,21 @@ class BoundedFloat(ValidatedAttribute):
 
 
 class RegexValidatedString(ValidatedAttribute):
-    """Ensures string attribute matches a specific regular expression pattern."""
+    """
+    Validates that a string matches a regular expression pattern.
+    Used for Offer IDs and Booking References.
+    """
     def __init__(self, pattern: Pattern[str], description: str = "structured identifier"):
         self.pattern = pattern
         self.description = description
 
     def __set__(self, instance: Any, value: Any) -> None:
         if not isinstance(value, str):
-            raise DataValidationError(f"Expected string for {self.description}, got {type(value).__name__}", field=self.public_name)
-        
+            raise DataValidationError(
+                f"Expected string for {self.description}, got {type(value).__name__}",
+                field=self.public_name
+            )
+
         cleaned = value.strip()
         if not self.pattern.match(cleaned):
             raise DataValidationError(

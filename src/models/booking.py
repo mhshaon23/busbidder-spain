@@ -86,3 +86,4 @@ class BookingRecord:
             f"  - Luggage Limit  : {self.fare_conditions.get('luggage_kg', 0)} kg included\n"
             "========================================================"
         )
+

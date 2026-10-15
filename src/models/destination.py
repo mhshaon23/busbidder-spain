@@ -16,3 +16,4 @@ class Destination:
     def __post_init__(self) -> None:
         if self.distance_km <= 0:
             raise ValueError(f"Distance for destination '{self.name}' must be positive.")
+

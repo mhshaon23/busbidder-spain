@@ -1,5 +1,12 @@
 """
-Booking manager handling capacity allocation, reference generation, and persistence.
+manager.py
+Simulates booking a ticket on an offer.
+Tasks handled:
+- Checks if seats are available
+- Reduces the seats on the offer
+- Generates a unique booking reference matching regex 'ES-[A-Z0-9]{6}'
+- Saves the booking record to data/bookings.json
+- Generates a formatted text confirmation ticket
 """
 
 import json
@@ -22,7 +29,7 @@ from src.loaders.logger import logger
 
 class BookingManager:
     """
-    Manages booking lifecycles, capacity inventory updates, and persistent state.
+    Manages booking tickets, saving them to JSON, and decrementing available seats.
     """
     def __init__(self, storage_path: Optional[Path] = None):
         self.storage_path = storage_path or (
@@ -32,7 +39,7 @@ class BookingManager:
         self._load_existing_bookings()
 
     def _load_existing_bookings(self) -> None:
-        """Reads persisted bookings from JSON store."""
+        """Loads previously saved bookings from data/bookings.json if the file exists."""
         if not self.storage_path.exists():
             return
 
@@ -58,10 +65,10 @@ class BookingManager:
                 self.bookings[rec.booking_reference] = rec
             logger.info(f"Loaded {len(self.bookings)} existing bookings from {self.storage_path}")
         except Exception as e:
-            logger.error(f"Error loading bookings from {self.storage_path}: {e}")
+            logger.error(f"Error reading bookings from {self.storage_path}: {e}")
 
     def _persist(self) -> None:
-        """Serializes current bookings to storage file."""
+        """Helper to save the current bookings dictionary to JSON."""
         data = [b.to_dict() for b in self.bookings.values()]
         self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.storage_path, "w", encoding="utf-8") as f:
@@ -69,27 +76,31 @@ class BookingManager:
 
     def generate_booking_reference(self) -> str:
         """
-        Generates a unique reference guaranteed to conform to regex r"^ES-[A-Z0-9]{6}$".
+        Generates a unique booking code matching the regex: r'^ES-[A-Z0-9]{6}$'.
+        Example: ES-A4K891
         """
-        characters = string.ascii_uppercase + string.digits
+        chars = string.ascii_uppercase + string.digits
         while True:
-            suffix = "".join(random.choices(characters, k=6))
-            ref = f"ES-{suffix}"
+            code = "".join(random.choices(chars, k=6))
+            ref = f"ES-{code}"
+            # Ensure it is valid regex and not already used
             if is_valid_booking_ref(ref) and ref not in self.bookings:
                 return ref
 
     def create_booking(self, offer: Offer, passenger_name: str, seats: int = 1) -> BookingRecord:
         """
-        Books seats on a selected offer, decrements capacity consistently,
-        and saves the transaction.
+        Books seats on the offer:
+        1. Checks capacity
+        2. Deducts available seats from the offer
+        3. Creates and saves a BookingRecord
         """
         if offer.available_seats < seats:
             raise SeatUnavailableError(
                 f"Cannot book {seats} seat(s) on offer {offer.offer_id}. "
-                f"Only {offer.available_seats} remaining."
+                f"Only {offer.available_seats} seat(s) left."
             )
 
-        # Consistent inventory decrement
+        # Deduct available seats
         offer.available_seats -= seats
 
         booking_ref = self.generate_booking_reference()
@@ -120,13 +131,13 @@ class BookingManager:
         self._persist()
 
         logger.info(
-            f"Booking {booking_ref} confirmed for '{passenger_name}' on {offer.offer_id} "
-            f"({offer.company} to {offer.destination}). Remaining seats: {offer.available_seats}"
+            f"Booking {booking_ref} created for {passenger_name} ({offer.offer_id}). "
+            f"Remaining seats on offer: {offer.available_seats}"
         )
         return record
 
     def get_booking(self, reference: str) -> Optional[BookingRecord]:
-        """Queries a booking by reference with regex validation."""
+        """Finds a booking by its reference code (validating the code first)."""
         cleaned_ref = reference.strip().upper()
         if not is_valid_booking_ref(cleaned_ref):
             raise InvalidBookingReferenceError(
@@ -136,8 +147,7 @@ class BookingManager:
 
     def cancel_booking(self, reference: str, offer: Optional[Offer] = None) -> bool:
         """
-        Simulates booking cancellation. If fare conditions permit refund/change,
-        marks status as CANCELLED and restores capacity.
+        Cancels a booking if fare conditions allow it, and restores seat capacity.
         """
         record = self.get_booking(reference)
         if not record:
@@ -146,14 +156,14 @@ class BookingManager:
         if record.status == "CANCELLED":
             return False
 
-        # Check fare conditions
+        # Check if the ticket can be refunded or changed
         if not record.fare_conditions.get("is_refundable") and not record.fare_conditions.get("is_changeable"):
-            raise BookingError(f"Booking {reference} has a strict non-refundable/non-changeable fare.")
+            raise BookingError(f"Booking {reference} has a non-refundable/non-changeable fare.")
 
         record.status = "CANCELLED"
         if offer and offer.offer_id == record.offer_id:
             offer.available_seats += record.seats_booked
 
         self._persist()
-        logger.info(f"Booking {reference} cancelled. Capacity restored.")
+        logger.info(f"Booking {reference} cancelled. Seat capacity restored.")
         return True

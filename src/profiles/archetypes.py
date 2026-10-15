@@ -1,6 +1,11 @@
 """
-Predefined traveller profiles for sensitivity analysis and demonstration.
-Directly satisfies Section 6 requirement: 'Support different traveller profiles'.
+archetypes.py
+Predefined traveller profiles for testing and demonstration.
+The project asks to show that different travellers get different recommendations:
+1. Budget Backpacker (wants lowest price, accepts transfers)
+2. Business Executive (wants speed, direct route, flexibility)
+3. Flexible Tourist (cares most about ticket flexibility and luggage)
+4. Eco-Conscious Traveller (wants lowest CO2 emissions)
 """
 
 from typing import Dict, Any
@@ -14,8 +19,8 @@ def create_budget_traveller_request(
     max_budget: float = 45.0,
 ) -> TravellerRequest:
     """
-    Profile: Budget Backpacker
-    Prioritizes low cost above all other parameters. Accepts transfers and strict fares.
+    Budget Backpacker profile:
+    60% weight on price. Willing to take 1 transfer to save money.
     """
     return TravellerRequest(
         destination=destination,
@@ -40,16 +45,16 @@ def create_business_traveller_request(
     date_to: str = "2026-07-14",
 ) -> TravellerRequest:
     """
-    Profile: Business Executive
-    Prioritizes speed, convenience, and schedule certainty. Price is secondary.
-    Strictly forbids transfers.
+    Business Executive profile:
+    Fast direct route only (0 transfers) and changeable ticket required.
+    Duration is 40% of the score.
     """
     return TravellerRequest(
         destination=destination,
         date_from=date_from,
         date_to=date_to,
-        max_transfers=0,  # Direct only
-        require_changeable=True,  # Mandatory flexibility
+        max_transfers=0,
+        require_changeable=True,
         preferred_departure_window="08:30",
         weights={
             "duration": 0.40,
@@ -66,8 +71,8 @@ def create_flexible_tourist_request(
     date_to: str = "2026-07-14",
 ) -> TravellerRequest:
     """
-    Profile: Flexibility-Focused Tourist
-    Prioritizes free ticket alterations, refundability, and generous luggage.
+    Flexible Tourist profile:
+    Prioritizes refundable/changeable tickets (45% weight) and luggage.
     """
     return TravellerRequest(
         destination=destination,
@@ -90,8 +95,8 @@ def create_eco_traveller_request(
     date_to: str = "2026-07-14",
 ) -> TravellerRequest:
     """
-    Profile: Eco-Conscious Traveller
-    Prioritizes lowest environmental footprint (CO2 per passenger).
+    Eco-Conscious Traveller profile:
+    50% weight on CO2 emissions (VerdeBus).
     """
     return TravellerRequest(
         destination=destination,

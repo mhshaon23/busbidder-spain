@@ -102,3 +102,4 @@ python -m pytest -v
   - `test_ranker_and_normalizers.py`: Cost/benefit normalization math, circular clock distance, tie-breakers.
   - `test_booking.py`: Capacity decrements, regex ticket generation, seat exhaustion, cancellations.
   - `test_profile_divergence.py`: Demonstrates that Budget, Business, and Eco profiles produce distinct winners on identical search inputs.
+

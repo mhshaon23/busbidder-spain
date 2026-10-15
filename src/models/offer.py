@@ -1,6 +1,8 @@
 """
-Offer domain model incorporating descriptor-based validation.
-Demonstrates object-oriented composition and metaprogramming.
+offer.py
+Offer class representing a single bus journey offer.
+Uses descriptors for attribute validation to ensure positive prices,
+valid ratings (1-5), and proper ID formats.
 """
 
 from datetime import datetime, time, date
@@ -17,8 +19,8 @@ from src.validators.exceptions import DataValidationError
 
 class Offer:
     """
-    Represents an individual bus journey offer returned by a company.
-    Attributes are managed by custom descriptors to guarantee integrity.
+    Represents one bus offer from a company.
+    Attributes like price, seats, and rating are validated by descriptors.
     """
     offer_id = RegexValidatedString(OFFER_ID_PATTERN, "Offer ID")
     price = PositiveNumber()
@@ -47,7 +49,7 @@ class Offer:
         customer_rating: float,
         co2_kg_per_passenger: float = 12.0,
     ):
-        # Descriptors handle validation upon assignment
+        # Descriptors handle the validation automatically here:
         self.offer_id = offer_id
         self.price = price
         self.duration_minutes = duration_minutes
@@ -56,7 +58,7 @@ class Offer:
         self.customer_rating = customer_rating
         self.co2_kg_per_passenger = co2_kg_per_passenger
 
-        # Simple string/boolean attributes
+        # Basic string & boolean values
         self.company = company.strip()
         self.origin = origin.strip()
         self.destination = destination.strip()
@@ -64,7 +66,7 @@ class Offer:
         self.is_refundable = bool(is_refundable)
         self.luggage_kg = int(luggage_kg)
 
-        # Date & Time validation and parsing
+        # Validate date and time strings using our regex helpers
         if not is_valid_date(travel_date):
             raise DataValidationError(f"Invalid date format '{travel_date}', expected YYYY-MM-DD", field="travel_date")
         if not is_valid_time(departure_time):
@@ -76,20 +78,21 @@ class Offer:
         self.departure_time_str = departure_time.strip()
         self.arrival_time_str = arrival_time.strip()
 
-        # Parse into datetime objects for logical operations
+        # Parse into datetime objects so we can do math/time checks
         self.travel_date = datetime.strptime(self.travel_date_str, "%Y-%m-%d").date()
         dep_dt = datetime.strptime(self.departure_time_str, "%H:%M")
         self.departure_time = dep_dt.time()
         arr_dt = datetime.strptime(self.arrival_time_str, "%H:%M")
         self.arrival_time = arr_dt.time()
 
-        # Logical cross-validation: verify duration is plausible given departure and arrival
+        # Check that departure time, arrival time, and duration actually make sense together
         self._validate_temporal_consistency()
 
     def _validate_temporal_consistency(self) -> None:
         """
-        Cross-validates departure time, arrival time, and stated duration.
-        Accounts for overnight journeys where arrival time is chronologically less than departure time.
+        Calculates travel minutes between departure and arrival to make sure
+        it matches duration_minutes (with allowance for slight buffer).
+        Also handles overnight trips (e.g. 23:00 to 05:00 next day).
         """
         dep_mins = self.departure_time.hour * 60 + self.departure_time.minute
         arr_mins = self.arrival_time.hour * 60 + self.arrival_time.minute
@@ -97,10 +100,10 @@ class Offer:
         if arr_mins >= dep_mins:
             elapsed = arr_mins - dep_mins
         else:
-            # Crosses midnight (overnight journey)
+            # Trip crosses midnight
             elapsed = (1440 - dep_mins) + arr_mins
 
-        # Allow slight discrepancy (+/- 15 mins for scheduled buffers), but flag obvious errors
+        # If there is a big difference between stated duration and elapsed time, raise error
         if abs(elapsed - self.duration_minutes) > 30:
             raise DataValidationError(
                 f"Temporal inconsistency: departure {self.departure_time_str} to "
@@ -111,11 +114,10 @@ class Offer:
     @property
     def flexibility_score(self) -> float:
         """
-        Calculates a normalized raw flexibility value:
-        - Changeable only: 0.5
-        - Refundable only: 0.7
-        - Both: 1.0
-        - Neither: 0.0
+        Simple score for ticket flexibility:
+        - 0.4 points for changeable
+        - 0.6 points for refundable
+        Max score is 1.0 (both), 0.0 if neither.
         """
         score = 0.0
         if self.is_changeable:
@@ -125,7 +127,7 @@ class Offer:
         return min(score, 1.0)
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert offer to dictionary representation."""
+        """Convert offer to dictionary (helpful for saving and printing tables)."""
         return {
             "offer_id": self.offer_id,
             "company": self.company,
@@ -148,5 +150,5 @@ class Offer:
     def __repr__(self) -> str:
         return (
             f"<Offer {self.offer_id} | {self.company} -> {self.destination} | "
-            f"€{self.price:.2f} | {self.duration_minutes}m | Seats: {self.available_seats}>"
+            f"EUR {self.price:.2f} | {self.duration_minutes}m | Seats: {self.available_seats}>"
         )

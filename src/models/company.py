@@ -13,3 +13,4 @@ class Company:
     profile: str
     default_cancellation_policy: str
     eco_certified: bool = False
+

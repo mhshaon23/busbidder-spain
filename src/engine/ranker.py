@@ -1,6 +1,7 @@
 """
-Weighted multi-criteria ranking engine for BusBidder Spain.
-Combines normalized scores with user-defined preference weights.
+ranker.py
+RankingEngine that scores and sorts surviving offers based on user weights.
+Formula: Total Score = sum(weight_i * normalized_score_i)
 """
 
 from typing import List, Dict, Any
@@ -13,8 +14,8 @@ from src.loaders.logger import logger
 
 class RankedOffer:
     """
-    Encapsulates an offer along with its component scores and final weighted composite score.
-    Supports complete auditing and explainability.
+    Holds an Offer alongside its individual criterion scores (0-100)
+    and final weighted total score.
     """
     def __init__(
         self,
@@ -29,7 +30,7 @@ class RankedOffer:
         self.rank = rank
 
     def to_dict(self) -> Dict[str, Any]:
-        """Dictionary format for reporting or tabular views."""
+        """Convert to dict for easy printing and debugging."""
         data = self.offer.to_dict()
         data["rank"] = self.rank
         data["total_score"] = round(self.weighted_total_score, 2)
@@ -40,32 +41,34 @@ class RankedOffer:
     def __repr__(self) -> str:
         return (
             f"<RankedOffer #{self.rank} | {self.offer.company} | "
-            f"Score: {self.weighted_total_score:.2f} | Price: €{self.offer.price:.2f}>"
+            f"Score: {self.weighted_total_score:.2f} | Price: EUR {self.offer.price:.2f}>"
         )
 
 
 class RankingEngine:
     """
-    Calculates multi-criteria weighted scores and produces a deterministic ranking.
+    Ranks filtered offers according to the traveller's preference weights.
     """
     def rank_offers(self, offers: List[Offer], request: TravellerRequest) -> List[RankedOffer]:
         """
-        Ranks surviving offers according to request weights.
+        Calculates normalized scores for each requested criterion,
+        multiplies them by user weights, and sorts descending by total score.
         """
         if not offers:
-            logger.info("Ranking requested on empty offer collection.")
+            logger.info("No offers to rank.")
             return []
 
-        # Validate that all requested weights exist in registry
+        # Make sure all weights the user requested exist in our registry
         for crit_name in request.weights.keys():
             if crit_name not in CRITERIA_REGISTRY:
                 raise RankingConfigurationError(
-                    f"Requested criterion '{crit_name}' is not registered. "
+                    f"Criterion '{crit_name}' is not in the registry. "
                     f"Available criteria: {list(CRITERIA_REGISTRY.keys())}"
                 )
 
         ranked_list: List[RankedOffer] = []
 
+        # Calculate scores for each offer
         for offer in offers:
             criterion_scores: Dict[str, float] = {}
             weighted_total = 0.0
@@ -85,8 +88,10 @@ class RankingEngine:
             )
 
         # Deterministic sorting:
-        # Primary: weighted total score (descending)
-        # Secondary tie-breakers: lower price, higher rating, shorter duration
+        # 1. Total score (highest first)
+        # 2. Tie breaker: lower price
+        # 3. Tie breaker: higher customer rating
+        # 4. Tie breaker: shorter duration
         ranked_list.sort(
             key=lambda ro: (
                 round(ro.weighted_total_score, 4),
@@ -97,9 +102,9 @@ class RankingEngine:
             reverse=True
         )
 
-        # Assign final rank position
+        # Assign rank number (1, 2, 3...)
         for idx, item in enumerate(ranked_list, start=1):
             item.rank = idx
 
-        logger.info(f"Successfully ranked {len(ranked_list)} offers. Top offer: {ranked_list[0].offer.offer_id}")
+        logger.info(f"Ranked {len(ranked_list)} offers. Top offer is {ranked_list[0].offer.offer_id}")
         return ranked_list
