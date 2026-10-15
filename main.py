@@ -60,34 +60,42 @@ def interactive_session():
     d_from = input("Travel start date (YYYY-MM-DD) [Default: 2026-07-12]: ").strip() or "2026-07-12"
     d_to = input("Travel end date (YYYY-MM-DD) [Default: 2026-07-14]: ").strip() or "2026-07-14"
 
-    # 3. Traveller Profile selection
-    print("\nChoose Traveller Archetype:")
-    print("  [1] Budget Backpacker (Maximize savings, price weight 60%)")
-    print("  [2] Business Executive (Speed, 0 transfers, prime schedule)")
-    print("  [3] Flexible Tourist (High refundability, generous luggage)")
-    print("  [4] Eco-Conscious Traveller (Lowest CO2 emissions)")
-    p_choice = input("Select profile [1-4, Default: 1]: ").strip() or "1"
-
-    if p_choice == "2":
-        profile_key = "business"
-    elif p_choice == "3":
-        profile_key = "flexible"
-    elif p_choice == "4":
-        profile_key = "eco"
-    else:
-        profile_key = "budget"
-
-    profile_name, profile_func = PROFILES[profile_key]
-    req: TravellerRequest = profile_func(destination=dest_name, date_from=d_from, date_to=d_to)
-
-    # Optional Feature: Offer customized weight elicitation quiz if extension is enabled
+    # 3. Preference Elicitation (Customization) or Preset Archetypes
+    custom_weights = None
     if HAS_PREFERENCE_QUIZ:
         custom_weights = prompt_preference_quiz()
-        if custom_weights:
-            req.weights = custom_weights
-            req.validate_weights()
 
-    print(f"\nApplied Profile: {profile_name if not (HAS_PREFERENCE_QUIZ and custom_weights) else 'Custom Questionnaire'}")
+    if custom_weights:
+        # If the user completed the customization quiz, build request with those weights
+        req: TravellerRequest = TravellerRequest(
+            destination=dest_name,
+            date_from=d_from,
+            date_to=d_to,
+            weights=custom_weights,
+        )
+        profile_name = "Custom Questionnaire"
+    else:
+        # If user answered 'no' (or module unavailable), prompt the 4 preset archetypes
+        print("\nChoose Traveller Archetype:")
+        print("  [1] Budget Backpacker (Maximize savings, price weight 60%)")
+        print("  [2] Business Executive (Speed, 0 transfers, prime schedule)")
+        print("  [3] Flexible Tourist (High refundability, generous luggage)")
+        print("  [4] Eco-Conscious Traveller (Lowest CO2 emissions)")
+        p_choice = input("Select profile [1-4, Default: 1]: ").strip() or "1"
+
+        if p_choice == "2":
+            profile_key = "business"
+        elif p_choice == "3":
+            profile_key = "flexible"
+        elif p_choice == "4":
+            profile_key = "eco"
+        else:
+            profile_key = "budget"
+
+        profile_name, profile_func = PROFILES[profile_key]
+        req: TravellerRequest = profile_func(destination=dest_name, date_from=d_from, date_to=d_to)
+
+    print(f"\nApplied Profile: {profile_name}")
     print(f"Configured Weights: {req.weights}")
 
     # 4. Filter offers

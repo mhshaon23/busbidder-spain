@@ -64,7 +64,7 @@ def prompt_preference_quiz() -> Optional[Dict[str, float]]:
     choice = input("Would you like to customize your search weights by answering 4 quick questions? (y/n) [Default: n]: ").strip().lower()
 
     if choice not in ("y", "yes"):
-        print("Skipping questionnaire. Using selected profile weights.")
+        print("Skipping customization. Proceeding to standard traveller profiles.")
         print("-" * 70)
         return None
 
