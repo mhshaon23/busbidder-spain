@@ -2,35 +2,35 @@
 
 **Course**: OsloMet ACIT4420 — *Problem-Solving with Scripting (2026)*  
 **Project**: BusBidder Spain — Final Project  
-**Current State**: Refactored to clean, idiomatic student-level Python code with full test suite passing (27/27). Ready for Report Writing.  
+**Current State**: 100% Complete (Code, Tests 30/30, Data, Documentation, and Final Academic Report in PDF & Markdown).  
 **Last Updated**: October 15, 2026  
 
 ---
 
 ## 1. Quick Start for the Next AI / Developer
 
-Everything is functional, clean, and tested. The code has been intentionally written in a natural, student-friendly Python style:
-- Clean, readable classes without unnecessary enterprise over-engineering.
-- Descriptive, authentic student comments explaining the logic for each assignment task.
-- Clear separation of concerns (models, loaders, engine, booking, cli).
-- Metaprogramming requirement is fulfilled via:
-  1. Custom Python attribute descriptors (`PositiveNumber`, `NonNegativeInt`, `BoundedFloat`, `RegexValidatedString`).
-  2. A clean `@register_criterion` decorator and criteria registry.
-- 100% test coverage across normal, boundary, missing-data, and sensitivity cases.
+Everything is functional, clean, and fully tested. All project deliverables required by the OsloMet ACIT4420 specification are complete and ready for submission:
+1. **Source Code**: Modular Python code written in a clean, student-authentic style.
+2. **Automated Tests**: 30 comprehensive unit and integration tests passing in 0.15s.
+3. **Datasets & Quarantine**: JSON and CSV datasets with robust validation and error quarantine.
+4. **Final Academic Report**: Completed in both Markdown (`report/final_report.md`) and compiled publication-quality PDF (`report/BusBidder_Spain_Final_Report.pdf`) featuring architecture diagrams and experimental comparison charts.
 
-### Quick Commands:
+### Verification Commands:
 ```bash
-# Run all 27 unit and integration tests
+# 1. Run all 30 unit and integration tests
 python -m pytest -v
 
-# Run the 4-profile sensitivity demonstration (Budget vs Business vs Eco vs Flexible)
+# 2. Run the 4-profile sensitivity demonstration (Budget vs Business vs Eco vs Flexible)
 python main.py --demo
 
-# Run interactive trip search, ranking, and ticket booking
+# 3. Run interactive trip search, ranking, and ticket booking
 python main.py --interactive
 
-# Check data validation and quarantine handling
+# 4. Check data validation and quarantine handling
 python main.py --quarantine
+
+# 5. Re-compile the PDF report if needed
+python report/generate_pdf.py
 ```
 
 ---
@@ -84,7 +84,7 @@ python main.py --quarantine
 │   │
 │   ├── extensions/
 │   │   ├── __init__.py
-│   │   └── preference_quiz.py      # Optional module: prompts 1-5 quiz to calculate normalized weights
+│   │   └── preference_quiz.py      # Pluggable module: prompts 1-5 quiz to calculate normalized weights
 │   │
 │   ├── booking/
 │   │   ├── __init__.py
@@ -103,43 +103,44 @@ python main.py --quarantine
 │   ├── test_preference_quiz.py          # Tests 1-5 rating normalization, edge cases, sum to 1.0 (3 tests)
 │   └── test_profile_divergence.py       # Proves that different profiles pick different winners (1 test)
 │
+├── report/
+│   ├── final_report.md                  # Comprehensive academic report in Markdown
+│   ├── BusBidder_Spain_Final_Report.pdf # Publication-ready 4-page PDF final report
+│   ├── architecture_diagram.png         # High-resolution component architecture diagram
+│   ├── profile_comparison_chart.png     # Sensitivity comparison chart across traveller profiles
+│   ├── generate_figures.py              # Matplotlib script that generates the figures
+│   └── generate_pdf.py                  # ReportLab compilation script
+│
 ├── main.py                         # CLI entry point (supports --demo, --interactive, --quarantine)
-├── requirements.txt                # Dependencies (pytest, rich)
+├── requirements.txt                # Dependencies (pytest, rich, matplotlib, reportlab)
 ├── README.md                       # Student project overview and setup instructions
-├── busbidder.log                   # Application log file
+├── busbidder.log                   # Application audit log file
 └── PROJECT_STATUS.md               # [THIS FILE] Handover and tracking document
 ```
 
 ---
 
-## 3. Rubric Requirements Completed
+## 3. Rubric Compliance Verification
 
-| Specification Requirement | How It Is Solved in Code |
-| :--- | :--- |
-| **Modular Python Application** | Divided into logical packages: `models`, `validators`, `loaders`, `engine`, `booking`, `profiles`, `cli`. |
-| **5 Companies & 15 Destinations** | Madrid departure hub connecting 15 destinations across SolRuta, Camino Express, CostaLink, VerdeBus, and NocheVia. |
-| **Data Validation & Quarantine** | `data_loader.py` catches corrupt records (negative prices, impossible dates, missing destinations) and quarantines them into `data/quarantine_offers.csv`. |
-| **Regular Expressions** | Genuine use: Booking reference `ES-[A-Z0-9]{6}`, Offer ID `OFF-[A-Z]{2,4}-\d{4}`, 24h time, and ISO dates. |
-| **Custom Exceptions** | `BusBidderError` base with subclasses for validation, constraints, and booking errors in `src/validators/exceptions.py`. |
-| **Metaprogramming** | Custom Python descriptors in `descriptors.py` + dynamic decorator registry `@register_criterion` in `criteria.py`. |
-| **Hard vs Soft Separation** | Non-negotiable limits (budget, seats, dates) filtered out first in `FilterEngine`; surviving offers scored in `RankingEngine`. |
-| **Weighted 0-100 Ranking** | Normalized scoring handling lower-is-better (price, duration), higher-is-better (rating, flexibility, eco), and circular time. |
-| **Explainable Recommendation** | `RecommendationExplainer` outputs advantages, acknowledged trade-offs, and weight rationale without claiming universal superiority. |
-| **Simulated Booking** | `BookingManager` confirms seats, decrements capacity, saves transaction to `data/bookings.json`, and prints formatted ticket. |
-| **3+ Traveller Profiles** | Budget Backpacker, Business Executive, Flexible Tourist, Eco-Conscious Traveller in `src/profiles/archetypes.py`. |
-| **Comprehensive Tests** | 27 automated `pytest` tests in `tests/` covering normal, boundary, corrupt, and sensitivity cases. |
+| Rubric Component (Weight) | Status | Where to Inspect |
+| :--- | :---: | :--- |
+| **Problem Interpretation & Requirements (10%)** | Complete | Report Section 1 & `README.md` |
+| **Software Design & Architecture Justifications (15%)** | Complete | Report Section 2, `src/validators/descriptors.py`, `src/engine/criteria.py`, and `Figure 1` |
+| **Implementation Explanation (15%)** | Complete | Report Section 3, `src/loaders/data_loader.py`, `src/engine/filters.py`, `src/engine/normalizers.py` |
+| **Testing & Experimental Evidence (15%)** | Complete | Report Section 4, `tests/` (30 passing tests in 0.15s) |
+| **Evaluation, Limitations & Critical Reflection (20%)** | Complete | Report Section 6 (Outlier vulnerability, geographic equity, preference elicitation limits) |
+| **Traceability & Reproducibility (10%)** | Complete | Report Section 7, Git commit log, exact terminal commands |
+| **Academic Integrity & Generative-AI Use (15%)** | Complete | Report Section 8 (Detailed declaration of AI tool, areas of assistance, and verification steps) |
 
 ---
 
-## 4. Next Step: Academic Report Writing
+## 4. Deliverables Ready for Submission
 
-According to the ACIT4420 rubric, the written report is the primary assessed deliverable (85%+ weight on reasoning, evaluation, and explanation).
-
-The report sections to write:
-1. **Introduction & Problem Formulation (10%)**: Explain the Madrid hub bus marketplace and the challenge of multi-criteria decision making.
-2. **Software Design & Architecture (15%)**: Justify the modular design, choice of composition over deep inheritance, use of descriptors, and the `@register_criterion` registry decorator.
-3. **Implementation Details (15%)**: Explain data loading with quarantine, hard filtering vs soft scoring, normalization formulas, and booking logic.
-4. **Testing & Experimental Evidence (15%)**: Present the 27 Pytest test cases, quarantine output, and sample runs.
-5. **Evaluation, Critical Reflection & Limitations (20%)**: Discuss limitations (e.g. min-max sensitivity to extreme outlier offers, circular clock edge cases) and ethical fairness (e.g. bias against distant coastal routes with higher base travel times).
-6. **Traceability & Reproducibility (10%)**: Exact commands to run tests and demos.
-7. **Generative-AI Use Declaration (15%)**: Clear statement of AI assistance, testing steps, and author validation.
+The folder contains all required submission contents as defined in Section 11 of the specification:
+1. `report/BusBidder_Spain_Final_Report.pdf` (Primary deliverable in PDF format).
+2. Complete, tested Python source code across modular packages.
+3. `README.md` with setup, dependency, and execution instructions.
+4. Input datasets in `data/`.
+5. Automated test suite with 30 tests.
+6. `requirements.txt` with dependency specifications.
+7. Clean Git repository commit history.
