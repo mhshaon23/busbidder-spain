@@ -82,6 +82,10 @@ python main.py --quarantine
 │   │   ├── __init__.py
 │   │   └── archetypes.py           # 4 student-designed traveller profiles for testing
 │   │
+│   ├── extensions/
+│   │   ├── __init__.py
+│   │   └── preference_quiz.py      # Optional module: prompts 1-5 quiz to calculate normalized weights
+│   │
 │   ├── booking/
 │   │   ├── __init__.py
 │   │   └── manager.py              # Books tickets, decrements seats, creates ES-XXXXXX references
@@ -96,6 +100,7 @@ python main.py --quarantine
 │   ├── test_filters.py                  # Tests hard filters (dates, budget, transfers, luggage) (4 tests)
 │   ├── test_ranker_and_normalizers.py   # Tests 0-100 normalization, ranking math, explanations (6 tests)
 │   ├── test_booking.py                  # Tests seat reduction, unique reference, cancellation (4 tests)
+│   ├── test_preference_quiz.py          # Tests 1-5 rating normalization, edge cases, sum to 1.0 (3 tests)
 │   └── test_profile_divergence.py       # Proves that different profiles pick different winners (1 test)
 │
 ├── main.py                         # CLI entry point (supports --demo, --interactive, --quarantine)

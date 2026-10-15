@@ -21,6 +21,13 @@ from src.cli.interface import (
     run_demonstration,
 )
 
+# Optional Extension: Pluggable Preference Quiz module
+try:
+    from src.extensions.preference_quiz import prompt_preference_quiz
+    HAS_PREFERENCE_QUIZ = True
+except ImportError:
+    HAS_PREFERENCE_QUIZ = False
+
 
 def interactive_session():
     """Interactive loop for searching, ranking, and booking bus journeys."""
@@ -73,7 +80,14 @@ def interactive_session():
     profile_name, profile_func = PROFILES[profile_key]
     req: TravellerRequest = profile_func(destination=dest_name, date_from=d_from, date_to=d_to)
 
-    print(f"\nApplied Profile: {profile_name}")
+    # Optional Feature: Offer customized weight elicitation quiz if extension is enabled
+    if HAS_PREFERENCE_QUIZ:
+        custom_weights = prompt_preference_quiz()
+        if custom_weights:
+            req.weights = custom_weights
+            req.validate_weights()
+
+    print(f"\nApplied Profile: {profile_name if not (HAS_PREFERENCE_QUIZ and custom_weights) else 'Custom Questionnaire'}")
     print(f"Configured Weights: {req.weights}")
 
     # 4. Filter offers

@@ -90,16 +90,18 @@ python -m pytest -v
 - **Pluggable Criteria Registry**: `src/engine/criteria.py` employs the `@register_criterion` decorator pattern, enabling modular addition of new scoring dimensions without modifying ranker core logic.
 - **Regex Validation**: Purposeful validation of structured booking identifiers (`^ES-[A-Z0-9]{6}$`), offer codes (`^OFF-[A-Z]{2,4}-\d{4}$`), 24h timestamps, and ISO dates.
 - **Explainability**: `RecommendationExplainer` contrasts the #1 ranked offer with alternatives, stating explicit advantages, acknowledged trade-offs, and avoiding misleading claims of objective superiority.
+- **Pluggable Preference Elicitation Module**: `src/extensions/preference_quiz.py` allows travellers to answer 4-5 quick qualitative questions (1–5 scale) that automatically calculate normalized weights summing to 1.0. This module is completely optional and non-intrusive.
 
 ---
 
 ## 7. Automated Testing Summary
 
-- **27 Automated Tests** in `tests/`:
+- **30 Automated Tests** in `tests/`:
   - `test_descriptors_and_models.py`: Attribute bounds, negative values, regex patterns, temporal consistency.
   - `test_loaders.py`: Ingestion, foreign key checks, quarantine handling, missing file resilience.
   - `test_filters.py`: Budget caps, travel dates, seat counts, transfers, flexibility requirements.
   - `test_ranker_and_normalizers.py`: Cost/benefit normalization math, circular clock distance, tie-breakers.
   - `test_booking.py`: Capacity decrements, regex ticket generation, seat exhaustion, cancellations.
+  - `test_preference_quiz.py`: Mathematical normalization of 1-5 ratings, handling equal ratings, and TravellerRequest integration.
   - `test_profile_divergence.py`: Demonstrates that Budget, Business, and Eco profiles produce distinct winners on identical search inputs.
 
