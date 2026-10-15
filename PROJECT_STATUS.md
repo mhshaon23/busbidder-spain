@@ -2,7 +2,7 @@
 
 **Course**: OsloMet ACIT4420 — *Problem-Solving with Scripting (2026)*  
 **Project**: BusBidder Spain — Final Project  
-**Current State**: 100% Complete (Code, Tests 30/30, Data, Documentation, and Final Academic Report in PDF & Markdown).  
+**Current State**: 100% Complete. Interactive session prompts customization first, completely bypassing the 4 preset archetypes if 'yes' is chosen.
 **Last Updated**: October 15, 2026  
 
 ---
