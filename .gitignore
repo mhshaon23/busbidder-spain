@@ -6,3 +6,9 @@ __pycache__/
 htmlcov/
 *.log
 
+
+# Word/Office lock files
+~$*
+
+# Course specification (not ours to publish)
+BusBidder Spain Final Project Specification.pdf

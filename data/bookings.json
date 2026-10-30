@@ -1,21 +1,21 @@
 [
   {
-    "booking_reference": "ES-WU9HKP",
-    "passenger_name": "F",
+    "booking_reference": "ES-15NDQX",
+    "passenger_name": "Test Traveller",
     "offer_id": "OFF-SR-1001",
     "company": "SolRuta",
     "destination": "Barcelona",
     "travel_date": "2026-07-12",
     "departure_time": "07:45",
     "arrival_time": "16:57",
-    "price_paid": 39.38,
+    "price_paid": 78.76,
     "fare_conditions": {
       "is_changeable": false,
       "is_refundable": false,
       "luggage_kg": 12
     },
-    "seats_booked": 1,
-    "created_at": "2026-10-15T21:47:34.376965",
+    "seats_booked": 2,
+    "created_at": "2026-10-30T00:40:37.724699",
     "status": "CONFIRMED"
   }
 ]

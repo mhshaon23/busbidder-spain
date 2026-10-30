@@ -112,9 +112,34 @@ def create_eco_traveller_request(
     )
 
 
+def create_balanced_traveller_request(
+    destination: str = "Malaga",
+    date_from: str = "2026-07-12",
+    date_to: str = "2026-07-14",
+) -> TravellerRequest:
+    """
+    Balanced profile:
+    Uses the example weights from the project specification
+    (price 40%, duration 25%, departure 15%, flexibility 20%) and no hard limits of its own.
+    """
+    return TravellerRequest(
+        destination=destination,
+        date_from=date_from,
+        date_to=date_to,
+        preferred_departure_window="Morning",
+        weights={
+            "price": 0.40,
+            "duration": 0.25,
+            "departure_time": 0.15,
+            "flexibility": 0.20,
+        }
+    )
+
+
 PROFILES = {
     "budget": ("Budget Backpacker", create_budget_traveller_request),
     "business": ("Business Executive", create_business_traveller_request),
     "flexible": ("Flexible Tourist", create_flexible_tourist_request),
     "eco": ("Eco-Conscious Traveller", create_eco_traveller_request),
+    "balanced": ("Balanced (specification example)", create_balanced_traveller_request),
 }

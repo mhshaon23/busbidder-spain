@@ -46,7 +46,7 @@ def create_architecture_diagram():
             ha="center", va="center", bbox=box_style_eval, fontsize=9, fontweight="bold")
 
     # 3. Output & Booking Layer
-    ax.text(10, 6.8, "Simulated Booking Store\n• bookings.json (ledger)\n• Unique ES-XXXXXX code\n• Capacity Decrement", 
+    ax.text(10, 6.8, "Simulated Booking Store\n• bookings.json (ledger)\n• Unique ES-XXXXXX code\n• Seats re-applied on restart", 
             ha="center", va="center", bbox=box_style_sink, fontsize=9, fontweight="bold")
 
     ax.text(10, 4.2, "Recommendation & Explanation\n(RecommendationExplainer)\n• Ranked table & scores\n• Contrastive pros & trade-offs\n• Transparent non-objective note", 
@@ -83,12 +83,49 @@ def create_architecture_diagram():
     print(f"Saved: {out_path}")
 
 
+def compute_profile_winners():
+    """Runs the four demo profiles on Madrid -> Malaga (12-14 July) and returns each winner."""
+    import sys
+    sys.path.insert(0, str(OUT_DIR.parent))
+    from src.loaders.data_loader import DataLoader
+    from src.engine.filters import FilterEngine
+    from src.engine.ranker import RankingEngine
+    from src.profiles.archetypes import (
+        create_budget_traveller_request,
+        create_business_traveller_request,
+        create_eco_traveller_request,
+        create_flexible_tourist_request,
+    )
+
+    offers, _ = DataLoader().load_offers()
+    requests = [
+        ("Budget\nBackpacker", create_budget_traveller_request(max_budget=45.0)),
+        ("Business\nExecutive", create_business_traveller_request()),
+        ("Eco-Conscious\nTraveller", create_eco_traveller_request()),
+        ("Flexible\nTourist", create_flexible_tourist_request()),
+    ]
+    winners = []
+    for label, req in requests:
+        accepted = FilterEngine().filter_offers(offers, req).accepted_offers
+        top = RankingEngine().rank_offers(accepted, req)[0]
+        winners.append({
+            "label": label,
+            "company": f"{top.offer.company}\n{top.offer.offer_id}",
+            "score": round(top.weighted_total_score, 1),
+            "price": top.offer.price,
+        })
+    return winners
+
+
 def create_profile_comparison_chart():
     """Generates a comparison bar chart illustrating sensitivity across traveller profiles."""
-    profiles = ["Budget\nBackpacker", "Business\nExecutive", "Eco-Conscious\nTraveller", "Flexible\nTourist"]
-    companies = ["SolRuta", "Camino Express", "VerdeBus", "VerdeBus"]
-    scores = [80.6, 88.0, 89.5, 92.5]
-    prices = [29.15, 50.35, 39.75, 39.75]
+    # Values come from the live ranking engine (not typed in by hand),
+    # so the chart always matches what `python main.py --demo` prints.
+    winners = compute_profile_winners()
+    profiles = [w["label"] for w in winners]
+    companies = [w["company"] for w in winners]
+    scores = [w["score"] for w in winners]
+    prices = [w["price"] for w in winners]
 
     fig, ax1 = plt.subplots(figsize=(9, 5), dpi=300)
 

@@ -20,6 +20,7 @@ from src.validators.exceptions import (
     DataValidationError,
     CorruptRecordError,
     InvalidIdentifierError,
+    DataFileMissingError,
 )
 from src.loaders.logger import logger
 
@@ -47,7 +48,7 @@ class DataLoader:
         logger.info(f"Loading companies from {target_path}")
 
         if not target_path.exists():
-            raise FileNotFoundError(f"Companies file not found at {target_path}")
+            raise DataFileMissingError(f"Companies file not found at {target_path}")
 
         with open(target_path, "r", encoding="utf-8") as f:
             raw_companies = json.load(f)
@@ -75,7 +76,7 @@ class DataLoader:
         logger.info(f"Loading destinations from {target_path}")
 
         if not target_path.exists():
-            raise FileNotFoundError(f"Destinations file not found at {target_path}")
+            raise DataFileMissingError(f"Destinations file not found at {target_path}")
 
         with open(target_path, "r", encoding="utf-8") as f:
             raw_dests = json.load(f)
@@ -117,7 +118,7 @@ class DataLoader:
 
         logger.info(f"Loading offers from {target_path}")
         if not target_path.exists():
-            raise FileNotFoundError(f"Offers file not found at {target_path}")
+            raise DataFileMissingError(f"Offers file not found at {target_path}")
 
         valid_offers: List[Offer] = []
         quarantine_records: List[Dict[str, str]] = []

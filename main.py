@@ -16,11 +16,13 @@ from src.engine.explainer import RecommendationExplainer
 from src.booking.manager import BookingManager
 from src.models.request import TravellerRequest
 from src.profiles.archetypes import PROFILES
-from src.validators.regex_patterns import is_valid_date
+from src.validators.regex_patterns import is_valid_date, is_valid_time
+from src.validators.exceptions import BusBidderError
 from src.cli.interface import (
     print_banner,
     display_ranked_offers_table,
     display_criteria_breakdown_table,
+    describe_request,
     run_demonstration,
 )
 
@@ -32,6 +34,71 @@ except ImportError:
     HAS_PREFERENCE_QUIZ = False
 
 
+def ask_optional_number(prompt: str, cast=float, min_value: float = 0) -> Optional[float]:
+    """Asks for a number; Enter means 'no limit' (None). Re-prompts on invalid input."""
+    while True:
+        raw = input(f"{prompt} [Enter = no limit]: ").strip().replace(",", ".")
+        if not raw:
+            return None
+        try:
+            value = cast(raw)
+        except ValueError:
+            print(f"  Error: '{raw}' is not a valid number. Please try again or press Enter for no limit.")
+            continue
+        if value < min_value:
+            print(f"  Error: Value must be at least {min_value}.")
+            continue
+        return value
+
+
+def ask_yes_no(prompt: str, default: bool = False) -> bool:
+    """Asks a y/n question with a default. Re-prompts on invalid input."""
+    default_str = "y" if default else "n"
+    while True:
+        raw = input(f"{prompt} (y/n) [Default: {default_str}]: ").strip().lower()
+        if not raw:
+            return default
+        if raw in ("y", "yes"):
+            return True
+        if raw in ("n", "no"):
+            return False
+        print(f"  Error: Invalid response '{raw}'. Please enter 'y' for yes or 'n' for no.")
+
+
+def ask_departure_preference() -> Optional[str]:
+    """Asks for a preferred departure as a part of day or an exact HH:MM time."""
+    while True:
+        raw = input("Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = profile default]: ").strip()
+        if not raw:
+            return None
+        if raw.lower() in ("morning", "afternoon", "evening", "night"):
+            return raw.capitalize()
+        if is_valid_time(raw):
+            return raw
+        print(f"  Error: '{raw}' is not recognised. Use Morning, Afternoon, Evening, Night or a time like 08:30.")
+
+
+def apply_user_constraints(req: TravellerRequest, limits: dict) -> None:
+    """
+    Combines the traveller's own hard constraints with those of the chosen profile.
+    The stricter value always wins, so a profile can never loosen a traveller's limit.
+    """
+    if limits["max_budget"] is not None:
+        req.max_budget = min(limits["max_budget"], req.max_budget) if req.max_budget is not None else limits["max_budget"]
+    if limits["max_transfers"] is not None:
+        req.max_transfers = min(limits["max_transfers"], req.max_transfers) if req.max_transfers is not None else limits["max_transfers"]
+    if limits["max_duration_minutes"] is not None:
+        req.max_duration_minutes = (
+            min(limits["max_duration_minutes"], req.max_duration_minutes)
+            if req.max_duration_minutes is not None else limits["max_duration_minutes"]
+        )
+    req.min_luggage_kg = max(req.min_luggage_kg, limits["min_luggage_kg"])
+    req.require_changeable = req.require_changeable or limits["require_changeable"]
+    req.require_refundable = req.require_refundable or limits["require_refundable"]
+    if limits["preferred_departure"]:
+        req.preferred_departure_window = limits["preferred_departure"]
+
+
 def interactive_session():
     """Interactive loop for searching, ranking, and booking bus journeys with strict validation."""
     print_banner()
@@ -39,6 +106,8 @@ def interactive_session():
     offers, quarantined = loader.load_offers()
     destinations = loader.load_destinations()
     booking_manager = BookingManager()
+    # Seats already sold in earlier sessions are deducted so capacity stays consistent
+    booking_manager.apply_existing_bookings(offers)
     filter_engine = FilterEngine()
     ranker = RankingEngine()
 
@@ -87,7 +156,23 @@ def interactive_session():
             continue
         break
 
-    # 3. Preference Elicitation (Customization) or Preset Archetypes
+    # 3. Hard constraints chosen by the traveller (offers that break them are removed)
+    print("\n--- Hard constraints: offers that break these are REMOVED before ranking ---")
+    max_duration_hours = ask_optional_number("Maximum journey duration in hours", float, 0.5)
+    limits = {
+        "max_budget": ask_optional_number("Maximum price per seat in EUR", float, 1),
+        "max_transfers": ask_optional_number("Maximum number of transfers", int, 0),
+        "max_duration_minutes": int(max_duration_hours * 60) if max_duration_hours is not None else None,
+        "min_luggage_kg": int(ask_optional_number("Minimum luggage allowance in kg", int, 0) or 0),
+        "require_changeable": ask_yes_no("Must the ticket be changeable?", default=False),
+        "require_refundable": ask_yes_no("Must the ticket be refundable?", default=False),
+    }
+
+    # Soft preference that is not a weight: the preferred departure time
+    print("\n--- Soft preferences: these only change the ORDER of the remaining offers ---")
+    limits["preferred_departure"] = ask_departure_preference()
+
+    # 4. Preference Elicitation (Customization) or Preset Archetypes
     custom_weights = None
     if HAS_PREFERENCE_QUIZ:
         custom_weights = prompt_preference_quiz()
@@ -102,57 +187,56 @@ def interactive_session():
         )
         profile_name = "Custom Questionnaire"
     else:
-        # User declined customization: show the 4 preset traveller archetypes
-        print("\nChoose Traveller Archetype:")
+        # User declined customization: show the preset traveller profiles
+        print("\nChoose Traveller Profile:")
         print("  [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)")
         print("  [2] Business Executive (Fastest direct travel and departure time are given priority)")
         print("  [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)")
         print("  [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)")
+        print("  [5] Balanced (price, duration, departure time and flexibility all count, price the most)")
 
+        profile_keys = {"1": "budget", "2": "business", "3": "flexible", "4": "eco", "5": "balanced"}
         while True:
-            p_choice = input("Select profile [1-4, Default: 1]: ").strip() or "1"
-            if p_choice in ("1", "2", "3", "4"):
+            p_choice = input("Select profile [1-5, Default: 1]: ").strip() or "1"
+            if p_choice in profile_keys:
                 break
-            print(f"  Error: Invalid selection '{p_choice}'. Please enter a number from 1 to 4.")
+            print(f"  Error: Invalid selection '{p_choice}'. Please enter a number from 1 to 5.")
 
-        if p_choice == "2":
-            profile_key = "business"
-        elif p_choice == "3":
-            profile_key = "flexible"
-        elif p_choice == "4":
-            profile_key = "eco"
-        else:
-            profile_key = "budget"
+        profile_key = profile_keys[p_choice]
 
         profile_name, profile_func = PROFILES[profile_key]
         req: TravellerRequest = profile_func(destination=dest_name, date_from=d_from, date_to=d_to)
 
-    print(f"\nApplied Profile: {profile_name}")
-    print(f"Configured Weights: {req.weights}")
+    apply_user_constraints(req, limits)
 
-    # 4. Filter offers
+    print(f"\nApplied Profile: {profile_name}")
+    print(describe_request(req))
+
+    # 5. Filter offers
     filter_result = filter_engine.filter_offers(offers, req)
     print(f"\n--- Filter Results ---")
     print(f"Initial offers considered : {filter_result.total_initial}")
     print(f"Offers passing constraints: {len(filter_result.accepted_offers)} ({filter_result.survival_rate:.1f}%)")
-    
+    removed = {k: v for k, v in filter_result.rejection_counts.items() if v > 0}
+    print(f"Offers removed, by first broken constraint: {removed}")
+
     if not filter_result.accepted_offers:
         print("No offers matched your constraints. Try widening your budget or date window.")
         return
 
-    # 5. Rank offers
+    # 6. Rank offers
     ranked_offers = ranker.rank_offers(filter_result.accepted_offers, req)
     print("\n")
     display_ranked_offers_table(ranked_offers, limit=8)
     display_criteria_breakdown_table(ranked_offers, limit=5)
 
-    # 6. Show Explainable Recommendation
+    # 7. Show Explainable Recommendation
     explanation = RecommendationExplainer.explain_top_offer(ranked_offers, req)
     print("\n" + "=" * 70)
     print(explanation)
     print("=" * 70 + "\n")
 
-    # 7. Booking Simulation with strict input validation
+    # 8. Booking Simulation with strict input validation
     while True:
         book_opt = input("Would you like to book an offer? (y/n) [Default: y]: ").strip().lower()
         if book_opt in ("", "y", "yes", "n", "no"):
@@ -215,15 +299,22 @@ def main():
 
     args = parser.parse_args()
 
-    if args.demo:
-        run_demonstration()
-    elif args.quarantine:
-        show_quarantine()
-    elif args.interactive:
-        interactive_session()
-    else:
-        # Default: run demo
-        run_demonstration()
+    # Known application errors (missing data files, invalid weights, booking problems)
+    # are shown as a short message instead of a Python traceback.
+    try:
+        if args.quarantine:
+            show_quarantine()
+        elif args.interactive:
+            interactive_session()
+        else:
+            # --demo, and also the default when no option is given
+            run_demonstration()
+    except BusBidderError as err:
+        print(f"\nError: {err}")
+        sys.exit(1)
+    except (KeyboardInterrupt, EOFError):
+        print("\nSession ended by user.")
+        sys.exit(0)
 
 
 if __name__ == "__main__":

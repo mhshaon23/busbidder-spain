@@ -63,8 +63,11 @@ class RecommendationExplainer:
         else:
             trade_offs.append(f"requires {offer.transfers} transfer(s)")
 
-        # 3. Schedule comparison
-        if scores.get("departure_time", 0) >= 85:
+        # 3. Schedule comparison (only when departure time is one of the traveller's criteria,
+        # otherwise there is no score and every offer would wrongly look inconvenient)
+        if "departure_time" not in scores:
+            pass
+        elif scores["departure_time"] >= 85:
             strengths.append(f"convenient departure at {offer.departure_time_str} matching your {request.preferred_departure_window} window")
         elif scores.get("departure_time", 0) < 50:
             trade_offs.append(f"departure at {offer.departure_time_str} is further from your preferred departure time")
@@ -86,15 +89,42 @@ class RecommendationExplainer:
         strengths_str = "; ".join(strengths) if strengths else "balanced attributes"
         trade_offs_str = "; ".join(trade_offs) if trade_offs else "no major disadvantages"
 
-        top_weights = sorted(request.weights.items(), key=lambda x: x[1], reverse=True)
-        main_priorities = ", ".join(f"{k} ({v*100:.0f}%)" for k, v in top_weights[:2])
+        # Why it won: compare weighted points with the runner-up, criterion by criterion,
+        # so the reason reflects what actually separated the two offers
+        if len(ranked_offers) > 1:
+            runner_up = ranked_offers[1]
+            gains = {
+                crit: weight * (scores.get(crit, 0) - runner_up.criterion_scores.get(crit, 0))
+                for crit, weight in request.weights.items()
+            }
+            deciding = [(c, g) for c, g in sorted(gains.items(), key=lambda x: x[1], reverse=True) if g > 0.05]
+            if deciding:
+                reasons = ", ".join(
+                    f"{c.replace('_', ' ')} (+{g:.1f} points, weight {request.weights[c]*100:.0f}%)" for c, g in deciding[:2]
+                )
+                why_won = f"Compared with rank #2 ({runner_up.offer.offer_id}), it gained most on {reasons}."
+            else:
+                other = runner_up.offer
+                if (other.price, other.customer_rating, other.duration_minutes) == (
+                        offer.price, offer.customer_rating, offer.duration_minutes):
+                    why_won = (f"It is tied with rank #2 ({other.offer_id}) on every criterion and every tie-break "
+                               f"attribute, so it is listed first only because it appears earlier in the catalogue.")
+                else:
+                    why_won = (f"It has the same total as rank #2 ({other.offer_id}); the order comes from the "
+                               f"tie-break rules (lower price, then higher rating, then shorter duration).")
+            margin = top.weighted_total_score - runner_up.weighted_total_score
+            if deciding and margin < 2.0:
+                why_won += (f" This is a close call: rank #2 is only {margin:.2f} points lower, "
+                            f"so a small change in weights could reverse the order.")
+        else:
+            why_won = "It was the only offer that met all of your hard constraints."
 
         explanation = (
             f"Recommendation Explanation for Rank #1 ({offer.company} - {offer.offer_id}):\n"
             f"  * Total Score   : {top.weighted_total_score:.1f} / 100.0\n"
-            f"  * Advantages    : {strengths_str.capitalize()}.\n"
-            f"  * Trade-offs    : {trade_offs_str.capitalize()}.\n"
-            f"  * Why it won    : Ranked #1 mainly because of your priority on {main_priorities}.\n"
+            f"  * Advantages    : {strengths_str[0].upper() + strengths_str[1:]}.\n"
+            f"  * Trade-offs    : {trade_offs_str[0].upper() + trade_offs_str[1:]}.\n"
+            f"  * Why it won    : {why_won}\n"
             f"  * Note          : This offer is not objectively superior in every aspect; it is the best fit "
             f"under your specific constraints, scoring rules, and preference weights."
         )

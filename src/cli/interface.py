@@ -31,7 +31,9 @@ try:
     from rich.table import Table
     from rich.panel import Panel
     from rich import box
-    console = Console()
+    # Fixed minimum width so the 11-column offer table is not cut off in a
+    # standard 80-column terminal or when output is redirected to a file
+    console = Console(width=max(Console().width, 130))
     HAS_RICH = True
 except ImportError:
     console = None
@@ -51,6 +53,31 @@ def print_banner():
         console.print(Panel(title, style="bold cyan", border_style="bright_blue"))
     else:
         print(title)
+
+
+def describe_request(req: TravellerRequest) -> str:
+    """
+    Shows the traveller which conditions are hard constraints (offers are removed)
+    and which are soft preferences (offers are only ranked lower).
+    """
+    no_limit = "no limit"
+    lines = [
+        "HARD CONSTRAINTS - offers that break any of these are removed before ranking:",
+        f"  * Destination          : {req.destination}",
+        f"  * Travel window        : {req.date_from} to {req.date_to}",
+        f"  * Seats needed         : at least {req.min_seats}",
+        f"  * Maximum price        : {f'EUR {req.max_budget:.2f}' if req.max_budget is not None else no_limit}",
+        f"  * Maximum transfers    : {req.max_transfers if req.max_transfers is not None else no_limit}",
+        f"  * Maximum duration     : {f'{req.max_duration_minutes} min' if req.max_duration_minutes is not None else no_limit}",
+        f"  * Minimum luggage      : {f'{req.min_luggage_kg} kg' if req.min_luggage_kg else 'none'}",
+        f"  * Changeable ticket    : {'required' if req.require_changeable else 'not required'}",
+        f"  * Refundable ticket    : {'required' if req.require_refundable else 'not required'}",
+        "SOFT PREFERENCES - used only to rank the offers that remain:",
+        f"  * Preferred departure  : {req.preferred_departure_window} (about {int(req.target_hour):02d}:{int(round(req.target_hour % 1 * 60)):02d})",
+    ]
+    for crit, weight in sorted(req.weights.items(), key=lambda kv: kv[1], reverse=True):
+        lines.append(f"  * Weight {crit.replace('_', ' '):<14}: {weight * 100:.0f}%")
+    return "\n".join(lines)
 
 
 def display_ranked_offers_table(ranked_offers: List[RankedOffer], limit: int = 10):
@@ -161,6 +188,7 @@ def run_demonstration():
     print_banner()
     loader = DataLoader()
     offers, _ = loader.load_offers()
+    BookingManager().apply_existing_bookings(offers)
     destinations = loader.load_destinations()
     filter_engine = FilterEngine()
     ranker = RankingEngine()
@@ -180,9 +208,7 @@ def run_demonstration():
         print("\n" + "=" * 75)
         print(f" DEMONSTRATION PROFILE: {p_name.upper()}")
         print("=" * 75)
-        print(f"Constraints: Destination={req.destination}, Dates={req.date_from} to {req.date_to}, "
-              f"MaxBudget={req.max_budget}, DirectOnly={req.max_transfers==0}")
-        print(f"Weights    : {req.weights}")
+        print(describe_request(req))
 
         f_result = filter_engine.filter_offers(offers, req)
         print(f"\nFiltering Result: {len(f_result.accepted_offers)} acceptable offers "

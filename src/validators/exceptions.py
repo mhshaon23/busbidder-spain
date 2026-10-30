@@ -22,6 +22,14 @@ class DataValidationError(BusBidderError):
         self.field = field
 
 
+class DataFileMissingError(BusBidderError, FileNotFoundError):
+    """
+    Raised when a required data file (companies, destinations or offers) does not exist.
+    Also inherits FileNotFoundError so code that catches the built-in error still works.
+    """
+    pass
+
+
 class CorruptRecordError(DataValidationError):
     """Raised when a row in the CSV is corrupted or missing required columns."""
     pass

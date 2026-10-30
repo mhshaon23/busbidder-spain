@@ -1,0 +1,47 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\mhsha\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Oslomet study\ACT4420\Final Project
+plugins: anyio-4.15.1
+collecting ... collected 38 items
+
+tests/test_booking.py::test_successful_booking_lifecycle PASSED          [  2%]
+tests/test_booking.py::test_seat_exhaustion_raises PASSED                [  5%]
+tests/test_booking.py::test_invalid_reference_format_raises PASSED       [  7%]
+tests/test_booking.py::test_cancellation_and_seat_restoration PASSED     [ 10%]
+tests/test_booking.py::test_bookings_reduce_capacity_after_restart PASSED [ 13%]
+tests/test_booking.py::test_cancelled_bookings_do_not_reduce_capacity_after_restart PASSED [ 15%]
+tests/test_descriptors_and_models.py::test_valid_offer_creation PASSED   [ 18%]
+tests/test_descriptors_and_models.py::test_negative_price_rejected PASSED [ 21%]
+tests/test_descriptors_and_models.py::test_invalid_offer_id_regex_rejected PASSED [ 23%]
+tests/test_descriptors_and_models.py::test_customer_rating_out_of_bounds_rejected PASSED [ 26%]
+tests/test_descriptors_and_models.py::test_temporal_inconsistency_rejected PASSED [ 28%]
+tests/test_descriptors_and_models.py::test_request_invalid_weights_rejected PASSED [ 31%]
+tests/test_descriptors_and_models.py::test_request_negative_weight_rejected PASSED [ 34%]
+tests/test_descriptors_and_models.py::test_request_reversed_dates_rejected PASSED [ 36%]
+tests/test_filters.py::test_filter_destination_and_dates PASSED          [ 39%]
+tests/test_filters.py::test_filter_budget_constraint PASSED              [ 42%]
+tests/test_filters.py::test_filter_direct_only_transfers PASSED          [ 44%]
+tests/test_filters.py::test_filter_mandatory_flexibility PASSED          [ 47%]
+tests/test_interactive_helpers.py::test_specification_example_request_is_applied PASSED [ 50%]
+tests/test_interactive_helpers.py::test_stricter_limit_wins_when_combined_with_profile PASSED [ 52%]
+tests/test_interactive_helpers.py::test_summary_separates_hard_and_soft_conditions PASSED [ 55%]
+tests/test_interactive_helpers.py::test_missing_data_file_raises_custom_error PASSED [ 57%]
+tests/test_loaders.py::test_load_metadata PASSED                         [ 60%]
+tests/test_loaders.py::test_load_valid_offers PASSED                     [ 63%]
+tests/test_loaders.py::test_quarantine_corrupt_offers PASSED             [ 65%]
+tests/test_loaders.py::test_missing_file_raises PASSED                   [ 68%]
+tests/test_loaders.py::test_missing_field_values_are_quarantined PASSED  [ 71%]
+tests/test_loaders.py::test_offer_with_zero_seats_loads_but_is_filtered PASSED [ 73%]
+tests/test_preference_quiz.py::test_calculate_weights_sum_to_one PASSED  [ 76%]
+tests/test_preference_quiz.py::test_equal_ratings_produce_equal_weights PASSED [ 78%]
+tests/test_preference_quiz.py::test_weights_work_with_traveller_request PASSED [ 81%]
+tests/test_profile_divergence.py::test_profile_divergence_on_identical_destination PASSED [ 84%]
+tests/test_ranker_and_normalizers.py::test_cost_normalization_lower_is_better PASSED [ 86%]
+tests/test_ranker_and_normalizers.py::test_benefit_normalization_higher_is_better PASSED [ 89%]
+tests/test_ranker_and_normalizers.py::test_normalization_single_value_edge_case PASSED [ 92%]
+tests/test_ranker_and_normalizers.py::test_circular_departure_time_convenience PASSED [ 94%]
+tests/test_ranker_and_normalizers.py::test_criteria_registry_coverage PASSED [ 97%]
+tests/test_ranker_and_normalizers.py::test_ranking_and_explanation PASSED [100%]
+
+============================= 38 passed in 0.33s ==============================

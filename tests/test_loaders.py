@@ -62,3 +62,41 @@ def test_missing_file_raises():
     with pytest.raises(FileNotFoundError):
         loader.load_offers(file_path=non_existent)
 
+
+
+def test_missing_field_values_are_quarantined(tmp_path):
+    """Missing data: rows with an empty price or missing departure time are set aside, not guessed."""
+    header = (
+        "offer_id,company,origin,destination,travel_date,departure_time,arrival_time,duration_minutes,"
+        "price,transfers,luggage_kg,is_changeable,is_refundable,available_seats,customer_rating,co2_kg_per_passenger\n"
+    )
+    rows = (
+        "OFF-SR-8001,SolRuta,Madrid,Toledo,2026-07-12,08:00,09:00,60,,0,12,False,False,10,3.9,3.0\n"
+        "OFF-SR-8002,SolRuta,Madrid,Toledo,2026-07-12,,09:00,60,12.5,0,12,False,False,10,3.9,3.0\n"
+        "OFF-SR-8003,SolRuta,Madrid,Toledo,2026-07-12,08:00,09:00,60,12.5,0,12,False,False,10,3.9,3.0\n"
+    )
+    csv_path = tmp_path / "missing_values.csv"
+    csv_path.write_text(header + rows, encoding="utf-8")
+
+    valid, quarantined = DataLoader().load_offers(
+        file_path=csv_path, quarantine_file_path=tmp_path / "q.csv"
+    )
+
+    assert [o.offer_id for o in valid] == ["OFF-SR-8003"]
+    assert {q["offer_id"] for q in quarantined} == {"OFF-SR-8001", "OFF-SR-8002"}
+
+
+def test_offer_with_zero_seats_loads_but_is_filtered():
+    """Boundary: 0 seats is valid catalogue data (sold out), but the filter must remove it."""
+    from src.engine.filters import FilterEngine
+    from src.models.request import TravellerRequest
+
+    offers, _ = DataLoader().load_offers()
+    target = next(o for o in offers if o.destination == "Toledo")
+    target.available_seats = 0
+    request = TravellerRequest(destination="Toledo", date_from="2026-07-12", date_to="2026-07-14")
+
+    result = FilterEngine().filter_offers(offers, request)
+
+    assert target not in result.accepted_offers
+    assert result.rejection_counts["insufficient_seats"] == 1

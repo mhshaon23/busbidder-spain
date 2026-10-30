@@ -1,3 +1,5 @@
 pytest>=9.0.0
 rich>=13.0.0
-
+# Only needed to rebuild the report figures and the Word report (report/*.py)
+matplotlib>=3.8
+python-docx>=1.1

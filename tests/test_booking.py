@@ -93,3 +93,30 @@ def test_cancellation_and_seat_restoration(tmp_path, test_offer):
     # Seats restored
     assert test_offer.available_seats == 3
 
+
+
+def test_bookings_reduce_capacity_after_restart(tmp_path, test_offer):
+    storage_path = tmp_path / "test_bookings.json"
+    manager = BookingManager(storage_path=storage_path)
+    manager.create_booking(test_offer, passenger_name="Ana Lopez", seats=2)
+
+    # Simulate a program restart: the offer is reloaded from the catalogue with full capacity
+    reloaded_offer = Offer(**{**test_offer.to_dict(), "available_seats": 3})
+    restarted_manager = BookingManager(storage_path=storage_path)
+    deducted = restarted_manager.apply_existing_bookings([reloaded_offer])
+
+    assert deducted == 2
+    assert reloaded_offer.available_seats == 1
+
+
+def test_cancelled_bookings_do_not_reduce_capacity_after_restart(tmp_path, test_offer):
+    storage_path = tmp_path / "test_bookings.json"
+    manager = BookingManager(storage_path=storage_path)
+    record = manager.create_booking(test_offer, passenger_name="Ana Lopez", seats=1)
+    manager.cancel_booking(record.booking_reference, offer=test_offer)
+
+    reloaded_offer = Offer(**{**test_offer.to_dict(), "available_seats": 3})
+    restarted_manager = BookingManager(storage_path=storage_path)
+    restarted_manager.apply_existing_bookings([reloaded_offer])
+
+    assert reloaded_offer.available_seats == 3

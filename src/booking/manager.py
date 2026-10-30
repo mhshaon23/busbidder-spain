@@ -67,6 +67,30 @@ class BookingManager:
         except Exception as e:
             logger.error(f"Error reading bookings from {self.storage_path}: {e}")
 
+    def apply_existing_bookings(self, offers: List[Offer]) -> int:
+        """
+        Re-applies saved CONFIRMED bookings to freshly loaded offers.
+        offers.csv stays the original catalogue and bookings.json is the ledger,
+        so the real capacity is: catalogue seats - seats in confirmed bookings.
+        Without this, seats would reset to full every time the program restarts.
+        Returns the number of seats deducted.
+        """
+        offers_by_id = {o.offer_id: o for o in offers}
+        deducted = 0
+        for rec in self.bookings.values():
+            if rec.status != "CONFIRMED":
+                continue
+            offer = offers_by_id.get(rec.offer_id)
+            if offer is None:
+                logger.warning(f"Booking {rec.booking_reference} refers to unknown offer {rec.offer_id}")
+                continue
+            # Never go below zero, even if the ledger was edited by hand
+            seats = min(rec.seats_booked, offer.available_seats)
+            offer.available_seats -= seats
+            deducted += seats
+        logger.info(f"Applied {deducted} booked seat(s) from {self.storage_path.name} to the offer catalogue")
+        return deducted
+
     def _persist(self) -> None:
         """Helper to save the current bookings dictionary to JSON."""
         data = [b.to_dict() for b in self.bookings.values()]
