@@ -1,0 +1,161 @@
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:37 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 0 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json
+2026-10-30 00:40:37 [INFO] (busbidder) Applied 0 booked seat(s) from bookings.json to the offer catalogue
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Filtering complete for Malaga: 12 accepted from 225 initial offers.
+2026-10-30 00:40:37 [INFO] (busbidder) Ranked 12 offers. Top offer is OFF-SR-1046
+2026-10-30 00:40:37 [INFO] (busbidder) Filtering complete for Malaga: 12 accepted from 225 initial offers.
+2026-10-30 00:40:37 [INFO] (busbidder) Ranked 12 offers. Top offer is OFF-CE-1049
+2026-10-30 00:40:37 [INFO] (busbidder) Filtering complete for Malaga: 15 accepted from 225 initial offers.
+2026-10-30 00:40:37 [INFO] (busbidder) Ranked 15 offers. Top offer is OFF-VB-1055
+2026-10-30 00:40:37 [INFO] (busbidder) Filtering complete for Malaga: 12 accepted from 225 initial offers.
+2026-10-30 00:40:37 [INFO] (busbidder) Ranked 12 offers. Top offer is OFF-VB-1056
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:37 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 0 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json
+2026-10-30 00:40:37 [INFO] (busbidder) Applied 0 booked seat(s) from bookings.json to the offer catalogue
+2026-10-30 00:40:37 [INFO] (busbidder) Filtering complete for Malaga: 9 accepted from 225 initial offers.
+2026-10-30 00:40:37 [INFO] (busbidder) Ranked 9 offers. Top offer is OFF-CL-1052
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:37 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 0 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json
+2026-10-30 00:40:37 [INFO] (busbidder) Applied 0 booked seat(s) from bookings.json to the offer catalogue
+2026-10-30 00:40:37 [INFO] (busbidder) Filtering complete for Barcelona: 9 accepted from 225 initial offers.
+2026-10-30 00:40:37 [INFO] (busbidder) Ranked 9 offers. Top offer is OFF-SR-1001
+2026-10-30 00:40:37 [INFO] (busbidder) Booking ES-15NDQX created for Test Traveller (OFF-SR-1001). Remaining seats on offer: 13
+2026-10-30 00:40:37 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:37 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:37 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:37 [INFO] (busbidder) Loaded 1 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json
+2026-10-30 00:40:37 [INFO] (busbidder) Applied 2 booked seat(s) from bookings.json to the offer catalogue
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\corrupt_offers_sample.csv
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 2 [OFF-SR-9991]: [Unknown] Invalid field 'price': Value must be strictly > 0, got -25.5
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 3 [OFF-CE-9992]: [OFF-CE-9992] Invalid field 'destination': Destination 'Atlantis' is not in registered destinations catalog.
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 4 [INVALID-ID]: [Unknown] Invalid field 'offer_id': Value 'INVALID-ID' does not match required Offer ID pattern '^OFF-[A-Z]{2,4}-\d{4}$'
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 5 [OFF-VB-9994]: [Unknown] Invalid field 'customer_rating': Value must be between 1.0 and 5.0, got 7.5
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 6 [OFF-NV-9995]: [Unknown] Invalid field 'duration_minutes': Temporal inconsistency: departure 23:00 to arrival 05:00 is 360 mins, but duration is 120.0 mins.
+2026-10-30 00:40:38 [INFO] (busbidder) Saved 5 quarantined records to D:\Oslomet study\ACT4420\Final Project\data\quarantine_offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 0 valid offers, 5 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Booking ES-PIVO3T created for Carlos Ruiz (OFF-CE-2001). Remaining seats on offer: 1
+2026-10-30 00:40:38 [INFO] (busbidder) Booking ES-ST3A5A created for Ana Lopez (OFF-CE-2001). Remaining seats on offer: 2
+2026-10-30 00:40:38 [INFO] (busbidder) Booking ES-ST3A5A cancelled. Seat capacity restored.
+2026-10-30 00:40:38 [INFO] (busbidder) Booking ES-JTY1P7 created for Ana Lopez (OFF-CE-2001). Remaining seats on offer: 1
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 1 existing bookings from C:\Users\mhsha\AppData\Local\Temp\pytest-of-mhsha\pytest-16\test_bookings_reduce_capacity_0\test_bookings.json
+2026-10-30 00:40:38 [INFO] (busbidder) Applied 2 booked seat(s) from test_bookings.json to the offer catalogue
+2026-10-30 00:40:38 [INFO] (busbidder) Booking ES-711Z5I created for Ana Lopez (OFF-CE-2001). Remaining seats on offer: 2
+2026-10-30 00:40:38 [INFO] (busbidder) Booking ES-711Z5I cancelled. Seat capacity restored.
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 1 existing bookings from C:\Users\mhsha\AppData\Local\Temp\pytest-of-mhsha\pytest-16\test_cancelled_bookings_do_not0\test_bookings.json
+2026-10-30 00:40:38 [INFO] (busbidder) Applied 0 booked seat(s) from test_bookings.json to the offer catalogue
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Valencia: 5 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Barcelona: 0 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Cadiz: 12 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Malaga: 6 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from C:\Users\mhsha\AppData\Local\Temp\pytest-of-mhsha\pytest-16\test_missing_data_file_raises_0\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\corrupt_offers_sample.csv
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 2 [OFF-SR-9991]: [Unknown] Invalid field 'price': Value must be strictly > 0, got -25.5
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 3 [OFF-CE-9992]: [OFF-CE-9992] Invalid field 'destination': Destination 'Atlantis' is not in registered destinations catalog.
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 4 [INVALID-ID]: [Unknown] Invalid field 'offer_id': Value 'INVALID-ID' does not match required Offer ID pattern '^OFF-[A-Z]{2,4}-\d{4}$'
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 5 [OFF-VB-9994]: [Unknown] Invalid field 'customer_rating': Value must be between 1.0 and 5.0, got 7.5
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 6 [OFF-NV-9995]: [Unknown] Invalid field 'duration_minutes': Temporal inconsistency: departure 23:00 to arrival 05:00 is 360 mins, but duration is 120.0 mins.
+2026-10-30 00:40:38 [INFO] (busbidder) Saved 5 quarantined records to C:\Users\mhsha\AppData\Local\Temp\pytest-of-mhsha\pytest-16\test_quarantine_corrupt_offers0\test_quarantine.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 0 valid offers, 5 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from non_existent_offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from C:\Users\mhsha\AppData\Local\Temp\pytest-of-mhsha\pytest-16\test_missing_field_values_are_0\missing_values.csv
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 2 [OFF-SR-8001]: could not convert string to float: ''
+2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 3 [OFF-SR-8002]: [Unknown] Invalid field 'departure_time': Invalid departure time '', expected HH:MM
+2026-10-30 00:40:38 [INFO] (busbidder) Saved 2 quarantined records to C:\Users\mhsha\AppData\Local\Temp\pytest-of-mhsha\pytest-16\test_missing_field_values_are_0\q.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 1 valid offers, 2 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Toledo: 14 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-10-30 00:40:38 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-10-30 00:40:38 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-10-30 00:40:38 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Malaga: 12 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Ranked 12 offers. Top offer is OFF-SR-1046
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Malaga: 12 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Ranked 12 offers. Top offer is OFF-CE-1049
+2026-10-30 00:40:38 [INFO] (busbidder) Filtering complete for Malaga: 15 accepted from 225 initial offers.
+2026-10-30 00:40:38 [INFO] (busbidder) Ranked 15 offers. Top offer is OFF-VB-1055
+2026-10-30 00:40:38 [INFO] (busbidder) Ranked 2 offers. Top offer is OFF-CE-0002
+2026-10-30 00:40:39 [INFO] (busbidder) Loading destinations from data_folder_that_does_not_exist\destinations.json

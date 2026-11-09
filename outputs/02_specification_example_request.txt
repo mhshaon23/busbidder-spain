@@ -1,0 +1,91 @@
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ =========================================================================                                                      │
+│                   BUSBIDDER SPAIN - TRAVEL PLATFORM                                                                            │
+│        Flexible Bus-Booking & Multi-Criteria Offer-Ranking Engine                                                              │
+│                      OsloMet ACIT4420 Project 2026                                                                             │
+│ =========================================================================                                                      │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Available destinations from Madrid:
+  [ 1] Alicante                  [ 2] Barcelona                 [ 3] Bilbao                  
+  [ 4] Cadiz                     [ 5] Cordoba                   [ 6] Granada                 
+  [ 7] Malaga                    [ 8] Murcia                    [ 9] Salamanca               
+  [10] San Sebastian             [11] Santiago de Compostela    [12] Seville                 
+  [13] Toledo                    [14] Valencia                  [15] Zaragoza                
+
+
+Enter destination name or number [Default: Malaga]: Selected destination: Malaga
+Travel start date (YYYY-MM-DD) [Default: 2026-07-12]: Travel end date (YYYY-MM-DD) [Default: 2026-07-14]: 
+--- Hard constraints: offers that break these are REMOVED before ranking ---
+Maximum journey duration in hours [Enter = no limit]: Maximum price per seat in EUR [Enter = no limit]: Maximum number of transfers [Enter = no limit]: Minimum luggage allowance in kg [Enter = no limit]: Must the ticket be changeable? (y/n) [Default: n]: Must the ticket be refundable? (y/n) [Default: n]: 
+--- Soft preferences: these only change the ORDER of the remaining offers ---
+Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = profile default]: 
+----------------------------------------------------------------------
+Would you like to customize your search preferences? Answer 5 quick questions (y/n) [Default: n]: Skipping customization. Proceeding to standard traveller profiles.
+----------------------------------------------------------------------
+
+Choose Traveller Profile:
+  [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)
+  [2] Business Executive (Fastest direct travel and departure time are given priority)
+  [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)
+  [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)
+  [5] Balanced (price, duration, departure time and flexibility all count, price the most)
+Select profile [1-5, Default: 1]: 
+Applied Profile: Balanced (specification example)
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Malaga
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : EUR 50.00
+  * Maximum transfers    : 1
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Morning (about 09:00)
+  * Weight price         : 40%
+  * Weight duration      : 25%
+  * Weight flexibility   : 20%
+  * Weight departure time: 15%
+
+--- Filter Results ---
+Initial offers considered : 225
+Offers passing constraints: 9 (4.0%)
+Offers removed, by first broken constraint: {'destination_mismatch': 210, 'exceeded_budget': 3, 'missing_changeability': 3}
+
+
+                                                       Top 8 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-CL-1052  │ CostaLink       │  09:15  │  16:22  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   22   │    58.2 │
+│   2   │ OFF-VB-1055  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   43   │    58.1 │
+│   3   │ OFF-VB-1057  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   22   │    58.1 │
+│   4   │ OFF-CL-1053  │ CostaLink       │  13:45  │  20:52  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   29   │    49.7 │
+│   5   │ OFF-VB-1056  │ VerdeBus        │  15:00  │  21:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   15   │    48.8 │
+│   6   │ OFF-CL-1054  │ CostaLink       │  16:30  │  23:37  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   36   │    44.6 │
+│   7   │ OFF-NV-1058  │ NocheVia        │  22:30  │  05:57  │    7h 27m │   EUR 34.45 │  Change  │     15.9 │   29   │    40.0 │
+│   8   │ OFF-NV-1059  │ NocheVia        │  23:45  │  07:12  │    7h 27m │   EUR 34.45 │  Change  │     15.9 │   36   │    40.0 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                           
+                                                                                                          
+  Rank      Offer ID     Company           Price   Duration   Departure Time   Flexibility   Total Score  
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-CL-1052    CostaLink          70.0       62.5             96.9           0.0          58.2  
+    2     OFF-VB-1055    VerdeBus            0.0      100.0             87.5         100.0          58.1  
+    3     OFF-VB-1057    VerdeBus            0.0      100.0             87.5         100.0          58.1  
+    4     OFF-CL-1053    CostaLink          70.0       62.5             40.6           0.0          49.7  
+    5     OFF-VB-1056    VerdeBus            0.0      100.0             25.0         100.0          48.8  
+                                                                                                          
+
+======================================================================
+Recommendation Explanation for Rank #1 (CostaLink - OFF-CL-1052):
+  * Total Score   : 58.2 / 100.0
+  * Advantages    : Direct route with zero transfers; convenient departure at 09:15 matching your Morning window; ticket can be changed.
+  * Trade-offs    : Costs EUR 1.59 more than the cheapest option (EUR 34.45); takes 12 minutes longer than the fastest option; non-refundable.
+  * Why it won    : Compared with rank #2 (OFF-VB-1055), it gained most on price (+28.0 points, weight 40%), departure time (+1.4 points, weight 15%). This is a close call: rank #2 is only 0.03 points lower, so a small change in weights could reverse the order.
+  * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific constraints, scoring rules, and preference weights.
+======================================================================
+
+Would you like to book an offer? (y/n) [Default: y]: 

@@ -1,0 +1,6 @@
+offer_id,company,origin,destination,travel_date,departure_time,arrival_time,duration_minutes,price,transfers,luggage_kg,is_changeable,is_refundable,available_seats,customer_rating,co2_kg_per_passenger,expected_error,line_number,rejection_reason
+OFF-SR-9991,SolRuta,Madrid,Barcelona,2026-07-12,08:00,14:00,360,-25.5,0,15,True,False,20,4.1,15.0,Negative price,2,"[Unknown] Invalid field 'price': Value must be strictly > 0, got -25.5"
+OFF-CE-9992,Camino Express,Madrid,Atlantis,2026-07-12,09:00,13:00,240,45.0,0,20,True,True,10,4.8,12.0,Unknown destination,3,[OFF-CE-9992] Invalid field 'destination': Destination 'Atlantis' is not in registered destinations catalog.
+INVALID-ID,CostaLink,Madrid,Valencia,2026-07-12,10:00,14:30,270,30.0,0,20,True,False,15,4.0,14.0,Regex ID mismatch,4,"[Unknown] Invalid field 'offer_id': Value 'INVALID-ID' does not match required Offer ID pattern '^OFF-[A-Z]{2,4}-\d{4}$'"
+OFF-VB-9994,VerdeBus,Madrid,Seville,2026-07-12,10:00,15:00,300,35.0,0,18,True,True,25,7.5,6.0,Rating exceeds bounds,5,"[Unknown] Invalid field 'customer_rating': Value must be between 1.0 and 5.0, got 7.5"
+OFF-NV-9995,NocheVia,Madrid,Malaga,2026-07-12,23:00,05:00,120,32.0,0,20,True,False,30,4.2,15.0,Temporal discrepancy,6,"[Unknown] Invalid field 'duration_minutes': Temporal inconsistency: departure 23:00 to arrival 05:00 is 360 mins, but duration is 120.0 mins."

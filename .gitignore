@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+
+# Word/Office lock files
+~$*
+
+# Course specification (not ours to publish)
+BusBidder Spain Final Project Specification.pdf
+report/final_report.md
+report/final_report.md
+report/BusBidder_Spain_Final_Report.pdf
+report/BusBidder_Spain_Final_Report.docx
+report/build_report.py
+PROJECT_STATUS.md

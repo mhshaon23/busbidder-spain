@@ -1,0 +1,213 @@
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ =========================================================================                                                      │
+│                   BUSBIDDER SPAIN - TRAVEL PLATFORM                                                                            │
+│        Flexible Bus-Booking & Multi-Criteria Offer-Ranking Engine                                                              │
+│                      OsloMet ACIT4420 Project 2026                                                                             │
+│ =========================================================================                                                      │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+===========================================================================
+ DEMONSTRATION PROFILE: BUDGET BACKPACKER
+===========================================================================
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Malaga
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : EUR 45.00
+  * Maximum transfers    : 1
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : not required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Morning (about 09:00)
+  * Weight price         : 60%
+  * Weight duration      : 15%
+  * Weight departure time: 15%
+  * Weight flexibility   : 10%
+
+Filtering Result: 12 acceptable offers (Survival rate: 5.3%)
+Rejections breakdown: {'destination_mismatch': 210, 'exceeded_budget': 3}
+                                                       Top 5 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-SR-1046  │ SolRuta         │  07:45  │  15:33  │    7h 48m │   EUR 34.15 │  Strict  │     20.1 │   15   │    72.7 │
+│   2   │ OFF-SR-1047  │ SolRuta         │  11:30  │  19:18  │    7h 48m │   EUR 34.15 │  Strict  │     20.1 │   22   │    70.3 │
+│   3   │ OFF-CL-1052  │ CostaLink       │  09:15  │  16:22  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   22   │    69.9 │
+│   4   │ OFF-NV-1058  │ NocheVia        │  22:30  │  05:57  │    7h 27m │   EUR 34.45 │  Change  │     15.9 │   29   │    66.7 │
+│   5   │ OFF-NV-1059  │ NocheVia        │  23:45  │  07:12  │    7h 27m │   EUR 34.45 │  Change  │     15.9 │   36   │    66.7 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                           
+                                                                                                          
+  Rank      Offer ID     Company           Price   Duration   Departure Time   Flexibility   Total Score  
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-SR-1046    SolRuta           100.0        0.0             84.4           0.0          72.7  
+    2     OFF-SR-1047    SolRuta           100.0        0.0             68.8           0.0          70.3  
+    3     OFF-CL-1052    CostaLink          66.2       77.4             96.9          40.0          69.9  
+                                                                                                          
+┌────────────────────────────────────────────────── Explainable Recommendation ──────────────────────────────────────────────────┐
+│ Recommendation Explanation for Rank #1 (SolRuta - OFF-SR-1046):                                                                │
+│   * Total Score   : 72.7 / 100.0                                                                                               │
+│   * Advantages    : Lowest available price at EUR 34.15.                                                                       │
+│   * Trade-offs    : Takes 53 minutes longer than the fastest option; requires 1 transfer(s); strict non-flexible ticket (no    │
+│ changes or refunds).                                                                                                           │
+│   * Why it won    : Compared with rank #2 (OFF-SR-1047), it gained most on departure time (+2.3 points, weight 15%).           │
+│   * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific             │
+│ constraints, scoring rules, and preference weights.                                                                            │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+===========================================================================
+ DEMONSTRATION PROFILE: BUSINESS EXECUTIVE
+===========================================================================
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Malaga
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : no limit
+  * Maximum transfers    : 0
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : 08:30 (about 08:30)
+  * Weight duration      : 40%
+  * Weight departure time: 30%
+  * Weight flexibility   : 20%
+  * Weight price         : 10%
+
+Filtering Result: 12 acceptable offers (Survival rate: 5.3%)
+Rejections breakdown: {'destination_mismatch': 210, 'exceeded_transfers': 3}
+                                                       Top 5 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-CE-1049  │ Camino Express  │  08:30  │  14:56  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   36   │    90.0 │
+│   2   │ OFF-VB-1055  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   43   │    72.0 │
+│   3   │ OFF-VB-1057  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   22   │    72.0 │
+│   4   │ OFF-CE-1050  │ Camino Express  │  14:00  │  20:26  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   43   │    69.4 │
+│   5   │ OFF-CE-1051  │ Camino Express  │  17:30  │  23:56  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   15   │    60.0 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                           
+                                                                                                          
+  Rank      Offer ID     Company           Duration   Departure Time   Flexibility   Price   Total Score  
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-CE-1049    Camino Express       100.0            100.0         100.0     0.0          90.0  
+    2     OFF-VB-1055    VerdeBus              52.5             81.2         100.0    66.7          72.0  
+    3     OFF-VB-1057    VerdeBus              52.5             81.2         100.0    66.7          72.0  
+                                                                                                          
+┌────────────────────────────────────────────────── Explainable Recommendation ──────────────────────────────────────────────────┐
+│ Recommendation Explanation for Rank #1 (Camino Express - OFF-CE-1049):                                                         │
+│   * Total Score   : 90.0 / 100.0                                                                                               │
+│   * Advantages    : Fastest journey time (6h 26m); direct route with zero transfers; convenient departure at 08:30 matching    │
+│ your 08:30 window; fully flexible ticket (both changeable and refundable).                                                     │
+│   * Trade-offs    : Costs EUR 15.90 more than the cheapest option (EUR 34.45).                                                 │
+│   * Why it won    : Compared with rank #2 (OFF-VB-1055), it gained most on duration (+19.0 points, weight 40%), departure time │
+│ (+5.6 points, weight 30%).                                                                                                     │
+│   * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific             │
+│ constraints, scoring rules, and preference weights.                                                                            │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+===========================================================================
+ DEMONSTRATION PROFILE: ECO-CONSCIOUS TRAVELLER
+===========================================================================
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Malaga
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : no limit
+  * Maximum transfers    : no limit
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : not required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Morning (about 09:00)
+  * Weight eco score     : 50%
+  * Weight customer rating: 20%
+  * Weight duration      : 15%
+  * Weight price         : 15%
+
+Filtering Result: 15 acceptable offers (Survival rate: 6.7%)
+Rejections breakdown: {'destination_mismatch': 210}
+                                                       Top 5 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-VB-1055  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   43   │    89.5 │
+│   2   │ OFF-VB-1056  │ VerdeBus        │  15:00  │  21:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   15   │    89.5 │
+│   3   │ OFF-VB-1057  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   22   │    89.5 │
+│   4   │ OFF-CE-1049  │ Camino Express  │  08:30  │  14:56  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   36   │    45.0 │
+│   5   │ OFF-CE-1050  │ Camino Express  │  14:00  │  20:26  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   43   │    45.0 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                          
+                                                                                                         
+  Rank      Offer ID     Company           Eco Score   Customer Rating   Duration   Price   Total Score  
+ ─────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-VB-1055    VerdeBus              100.0             100.0       64.6    65.4          89.5  
+    2     OFF-VB-1056    VerdeBus              100.0             100.0       64.6    65.4          89.5  
+    3     OFF-VB-1057    VerdeBus              100.0             100.0       64.6    65.4          89.5  
+                                                                                                         
+┌────────────────────────────────────────────────── Explainable Recommendation ──────────────────────────────────────────────────┐
+│ Recommendation Explanation for Rank #1 (VerdeBus - OFF-VB-1055):                                                               │
+│   * Total Score   : 89.5 / 100.0                                                                                               │
+│   * Advantages    : Direct route with zero transfers; fully flexible ticket (both changeable and refundable); low carbon       │
+│ footprint (7.4 kg CO2/passenger).                                                                                              │
+│   * Trade-offs    : Costs EUR 5.60 more than the cheapest option (EUR 34.15); takes 29 minutes longer than the fastest option. │
+│   * Why it won    : It is tied with rank #2 (OFF-VB-1056) on every criterion and every tie-break attribute, so it is listed    │
+│ first only because it appears earlier in the catalogue.                                                                        │
+│   * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific             │
+│ constraints, scoring rules, and preference weights.                                                                            │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+===========================================================================
+ DEMONSTRATION PROFILE: FLEXIBLE TOURIST
+===========================================================================
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Malaga
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : no limit
+  * Maximum transfers    : no limit
+  * Maximum duration     : no limit
+  * Minimum luggage      : 15 kg
+  * Changeable ticket    : not required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Afternoon (about 14:00)
+  * Weight flexibility   : 45%
+  * Weight customer rating: 20%
+  * Weight departure time: 20%
+  * Weight price         : 15%
+
+Filtering Result: 12 acceptable offers (Survival rate: 5.3%)
+Rejections breakdown: {'destination_mismatch': 210, 'insufficient_luggage': 3}
+                                                       Top 5 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-VB-1056  │ VerdeBus        │  15:00  │  21:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   15   │    92.5 │
+│   2   │ OFF-VB-1055  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   43   │    85.0 │
+│   3   │ OFF-VB-1057  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   22   │    85.0 │
+│   4   │ OFF-CE-1050  │ Camino Express  │  14:00  │  20:26  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   43   │    81.7 │
+│   5   │ OFF-CE-1051  │ Camino Express  │  17:30  │  23:56  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   15   │    72.9 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                              Normalized Component Scores Breakdown (0 - 100 Scale)                              
+                                                                                                                 
+  Rank      Offer ID     Company           Flexibility   Customer Rating   Departure Time   Price   Total Score  
+ ─────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-VB-1056    VerdeBus                100.0             100.0             87.5    66.7          92.5  
+    2     OFF-VB-1055    VerdeBus                100.0             100.0             50.0    66.7          85.0  
+    3     OFF-VB-1057    VerdeBus                100.0             100.0             50.0    66.7          85.0  
+                                                                                                                 
+┌────────────────────────────────────────────────── Explainable Recommendation ──────────────────────────────────────────────────┐
+│ Recommendation Explanation for Rank #1 (VerdeBus - OFF-VB-1056):                                                               │
+│   * Total Score   : 92.5 / 100.0                                                                                               │
+│   * Advantages    : Direct route with zero transfers; convenient departure at 15:00 matching your Afternoon window; fully      │
+│ flexible ticket (both changeable and refundable); low carbon footprint (7.4 kg CO2/passenger).                                 │
+│   * Trade-offs    : Costs EUR 5.30 more than the cheapest option (EUR 34.45); takes 29 minutes longer than the fastest option. │
+│   * Why it won    : Compared with rank #2 (OFF-VB-1055), it gained most on departure time (+7.5 points, weight 20%).           │
+│   * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific             │
+│ constraints, scoring rules, and preference weights.                                                                            │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

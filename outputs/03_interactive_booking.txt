@@ -1,0 +1,111 @@
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ =========================================================================                                                      │
+│                   BUSBIDDER SPAIN - TRAVEL PLATFORM                                                                            │
+│        Flexible Bus-Booking & Multi-Criteria Offer-Ranking Engine                                                              │
+│                      OsloMet ACIT4420 Project 2026                                                                             │
+│ =========================================================================                                                      │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Available destinations from Madrid:
+  [ 1] Alicante                  [ 2] Barcelona                 [ 3] Bilbao                  
+  [ 4] Cadiz                     [ 5] Cordoba                   [ 6] Granada                 
+  [ 7] Malaga                    [ 8] Murcia                    [ 9] Salamanca               
+  [10] San Sebastian             [11] Santiago de Compostela    [12] Seville                 
+  [13] Toledo                    [14] Valencia                  [15] Zaragoza                
+
+
+Enter destination name or number [Default: Malaga]: Selected destination: Barcelona
+Travel start date (YYYY-MM-DD) [Default: 2026-07-12]: Travel end date (YYYY-MM-DD) [Default: 2026-07-14]: 
+--- Hard constraints: offers that break these are REMOVED before ranking ---
+Maximum journey duration in hours [Enter = no limit]: Maximum price per seat in EUR [Enter = no limit]: Maximum number of transfers [Enter = no limit]: Minimum luggage allowance in kg [Enter = no limit]: Must the ticket be changeable? (y/n) [Default: n]: Must the ticket be refundable? (y/n) [Default: n]: 
+--- Soft preferences: these only change the ORDER of the remaining offers ---
+Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = profile default]: 
+----------------------------------------------------------------------
+Would you like to customize your search preferences? Answer 5 quick questions (y/n) [Default: n]: Skipping customization. Proceeding to standard traveller profiles.
+----------------------------------------------------------------------
+
+Choose Traveller Profile:
+  [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)
+  [2] Business Executive (Fastest direct travel and departure time are given priority)
+  [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)
+  [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)
+  [5] Balanced (price, duration, departure time and flexibility all count, price the most)
+Select profile [1-5, Default: 1]: 
+Applied Profile: Budget Backpacker
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Barcelona
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : EUR 45.00
+  * Maximum transfers    : 1
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : not required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Morning (about 09:00)
+  * Weight price         : 60%
+  * Weight duration      : 15%
+  * Weight departure time: 15%
+  * Weight flexibility   : 10%
+
+--- Filter Results ---
+Initial offers considered : 225
+Offers passing constraints: 9 (4.0%)
+Offers removed, by first broken constraint: {'destination_mismatch': 210, 'exceeded_budget': 6}
+
+
+                                                       Top 8 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-SR-1001  │ SolRuta         │  07:45  │  16:57  │    9h 12m │   EUR 39.38 │  Strict  │     23.8 │   15   │    72.7 │
+│   2   │ OFF-SR-1002  │ SolRuta         │  11:30  │  20:42  │    9h 12m │   EUR 39.38 │  Strict  │     23.8 │   22   │    70.3 │
+│   3   │ OFF-SR-1003  │ SolRuta         │  15:15  │  00:27  │    9h 12m │   EUR 39.38 │  Strict  │     23.8 │   29   │    63.3 │
+│   4   │ OFF-NV-1013  │ NocheVia        │  22:30  │  07:18  │    8h 48m │   EUR 40.62 │  Change  │     18.8 │   29   │    53.7 │
+│   5   │ OFF-NV-1014  │ NocheVia        │  23:45  │  08:33  │    8h 48m │   EUR 40.62 │  Change  │     18.8 │   36   │    53.7 │
+│   6   │ OFF-NV-1015  │ NocheVia        │  22:30  │  07:18  │    8h 48m │   EUR 40.62 │  Change  │     18.8 │   43   │    53.7 │
+│   7   │ OFF-CL-1007  │ CostaLink       │  09:15  │  17:39  │    8h 24m │   EUR 42.50 │  Change  │     21.9 │   22   │    39.5 │
+│   8   │ OFF-CL-1008  │ CostaLink       │  13:45  │  22:09  │    8h 24m │   EUR 42.50 │  Change  │     21.9 │   29   │    31.1 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                           
+                                                                                                          
+  Rank      Offer ID     Company           Price   Duration   Departure Time   Flexibility   Total Score  
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-SR-1001    SolRuta           100.0        0.0             84.4           0.0          72.7  
+    2     OFF-SR-1002    SolRuta           100.0        0.0             68.8           0.0          70.3  
+    3     OFF-SR-1003    SolRuta           100.0        0.0             21.9           0.0          63.3  
+    4     OFF-NV-1013    NocheVia           60.3       50.0              0.0         100.0          53.7  
+    5     OFF-NV-1014    NocheVia           60.3       50.0              0.0         100.0          53.7  
+                                                                                                          
+
+======================================================================
+Recommendation Explanation for Rank #1 (SolRuta - OFF-SR-1001):
+  * Total Score   : 72.7 / 100.0
+  * Advantages    : Lowest available price at EUR 39.38.
+  * Trade-offs    : Takes 48 minutes longer than the fastest option; requires 1 transfer(s); strict non-flexible ticket (no changes or refunds).
+  * Why it won    : Compared with rank #2 (OFF-SR-1002), it gained most on departure time (+2.3 points, weight 15%).
+  * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific constraints, scoring rules, and preference weights.
+======================================================================
+
+Would you like to book an offer? (y/n) [Default: y]: Enter rank to book (1-9) [Default: 1]: Enter traveller full name [Default: Alex Smith]: Number of seats (1-15) [Default: 1]: 
+Booking successfully generated and persisted!
+
+========================================================
+                 BUSBIDDER SPAIN TICKET                 
+========================================================
+ Booking Reference : ES-15NDQX
+ Status            : CONFIRMED
+ Passenger Name    : Test Traveller
+ Operator          : SolRuta
+ Route             : Madrid -> Barcelona
+ Travel Date       : 2026-07-12
+ Schedule          : 07:45 - 16:57
+ Seats Booked      : 2
+ Total Paid        : EUR 78.76
+--------------------------------------------------------
+ Fare Conditions:
+  - Changeable     : No
+  - Refundable     : No
+  - Luggage Limit  : 12 kg included
+========================================================
