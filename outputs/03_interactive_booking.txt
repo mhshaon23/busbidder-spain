@@ -16,22 +16,78 @@ Available destinations from Madrid:
 
 Enter destination name or number [Default: Malaga]: Selected destination: Barcelona
 Travel start date (YYYY-MM-DD) [Default: 2026-07-12]: Travel end date (YYYY-MM-DD) [Default: 2026-07-14]: 
---- Hard constraints: offers that break these are REMOVED before ranking ---
-Maximum journey duration in hours [Enter = no limit]: Maximum price per seat in EUR [Enter = no limit]: Maximum number of transfers [Enter = no limit]: Minimum luggage allowance in kg [Enter = no limit]: Must the ticket be changeable? (y/n) [Default: n]: Must the ticket be refundable? (y/n) [Default: n]: 
---- Soft preferences: these only change the ORDER of the remaining offers ---
-Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = profile default]: 
-----------------------------------------------------------------------
-Would you like to customize your search preferences? Answer 5 quick questions (y/n) [Default: n]: Skipping customization. Proceeding to standard traveller profiles.
-----------------------------------------------------------------------
-
-Choose Traveller Profile:
+How would you like us to rank your options?
   [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)
   [2] Business Executive (Fastest direct travel and departure time are given priority)
   [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)
   [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)
   [5] Balanced (price, duration, departure time and flexibility all count, price the most)
-Select profile [1-5, Default: 1]: 
-Applied Profile: Budget Backpacker
+  [6] Tell us what matters to you (5 quick ratings)
+Select an option [1-6, Default: 1]: 
+Ranking by: Budget Backpacker
+Showing all available offers for your dates.
+
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Barcelona
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : no limit
+  * Maximum transfers    : no limit
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : not required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Morning (about 09:00)
+  * Weight price         : 60%
+  * Weight duration      : 15%
+  * Weight departure time: 15%
+  * Weight flexibility   : 10%
+
+--- Filter Results ---
+Offers considered         : 225
+Offers passing constraints: 15 (6.7%)
+Offers removed, by first broken constraint: {'destination_mismatch': 210}
+
+
+                                                       Top 8 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-CL-1007  │ CostaLink       │  09:15  │  17:39  │    8h 24m │   EUR 42.50 │  Change  │     21.9 │   22   │    76.7 │
+│   2   │ OFF-SR-1001  │ SolRuta         │  07:45  │  16:57  │    9h 12m │   EUR 39.38 │  Strict  │     23.8 │   15   │    72.7 │
+│   3   │ OFF-VB-1010  │ VerdeBus        │  10:00  │  18:09  │    8h 09m │   EUR 46.88 │   Full   │      8.8 │   43   │    70.5 │
+│   4   │ OFF-VB-1012  │ VerdeBus        │  10:00  │  18:09  │    8h 09m │   EUR 46.88 │   Full   │      8.8 │   22   │    70.5 │
+│   5   │ OFF-SR-1002  │ SolRuta         │  11:30  │  20:42  │    9h 12m │   EUR 39.38 │  Strict  │     23.8 │   22   │    70.3 │
+│   6   │ OFF-CL-1008  │ CostaLink       │  13:45  │  22:09  │    8h 24m │   EUR 42.50 │  Change  │     21.9 │   29   │    68.2 │
+│   7   │ OFF-NV-1013  │ NocheVia        │  22:30  │  07:18  │    8h 48m │   EUR 40.62 │  Change  │     18.8 │   29   │    64.0 │
+│   8   │ OFF-NV-1014  │ NocheVia        │  23:45  │  08:33  │    8h 48m │   EUR 40.62 │  Change  │     18.8 │   36   │    64.0 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                           
+                                                                                                          
+  Rank      Offer ID     Company           Price   Duration   Departure Time   Flexibility   Total Score  
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-CL-1007    CostaLink          84.4       50.0             96.9          40.0          76.7  
+    2     OFF-SR-1001    SolRuta           100.0        0.0             84.4           0.0          72.7  
+    3     OFF-VB-1010    VerdeBus           62.5       65.6             87.5         100.0          70.5  
+    4     OFF-VB-1012    VerdeBus           62.5       65.6             87.5         100.0          70.5  
+    5     OFF-SR-1002    SolRuta           100.0        0.0             68.8           0.0          70.3  
+                                                                                                          
+
+======================================================================
+Recommendation Explanation for Rank #1 (CostaLink - OFF-CL-1007):
+  * Total Score   : 76.7 / 100.0
+  * Advantages    : Competitive price (EUR 42.50); direct route with zero transfers; convenient departure at 09:15 matching your Morning window; ticket can be changed.
+  * Trade-offs    : Takes 48 minutes longer than the fastest option; non-refundable.
+  * Why it won    : Compared with rank #2 (OFF-SR-1001), it gained most on duration (+7.5 points, weight 15%), flexibility (+4.0 points, weight 10%).
+  * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific constraints, scoring rules, and preference weights.
+======================================================================
+
+Refine your results? Set a budget, limit transfers, or choose flexible tickets only. (y/n) [Default: n]: 
+--- Hard constraints: offers that break these are REMOVED before ranking ---
+Your Budget Backpacker profile suggests: max EUR 45.00, max 1 transfer. Apply these suggestions? (y/n) [Default: y]: Maximum journey duration in hours [Enter = no limit]: Maximum price per seat in EUR [Enter = no limit]: Maximum number of transfers [Enter = no limit]: Minimum luggage allowance in kg [Enter = no limit]: Must the ticket be changeable? (y/n) [Default: n]: Must the ticket be refundable? (y/n) [Default: n]: 
+Your refined results (the remaining offers are ranked again):
+
 HARD CONSTRAINTS - offers that break any of these are removed before ranking:
   * Destination          : Barcelona
   * Travel window        : 2026-07-12 to 2026-07-14
@@ -50,9 +106,9 @@ SOFT PREFERENCES - used only to rank the offers that remain:
   * Weight flexibility   : 10%
 
 --- Filter Results ---
-Initial offers considered : 225
-Offers passing constraints: 9 (4.0%)
-Offers removed, by first broken constraint: {'destination_mismatch': 210, 'exceeded_budget': 6}
+Offers considered         : 15
+Offers passing constraints: 9 (60.0%)
+Offers removed, by first broken constraint: {'exceeded_budget': 6}
 
 
                                                        Top 8 Ranked Offers                                                       
@@ -88,13 +144,15 @@ Recommendation Explanation for Rank #1 (SolRuta - OFF-SR-1001):
   * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific constraints, scoring rules, and preference weights.
 ======================================================================
 
+9 of 15 offers match your filters.
+
 Would you like to book an offer? (y/n) [Default: y]: Enter rank to book (1-9) [Default: 1]: Enter traveller full name [Default: Alex Smith]: Number of seats (1-15) [Default: 1]: 
 Booking successfully generated and persisted!
 
 ========================================================
                  BUSBIDDER SPAIN TICKET                 
 ========================================================
- Booking Reference : ES-15NDQX
+ Booking Reference : ES-FWK2UE
  Status            : CONFIRMED
  Passenger Name    : Test Traveller
  Operator          : SolRuta

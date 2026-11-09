@@ -66,3 +66,46 @@ def test_missing_data_file_raises_custom_error(tmp_path):
         loader.load_companies()
     # The custom error is part of the application's error hierarchy
     assert issubclass(DataFileMissingError, BusBidderError)
+
+
+def test_profile_limits_become_suggestions_so_first_search_shows_all():
+    # Budget profile has max EUR 45 and max 1 transfer built in
+    from main import split_profile_limits
+    from src.profiles.archetypes import create_budget_traveller_request
+    req = create_budget_traveller_request("Malaga", "2026-07-12", "2026-07-14")
+    suggestions = split_profile_limits(req)
+
+    assert suggestions == {"max_budget": 45.0, "max_transfers": 1}
+    assert req.max_budget is None and req.max_transfers is None
+
+
+def test_specification_example_through_refine_step():
+    # Balanced profile, all offers first, then refine with EUR 50, 1 transfer, changeable
+    from main import split_profile_limits
+    from src.engine.filters import FilterEngine
+    from src.engine.ranker import RankingEngine
+    offers, _ = DataLoader().load_offers()
+    req = create_balanced_traveller_request("Malaga", "2026-07-12", "2026-07-14")
+    split_profile_limits(req)
+    first = FilterEngine().filter_offers(offers, req).accepted_offers
+    assert len(first) == 15
+
+    apply_user_constraints(req, _limits(max_budget=50.0, max_transfers=1, require_changeable=True))
+    refined = FilterEngine().filter_offers(first, req).accepted_offers
+    ranked = RankingEngine().rank_offers(refined, req)
+    assert len(refined) == 9
+    assert ranked[0].offer.offer_id == "OFF-CL-1052"
+
+
+def test_note_when_all_remaining_tickets_are_fully_flexible():
+    from main import uniform_criteria_notes
+    from src.engine.filters import FilterEngine
+    offers, _ = DataLoader().load_offers()
+    req = create_balanced_traveller_request("Malaga", "2026-07-12", "2026-07-14")
+    apply_user_constraints(req, _limits(require_changeable=True, require_refundable=True))
+    remaining = FilterEngine().filter_offers(offers, req).accepted_offers
+
+    notes = uniform_criteria_notes(remaining, req)
+    assert any("fully flexible" in n for n in notes)
+    # Price still differs, so no note about price
+    assert not any("price" in n for n in notes)

@@ -16,22 +16,78 @@ Available destinations from Madrid:
 
 Enter destination name or number [Default: Malaga]: Selected destination: Malaga
 Travel start date (YYYY-MM-DD) [Default: 2026-07-12]: Travel end date (YYYY-MM-DD) [Default: 2026-07-14]: 
---- Hard constraints: offers that break these are REMOVED before ranking ---
-Maximum journey duration in hours [Enter = no limit]: Maximum price per seat in EUR [Enter = no limit]: Maximum number of transfers [Enter = no limit]: Minimum luggage allowance in kg [Enter = no limit]: Must the ticket be changeable? (y/n) [Default: n]: Must the ticket be refundable? (y/n) [Default: n]: 
---- Soft preferences: these only change the ORDER of the remaining offers ---
-Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = profile default]: 
-----------------------------------------------------------------------
-Would you like to customize your search preferences? Answer 5 quick questions (y/n) [Default: n]: Skipping customization. Proceeding to standard traveller profiles.
-----------------------------------------------------------------------
-
-Choose Traveller Profile:
+How would you like us to rank your options?
   [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)
   [2] Business Executive (Fastest direct travel and departure time are given priority)
   [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)
   [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)
   [5] Balanced (price, duration, departure time and flexibility all count, price the most)
-Select profile [1-5, Default: 1]: 
-Applied Profile: Balanced (specification example)
+  [6] Tell us what matters to you (5 quick ratings)
+Select an option [1-6, Default: 1]: 
+Ranking by: Balanced (specification example)
+Showing all available offers for your dates.
+
+HARD CONSTRAINTS - offers that break any of these are removed before ranking:
+  * Destination          : Malaga
+  * Travel window        : 2026-07-12 to 2026-07-14
+  * Seats needed         : at least 1
+  * Maximum price        : no limit
+  * Maximum transfers    : no limit
+  * Maximum duration     : no limit
+  * Minimum luggage      : none
+  * Changeable ticket    : not required
+  * Refundable ticket    : not required
+SOFT PREFERENCES - used only to rank the offers that remain:
+  * Preferred departure  : Morning (about 09:00)
+  * Weight price         : 40%
+  * Weight duration      : 25%
+  * Weight flexibility   : 20%
+  * Weight departure time: 15%
+
+--- Filter Results ---
+Offers considered         : 225
+Offers passing constraints: 15 (6.7%)
+Offers removed, by first broken constraint: {'destination_mismatch': 210}
+
+
+                                                       Top 8 Ranked Offers                                                       
+┌───────┬──────────────┬─────────────────┬─────────┬─────────┬───────────┬─────────────┬──────────┬──────────┬────────┬─────────┐
+│ Rank  │   Offer ID   │ Company         │ Depart  │ Arrive  │  Duration │ Price (EUR) │   Flex   │ CO2 (kg) │ Seats  │   Score │
+├───────┼──────────────┼─────────────────┼─────────┼─────────┼───────────┼─────────────┼──────────┼──────────┼────────┼─────────┤
+│   1   │ OFF-VB-1055  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   43   │    75.5 │
+│   2   │ OFF-VB-1057  │ VerdeBus        │  10:00  │  16:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   22   │    75.5 │
+│   3   │ OFF-CL-1052  │ CostaLink       │  09:15  │  16:22  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   22   │    70.4 │
+│   4   │ OFF-VB-1056  │ VerdeBus        │  15:00  │  21:55  │    6h 55m │   EUR 39.75 │   Full   │      7.4 │   15   │    66.1 │
+│   5   │ OFF-CL-1053  │ CostaLink       │  13:45  │  20:52  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   29   │    61.9 │
+│   6   │ OFF-CE-1049  │ Camino Express  │  08:30  │  14:56  │    6h 26m │   EUR 50.35 │   Full   │     17.0 │   36   │    59.1 │
+│   7   │ OFF-CL-1054  │ CostaLink       │  16:30  │  23:37  │    7h 07m │   EUR 36.04 │  Change  │     18.6 │   36   │    56.8 │
+│   8   │ OFF-NV-1058  │ NocheVia        │  22:30  │  05:57  │    7h 27m │   EUR 34.45 │  Change  │     15.9 │   29   │    53.7 │
+└───────┴──────────────┴─────────────────┴─────────┴─────────┴───────────┴─────────────┴──────────┴──────────┴────────┴─────────┘
+                          Normalized Component Scores Breakdown (0 - 100 Scale)                           
+                                                                                                          
+  Rank      Offer ID     Company           Price   Duration   Departure Time   Flexibility   Total Score  
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────── 
+    1     OFF-VB-1055    VerdeBus           65.4       64.6             87.5         100.0          75.5  
+    2     OFF-VB-1057    VerdeBus           65.4       64.6             87.5         100.0          75.5  
+    3     OFF-CL-1052    CostaLink          88.3       50.0             96.9          40.0          70.4  
+    4     OFF-VB-1056    VerdeBus           65.4       64.6             25.0         100.0          66.1  
+    5     OFF-CL-1053    CostaLink          88.3       50.0             40.6          40.0          61.9  
+                                                                                                          
+
+======================================================================
+Recommendation Explanation for Rank #1 (VerdeBus - OFF-VB-1055):
+  * Total Score   : 75.5 / 100.0
+  * Advantages    : Direct route with zero transfers; convenient departure at 10:00 matching your Morning window; fully flexible ticket (both changeable and refundable); low carbon footprint (7.4 kg CO2/passenger).
+  * Trade-offs    : Costs EUR 5.60 more than the cheapest option (EUR 34.15); takes 29 minutes longer than the fastest option.
+  * Why it won    : It is tied with rank #2 (OFF-VB-1057) on every criterion and every tie-break attribute, so it is listed first only because it appears earlier in the catalogue.
+  * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific constraints, scoring rules, and preference weights.
+======================================================================
+
+Refine your results? Set a budget, limit transfers, or choose flexible tickets only. (y/n) [Default: n]: 
+--- Hard constraints: offers that break these are REMOVED before ranking ---
+Maximum journey duration in hours [Enter = no limit]: Maximum price per seat in EUR [Enter = no limit]: Maximum number of transfers [Enter = no limit]: Minimum luggage allowance in kg [Enter = no limit]: Must the ticket be changeable? (y/n) [Default: n]: Must the ticket be refundable? (y/n) [Default: n]: 
+Your refined results (the remaining offers are ranked again):
+
 HARD CONSTRAINTS - offers that break any of these are removed before ranking:
   * Destination          : Malaga
   * Travel window        : 2026-07-12 to 2026-07-14
@@ -50,9 +106,9 @@ SOFT PREFERENCES - used only to rank the offers that remain:
   * Weight departure time: 15%
 
 --- Filter Results ---
-Initial offers considered : 225
-Offers passing constraints: 9 (4.0%)
-Offers removed, by first broken constraint: {'destination_mismatch': 210, 'exceeded_budget': 3, 'missing_changeability': 3}
+Offers considered         : 15
+Offers passing constraints: 9 (60.0%)
+Offers removed, by first broken constraint: {'exceeded_budget': 3, 'missing_changeability': 3}
 
 
                                                        Top 8 Ranked Offers                                                       
@@ -87,5 +143,7 @@ Recommendation Explanation for Rank #1 (CostaLink - OFF-CL-1052):
   * Why it won    : Compared with rank #2 (OFF-VB-1055), it gained most on price (+28.0 points, weight 40%), departure time (+1.4 points, weight 15%). This is a close call: rank #2 is only 0.03 points lower, so a small change in weights could reverse the order.
   * Note          : This offer is not objectively superior in every aspect; it is the best fit under your specific constraints, scoring rules, and preference weights.
 ======================================================================
+
+9 of 15 offers match your filters.
 
 Would you like to book an offer? (y/n) [Default: y]: 

@@ -5,11 +5,11 @@
 │                      OsloMet ACIT4420 Project 2026                                                                             │
 │ =========================================================================                                                      │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 2 [OFF-SR-9991]: [Unknown] Invalid field 'price': Value must be strictly > 0, got -25.5
-2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 3 [OFF-CE-9992]: [OFF-CE-9992] Invalid field 'destination': Destination 'Atlantis' is not in registered destinations catalog.
-2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 4 [INVALID-ID]: [Unknown] Invalid field 'offer_id': Value 'INVALID-ID' does not match required Offer ID pattern '^OFF-[A-Z]{2,4}-\d{4}$'
-2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 5 [OFF-VB-9994]: [Unknown] Invalid field 'customer_rating': Value must be between 1.0 and 5.0, got 7.5
-2026-10-30 00:40:38 [WARNING] (busbidder) Quarantining record at line 6 [OFF-NV-9995]: [Unknown] Invalid field 'duration_minutes': Temporal inconsistency: departure 23:00 to arrival 05:00 is 360 mins, but duration is 120.0 mins.
+2026-11-09 23:51:23 [WARNING] (busbidder) Quarantining record at line 2 [OFF-SR-9991]: [Unknown] Invalid field 'price': Value must be strictly > 0, got -25.5
+2026-11-09 23:51:23 [WARNING] (busbidder) Quarantining record at line 3 [OFF-CE-9992]: [OFF-CE-9992] Invalid field 'destination': Destination 'Atlantis' is not in registered destinations catalog.
+2026-11-09 23:51:23 [WARNING] (busbidder) Quarantining record at line 4 [INVALID-ID]: [Unknown] Invalid field 'offer_id': Value 'INVALID-ID' does not match required Offer ID pattern '^OFF-[A-Z]{2,4}-\d{4}$'
+2026-11-09 23:51:23 [WARNING] (busbidder) Quarantining record at line 5 [OFF-VB-9994]: [Unknown] Invalid field 'customer_rating': Value must be between 1.0 and 5.0, got 7.5
+2026-11-09 23:51:23 [WARNING] (busbidder) Quarantining record at line 6 [OFF-NV-9995]: [Unknown] Invalid field 'duration_minutes': Temporal inconsistency: departure 23:00 to arrival 05:00 is 360 mins, but duration is 120.0 mins.
 
 [QUARANTINE REVIEW] Inspecting invalid records...
 No quarantined records found in standard catalogue.

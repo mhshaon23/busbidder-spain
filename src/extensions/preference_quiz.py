@@ -66,6 +66,14 @@ def prompt_preference_quiz() -> Optional[Dict[str, float]]:
         else:
             print(f"  Error: Invalid response '{choice}'. Please enter 'y' for yes or 'n' for no.")
 
+    return ask_importance_ratings()
+
+
+def ask_importance_ratings() -> Dict[str, float]:
+    """
+    Asks the five 1-5 importance ratings and returns the resulting weights.
+    Used directly by the 'Tell us what matters to you' menu option.
+    """
     print("\nRate the importance of each factor from 1 (Not important) to 5 (Crucial):")
     
     price_rating = _ask_rating("1. Low Price / Budget savings", default=4)

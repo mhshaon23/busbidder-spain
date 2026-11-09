@@ -28,7 +28,7 @@ from src.cli.interface import (
 
 # Optional Extension: Pluggable Preference Quiz module
 try:
-    from src.extensions.preference_quiz import prompt_preference_quiz
+    from src.extensions.preference_quiz import ask_importance_ratings
     HAS_PREFERENCE_QUIZ = True
 except ImportError:
     HAS_PREFERENCE_QUIZ = False
@@ -65,10 +65,10 @@ def ask_yes_no(prompt: str, default: bool = False) -> bool:
         print(f"  Error: Invalid response '{raw}'. Please enter 'y' for yes or 'n' for no.")
 
 
-def ask_departure_preference() -> Optional[str]:
+def ask_departure_preference(default_label: str = "profile default") -> Optional[str]:
     """Asks for a preferred departure as a part of day or an exact HH:MM time."""
     while True:
-        raw = input("Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = profile default]: ").strip()
+        raw = input(f"Preferred departure (Morning/Afternoon/Evening/Night or HH:MM) [Enter = {default_label}]: ").strip()
         if not raw:
             return None
         if raw.lower() in ("morning", "afternoon", "evening", "night"):
@@ -95,8 +95,148 @@ def apply_user_constraints(req: TravellerRequest, limits: dict) -> None:
     req.min_luggage_kg = max(req.min_luggage_kg, limits["min_luggage_kg"])
     req.require_changeable = req.require_changeable or limits["require_changeable"]
     req.require_refundable = req.require_refundable or limits["require_refundable"]
-    if limits["preferred_departure"]:
+    if limits.get("preferred_departure"):
         req.preferred_departure_window = limits["preferred_departure"]
+
+
+# Hard limits a profile may bring with it, and their "no limit" values
+PROFILE_LIMIT_DEFAULTS = {
+    "max_budget": None,
+    "max_transfers": None,
+    "max_duration_minutes": None,
+    "min_luggage_kg": 0,
+    "require_changeable": False,
+    "require_refundable": False,
+}
+
+
+def split_profile_limits(req: TravellerRequest) -> dict:
+    """
+    Removes a profile's built-in hard limits from the request and returns them as suggestions.
+    The first search then shows all offers; the traveller can apply the suggestions when refining.
+    """
+    suggestions = {}
+    for attr, no_limit in PROFILE_LIMIT_DEFAULTS.items():
+        value = getattr(req, attr)
+        if value != no_limit:
+            suggestions[attr] = value
+            setattr(req, attr, no_limit)
+    return suggestions
+
+
+def describe_suggestions(suggestions: dict) -> str:
+    """Short text such as 'max EUR 45.00, max 1 transfer'."""
+    parts = []
+    if "max_budget" in suggestions:
+        parts.append(f"max EUR {suggestions['max_budget']:.2f}")
+    if "max_transfers" in suggestions:
+        n = suggestions["max_transfers"]
+        parts.append("direct only" if n == 0 else f"max {n} transfer{'s' if n > 1 else ''}")
+    if "max_duration_minutes" in suggestions:
+        parts.append(f"max {suggestions['max_duration_minutes']} min")
+    if "min_luggage_kg" in suggestions:
+        parts.append(f"luggage at least {suggestions['min_luggage_kg']} kg")
+    if suggestions.get("require_changeable"):
+        parts.append("changeable ticket")
+    if suggestions.get("require_refundable"):
+        parts.append("refundable ticket")
+    return ", ".join(parts)
+
+
+# Raw value of each weighted criterion, used to spot criteria that no longer separate the offers
+CRITERION_VALUES = {
+    "price": ("price", lambda o: o.price),
+    "duration": ("journey time", lambda o: o.duration_minutes),
+    "departure_time": ("departure time", lambda o: o.departure_time),
+    "flexibility": ("ticket flexibility", lambda o: o.flexibility_score),
+    "customer_rating": ("customer rating", lambda o: o.customer_rating),
+    "eco_score": ("CO2 emissions", lambda o: o.co2_kg_per_passenger),
+}
+
+
+def uniform_criteria_notes(offers, req: TravellerRequest) -> list:
+    """
+    Explains weighted criteria on which all remaining offers are equal. Such a criterion gives
+    every offer the same points, so it no longer affects the order, however high its weight.
+    """
+    notes = []
+    if len(offers) < 2:
+        return notes
+    for crit, weight in req.weights.items():
+        if weight <= 0 or crit not in CRITERION_VALUES:
+            continue
+        label, value_of = CRITERION_VALUES[crit]
+        if len({value_of(o) for o in offers}) == 1:
+            if crit == "flexibility" and offers[0].flexibility_score >= 1.0:
+                notes.append("All remaining tickets are fully flexible, so flexibility no longer affects the order.")
+            else:
+                notes.append(f"All remaining offers have the same {label}, so it no longer affects the order.")
+    return notes
+
+
+def choose_ranking(dest_name: str, d_from: str, d_to: str):
+    """One menu: a predefined profile, or the traveller's own 1-5 ratings. Returns (name, request)."""
+    print("\nHow would you like us to rank your options?")
+    print("  [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)")
+    print("  [2] Business Executive (Fastest direct travel and departure time are given priority)")
+    print("  [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)")
+    print("  [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)")
+    print("  [5] Balanced (price, duration, departure time and flexibility all count, price the most)")
+    options = "1-5"
+    if HAS_PREFERENCE_QUIZ:
+        print("  [6] Tell us what matters to you (5 quick ratings)")
+        options = "1-6"
+
+    profile_keys = {"1": "budget", "2": "business", "3": "flexible", "4": "eco", "5": "balanced"}
+    while True:
+        choice = input(f"Select an option [{options}, Default: 1]: ").strip() or "1"
+        if choice in profile_keys or (choice == "6" and HAS_PREFERENCE_QUIZ):
+            break
+        print(f"  Error: Invalid selection '{choice}'. Please enter a number from {options}.")
+
+    if choice == "6":
+        weights = ask_importance_ratings()
+        req = TravellerRequest(destination=dest_name, date_from=d_from, date_to=d_to, weights=weights)
+        departure = ask_departure_preference(default_label="Morning")
+        if departure:
+            req.preferred_departure_window = departure
+        return "Your own preferences", req
+
+    profile_name, profile_func = PROFILES[profile_keys[choice]]
+    return profile_name, profile_func(destination=dest_name, date_from=d_from, date_to=d_to)
+
+
+def run_search(offers, req: TravellerRequest, filter_engine: FilterEngine, ranker: RankingEngine,
+               refined: bool = False):
+    """Filters, ranks and explains one search. Returns the ranked offers (empty list if none remain)."""
+    print(describe_request(req))
+
+    filter_result = filter_engine.filter_offers(offers, req)
+    print(f"\n--- Filter Results ---")
+    print(f"Offers considered         : {filter_result.total_initial}")
+    print(f"Offers passing constraints: {len(filter_result.accepted_offers)} ({filter_result.survival_rate:.1f}%)")
+    removed = {k: v for k, v in filter_result.rejection_counts.items() if v > 0}
+    if removed:
+        print(f"Offers removed, by first broken constraint: {removed}")
+
+    if not filter_result.accepted_offers:
+        return []
+
+    # Scores are relative to the offers being compared, so every search is ranked afresh
+    ranked_offers = ranker.rank_offers(filter_result.accepted_offers, req)
+    print("\n")
+    display_ranked_offers_table(ranked_offers, limit=8)
+    display_criteria_breakdown_table(ranked_offers, limit=5)
+
+    if refined:
+        for note in uniform_criteria_notes(filter_result.accepted_offers, req):
+            print(f"Note: {note}")
+
+    explanation = RecommendationExplainer.explain_top_offer(ranked_offers, req)
+    print("\n" + "=" * 70)
+    print(explanation)
+    print("=" * 70 + "\n")
+    return ranked_offers
 
 
 def interactive_session():
@@ -156,87 +296,48 @@ def interactive_session():
             continue
         break
 
-    # 3. Hard constraints chosen by the traveller (offers that break them are removed)
-    print("\n--- Hard constraints: offers that break these are REMOVED before ranking ---")
-    max_duration_hours = ask_optional_number("Maximum journey duration in hours", float, 0.5)
-    limits = {
-        "max_budget": ask_optional_number("Maximum price per seat in EUR", float, 1),
-        "max_transfers": ask_optional_number("Maximum number of transfers", int, 0),
-        "max_duration_minutes": int(max_duration_hours * 60) if max_duration_hours is not None else None,
-        "min_luggage_kg": int(ask_optional_number("Minimum luggage allowance in kg", int, 0) or 0),
-        "require_changeable": ask_yes_no("Must the ticket be changeable?", default=False),
-        "require_refundable": ask_yes_no("Must the ticket be refundable?", default=False),
-    }
+    # 3. One question decides the ranking: a predefined profile or the traveller's own ratings
+    profile_name, req = choose_ranking(dest_name, d_from, d_to)
 
-    # Soft preference that is not a weight: the preferred departure time
-    print("\n--- Soft preferences: these only change the ORDER of the remaining offers ---")
-    limits["preferred_departure"] = ask_departure_preference()
-
-    # 4. Preference Elicitation (Customization) or Preset Archetypes
-    custom_weights = None
-    if HAS_PREFERENCE_QUIZ:
-        custom_weights = prompt_preference_quiz()
-
-    if custom_weights:
-        # User completed the questionnaire: use custom weights directly (no 4 presets asked)
-        req: TravellerRequest = TravellerRequest(
-            destination=dest_name,
-            date_from=d_from,
-            date_to=d_to,
-            weights=custom_weights,
-        )
-        profile_name = "Custom Questionnaire"
-    else:
-        # User declined customization: show the preset traveller profiles
-        print("\nChoose Traveller Profile:")
-        print("  [1] Budget Backpacker (Price is given more priority, accepts transfers to save money)")
-        print("  [2] Business Executive (Fastest direct travel and departure time are given priority)")
-        print("  [3] Flexible Tourist (Ticket changes, refunds, and luggage are given priority)")
-        print("  [4] Eco-Conscious Traveller (Lowest CO2 emissions and green transport are given priority)")
-        print("  [5] Balanced (price, duration, departure time and flexibility all count, price the most)")
-
-        profile_keys = {"1": "budget", "2": "business", "3": "flexible", "4": "eco", "5": "balanced"}
-        while True:
-            p_choice = input("Select profile [1-5, Default: 1]: ").strip() or "1"
-            if p_choice in profile_keys:
-                break
-            print(f"  Error: Invalid selection '{p_choice}'. Please enter a number from 1 to 5.")
-
-        profile_key = profile_keys[p_choice]
-
-        profile_name, profile_func = PROFILES[profile_key]
-        req: TravellerRequest = profile_func(destination=dest_name, date_from=d_from, date_to=d_to)
-
-    apply_user_constraints(req, limits)
-
-    print(f"\nApplied Profile: {profile_name}")
-    print(describe_request(req))
-
-    # 5. Filter offers
-    filter_result = filter_engine.filter_offers(offers, req)
-    print(f"\n--- Filter Results ---")
-    print(f"Initial offers considered : {filter_result.total_initial}")
-    print(f"Offers passing constraints: {len(filter_result.accepted_offers)} ({filter_result.survival_rate:.1f}%)")
-    removed = {k: v for k, v in filter_result.rejection_counts.items() if v > 0}
-    print(f"Offers removed, by first broken constraint: {removed}")
-
-    if not filter_result.accepted_offers:
-        print("No offers matched your constraints. Try widening your budget or date window.")
+    # 4. Show ALL available offers first; a profile's own limits are kept back as suggestions
+    suggestions = split_profile_limits(req)
+    print(f"\nRanking by: {profile_name}")
+    print("Showing all available offers for your dates.\n")
+    ranked_offers = run_search(offers, req, filter_engine, ranker)
+    if not ranked_offers:
+        print("No offers are available for this destination and these dates. Try another date window.")
         return
+    all_offers = [ro.offer for ro in ranked_offers]
 
-    # 6. Rank offers
-    ranked_offers = ranker.rank_offers(filter_result.accepted_offers, req)
-    print("\n")
-    display_ranked_offers_table(ranked_offers, limit=8)
-    display_criteria_breakdown_table(ranked_offers, limit=5)
+    # 5. Optional refinement: hard constraints are applied only if the traveller asks for them
+    if ask_yes_no("Refine your results? Set a budget, limit transfers, or choose flexible tickets only.", default=False):
+        print("\n--- Hard constraints: offers that break these are REMOVED before ranking ---")
+        if suggestions and ask_yes_no(
+                f"Your {profile_name} profile suggests: {describe_suggestions(suggestions)}. Apply these suggestions?",
+                default=True):
+            for attr, value in suggestions.items():
+                setattr(req, attr, value)
 
-    # 7. Show Explainable Recommendation
-    explanation = RecommendationExplainer.explain_top_offer(ranked_offers, req)
-    print("\n" + "=" * 70)
-    print(explanation)
-    print("=" * 70 + "\n")
+        max_duration_hours = ask_optional_number("Maximum journey duration in hours", float, 0.5)
+        limits = {
+            "max_budget": ask_optional_number("Maximum price per seat in EUR", float, 1),
+            "max_transfers": ask_optional_number("Maximum number of transfers", int, 0),
+            "max_duration_minutes": int(max_duration_hours * 60) if max_duration_hours is not None else None,
+            "min_luggage_kg": int(ask_optional_number("Minimum luggage allowance in kg", int, 0) or 0),
+            "require_changeable": ask_yes_no("Must the ticket be changeable?", default=False),
+            "require_refundable": ask_yes_no("Must the ticket be refundable?", default=False),
+        }
+        apply_user_constraints(req, limits)
 
-    # 8. Booking Simulation with strict input validation
+        print("\nYour refined results (the remaining offers are ranked again):\n")
+        refined = run_search(all_offers, req, filter_engine, ranker, refined=True)
+        if refined:
+            print(f"{len(refined)} of {len(all_offers)} offers match your filters.\n")
+            ranked_offers = refined
+        else:
+            print("No offers match these filters. You can still book from your earlier results.\n")
+
+    # 6. Booking Simulation with strict input validation
     while True:
         book_opt = input("Would you like to book an offer? (y/n) [Default: y]: ").strip().lower()
         if book_opt in ("", "y", "yes", "n", "no"):
