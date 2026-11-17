@@ -11,7 +11,7 @@
 | Application | Complete: `--demo`, `--interactive`, `--quarantine` |
 | Tests | 48 passing (`python -m pytest -v`) |
 | Evidence | `outputs/01`–`08`, regenerated from the current code |
-| Report | `report/BusBidder_Spain_Final_Report.docx` (editable) and `.pdf`, built by `report/build_report.py` |
+| Report | `report/BusBidder_Spain_Final_Report.docx` (editable) and `.pdf` (edited in Word; the Word file is the master copy) |
 | README | Up to date (commands, requirements, inputs, outputs, tests) |
 
 ## Still to do before submission

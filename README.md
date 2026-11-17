@@ -27,7 +27,7 @@ Before every ranking the application prints which conditions are hard constraint
 - **Libraries** (see `requirements.txt`):
   - `rich`: formatted tables (optional; the program falls back to plain text tables)
   - `pytest`: automated tests
-  - `matplotlib` and `python-docx`: only needed to rebuild the report figures and the Word report
+  - `matplotlib`: only needed to regenerate the two report figures
 
 Install them from the project folder:
 
@@ -135,23 +135,13 @@ report/                  report (.docx, .pdf, .md), figures and build scripts
 
 Design choices (descriptors, the `@register_criterion` registry, composition and inheritance, normalisation, ties and limitations) are explained in the report.
 
-## 7. Rebuilding the report
+## 7. The report and its figures
 
-The report text is defined in `report/build_report.py`.
+The report is `report/BusBidder_Spain_Final_Report.pdf`, exported from the Word file `report/BusBidder_Spain_Final_Report.docx`. The two figures are produced from the program itself, so they always match its results:
 
 ```bash
 python report/generate_figures.py
 ```
-
-```bash
-python report/build_report.py
-```
-
-```bash
-python report/generate_pdf.py
-```
-
-`generate_pdf.py` uses Microsoft Word (Windows) to export the PDF. Without it, open the `.docx` in Word, update the table of contents and use File > Save As > PDF.
 
 ## 8. Known limitations
 

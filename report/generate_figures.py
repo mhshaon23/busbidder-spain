@@ -36,7 +36,7 @@ def create_architecture_diagram():
             ha="center", va="center", bbox=box_style_sink, fontsize=9)
 
     # 2. Decision Core Layer
-    ax.text(6, 6.8, "User Request & Constraints\n(TravellerRequest)\n• Hard Constraints (budget, dates)\n• Soft Preferences (weights)\n• Optional Preference Quiz", 
+    ax.text(6, 6.8, "User Request & Constraints\n(TravellerRequest)\n• Hard Constraints (budget, dates)\n• Soft Preferences (weights)\n• Profile or own 1-5 ratings",
             ha="center", va="center", bbox=box_style_data, fontsize=9, fontweight="bold")
 
     ax.text(6, 4.2, "Hard Constraint Filtering\n(FilterEngine)\n• Removes unacceptable offers\n• Records audit rejection causes\n• Computes survival rate %", 
@@ -46,13 +46,13 @@ def create_architecture_diagram():
             ha="center", va="center", bbox=box_style_eval, fontsize=9, fontweight="bold")
 
     # 3. Output & Booking Layer
-    ax.text(10, 6.8, "Simulated Booking Store\n• bookings.json (ledger)\n• Unique ES-XXXXXX code\n• Seats re-applied on restart", 
+    ax.text(10, 6.8, "Simulated Booking Store\n• bookings.json (ledger)\n• Unique ES-XXXXXX code\n• Seats re-applied on restart\n• Cancellation fee & refund",
             ha="center", va="center", bbox=box_style_sink, fontsize=9, fontweight="bold")
 
     ax.text(10, 4.2, "Recommendation & Explanation\n(RecommendationExplainer)\n• Ranked table & scores\n• Contrastive pros & trade-offs\n• Transparent non-objective note", 
             ha="center", va="center", bbox=box_style_proc, fontsize=9)
 
-    ax.text(10, 1.5, "Interactive Interface\n(CLI & Terminal Tables)\n• Rich / ASCII tabular views\n• Ticket receipt generation", 
+    ax.text(10, 1.5, "Interactive Interface\n(CLI & Terminal Tables)\n• Main menu (5 actions)\n• Rich / ASCII tabular views\n• Ticket receipt generation", 
             ha="center", va="center", bbox=box_style_data, fontsize=9)
 
     # Connecting Arrows
