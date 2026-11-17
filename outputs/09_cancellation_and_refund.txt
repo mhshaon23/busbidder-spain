@@ -1,0 +1,88 @@
+### 1. Cancelling a changeable but non-refundable CostaLink booking (ES-048GX7): python main.py --cancel ES-048GX7
+
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ =========================================================================                                                      │
+│                   BUSBIDDER SPAIN - TRAVEL PLATFORM                                                                            │
+│        Flexible Bus-Booking & Multi-Criteria Offer-Ranking Engine                                                              │
+│                      OsloMet ACIT4420 Project 2026                                                                             │
+│ =========================================================================                                                      │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+========================================================
+                 BUSBIDDER SPAIN TICKET                 
+========================================================
+ Booking Reference : ES-048GX7
+ Status            : CONFIRMED
+ Passenger Name    : Test Traveller
+ Operator          : CostaLink
+ Route             : Madrid -> Malaga
+ Travel Date       : 2026-07-12
+ Schedule          : 09:15 - 16:22
+ Seats Booked      : 2
+ Total Paid        : EUR 72.08
+--------------------------------------------------------
+ Fare Conditions:
+  - Changeable     : Yes
+  - Refundable     : No
+  - Luggage Limit  : 25 kg included
+========================================================
+
+Cancellation fee : EUR 18.02
+Refund (simulated): EUR 54.06
+Cancel this booking? (y/n) [Default: n]: 
+Booking ES-048GX7 cancelled. EUR 54.06 will be refunded (simulated).
+Its 2 seat(s) are available again from the next search.
+
+========================================================
+                 BUSBIDDER SPAIN TICKET                 
+========================================================
+ Booking Reference : ES-048GX7
+ Status            : CANCELLED
+ Passenger Name    : Test Traveller
+ Operator          : CostaLink
+ Route             : Madrid -> Malaga
+ Travel Date       : 2026-07-12
+ Schedule          : 09:15 - 16:22
+ Seats Booked      : 2
+ Total Paid        : EUR 72.08
+--------------------------------------------------------
+ Cancellation Fee  : EUR 18.02
+ Refund (simulated): EUR 54.06
+--------------------------------------------------------
+ Fare Conditions:
+  - Changeable     : Yes
+  - Refundable     : No
+  - Luggage Limit  : 25 kg included
+========================================================
+
+### 2. Trying to cancel a non-changeable, non-refundable SolRuta booking: python main.py --cancel ES-FWK2UE
+
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ =========================================================================                                                      │
+│                   BUSBIDDER SPAIN - TRAVEL PLATFORM                                                                            │
+│        Flexible Bus-Booking & Multi-Criteria Offer-Ranking Engine                                                              │
+│                      OsloMet ACIT4420 Project 2026                                                                             │
+│ =========================================================================                                                      │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+========================================================
+                 BUSBIDDER SPAIN TICKET                 
+========================================================
+ Booking Reference : ES-FWK2UE
+ Status            : CONFIRMED
+ Passenger Name    : Test Traveller
+ Operator          : SolRuta
+ Route             : Madrid -> Barcelona
+ Travel Date       : 2026-07-12
+ Schedule          : 07:45 - 16:57
+ Seats Booked      : 2
+ Total Paid        : EUR 78.76
+--------------------------------------------------------
+ Fare Conditions:
+  - Changeable     : No
+  - Refundable     : No
+  - Luggage Limit  : 12 kg included
+========================================================
+
+Error: Booking ES-FWK2UE has a non-refundable, non-changeable fare and cannot be cancelled.
+exit code: 1

@@ -17,5 +17,49 @@
     "seats_booked": 2,
     "created_at": "2026-11-09T23:51:23.037939",
     "status": "CONFIRMED"
+  },
+  {
+    "booking_reference": "ES-048GX7",
+    "passenger_name": "Test Traveller",
+    "offer_id": "OFF-CL-1052",
+    "company": "CostaLink",
+    "destination": "Malaga",
+    "travel_date": "2026-07-12",
+    "departure_time": "09:15",
+    "arrival_time": "16:22",
+    "price_paid": 72.08,
+    "fare_conditions": {
+      "is_changeable": true,
+      "is_refundable": false,
+      "luggage_kg": 25
+    },
+    "seats_booked": 2,
+    "created_at": "2026-11-10T00:55:34.935789",
+    "status": "CANCELLED",
+    "cancellation_fee": 18.02,
+    "refund_amount": 54.06,
+    "cancelled_at": "2026-11-10T00:55:35.827036"
+  },
+  {
+    "booking_reference": "ES-EX8T4R",
+    "passenger_name": "Alex Smith",
+    "offer_id": "OFF-VB-1145",
+    "company": "VerdeBus",
+    "destination": "Alicante",
+    "travel_date": "2026-07-12",
+    "departure_time": "10:00",
+    "arrival_time": "15:32",
+    "price_paid": 31.88,
+    "fare_conditions": {
+      "is_changeable": true,
+      "is_refundable": true,
+      "luggage_kg": 18
+    },
+    "seats_booked": 1,
+    "created_at": "2026-11-10T01:05:57.854212",
+    "status": "CANCELLED",
+    "cancellation_fee": 0.0,
+    "refund_amount": 31.88,
+    "cancelled_at": "2026-11-10T01:06:29.547199"
   }
 ]

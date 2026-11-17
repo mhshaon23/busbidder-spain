@@ -31,6 +31,9 @@ class BookingRecord:
         seats_booked: int = 1,
         created_at: str = None,
         status: str = "CONFIRMED",
+        cancellation_fee: float = 0.0,
+        refund_amount: float = 0.0,
+        cancelled_at: str = None,
     ):
         self.booking_reference = booking_reference
         self.passenger_name = passenger_name.strip()
@@ -45,10 +48,14 @@ class BookingRecord:
         self.seats_booked = seats_booked
         self.created_at = created_at or datetime.now().isoformat()
         self.status = status
+        # Filled in only when the booking is cancelled
+        self.cancellation_fee = float(cancellation_fee)
+        self.refund_amount = float(refund_amount)
+        self.cancelled_at = cancelled_at
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert booking to serializable dictionary."""
-        return {
+        data = {
             "booking_reference": self.booking_reference,
             "passenger_name": self.passenger_name,
             "offer_id": self.offer_id,
@@ -63,9 +70,21 @@ class BookingRecord:
             "created_at": self.created_at,
             "status": self.status,
         }
+        if self.status == "CANCELLED":
+            data["cancellation_fee"] = self.cancellation_fee
+            data["refund_amount"] = self.refund_amount
+            data["cancelled_at"] = self.cancelled_at
+        return data
 
     def generate_ticket(self) -> str:
         """Generates a formatted text ticket for output presentation."""
+        refund_lines = ""
+        if self.status == "CANCELLED":
+            refund_lines = (
+                "--------------------------------------------------------\n"
+                f" Cancellation Fee  : EUR {self.cancellation_fee:.2f}\n"
+                f" Refund (simulated): EUR {self.refund_amount:.2f}\n"
+            )
         return (
             "========================================================\n"
             "                 BUSBIDDER SPAIN TICKET                 \n"
@@ -79,6 +98,7 @@ class BookingRecord:
             f" Schedule          : {self.departure_time} - {self.arrival_time}\n"
             f" Seats Booked      : {self.seats_booked}\n"
             f" Total Paid        : EUR {self.price_paid:.2f}\n"
+            f"{refund_lines}"
             "--------------------------------------------------------\n"
             " Fare Conditions:\n"
             f"  - Changeable     : {'Yes' if self.fare_conditions.get('is_changeable') else 'No'}\n"

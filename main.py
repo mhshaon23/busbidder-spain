@@ -24,6 +24,8 @@ from src.cli.interface import (
     display_criteria_breakdown_table,
     describe_request,
     run_demonstration,
+    display_main_menu,
+    print_message,
 )
 
 # Optional Extension: Pluggable Preference Quiz module
@@ -43,10 +45,10 @@ def ask_optional_number(prompt: str, cast=float, min_value: float = 0) -> Option
         try:
             value = cast(raw)
         except ValueError:
-            print(f"  Error: '{raw}' is not a valid number. Please try again or press Enter for no limit.")
+            print_message(f"  Error: '{raw}' is not a valid number. Please try again or press Enter for no limit.", "error")
             continue
         if value < min_value:
-            print(f"  Error: Value must be at least {min_value}.")
+            print_message(f"  Error: Value must be at least {min_value}.", "error")
             continue
         return value
 
@@ -62,7 +64,7 @@ def ask_yes_no(prompt: str, default: bool = False) -> bool:
             return True
         if raw in ("n", "no"):
             return False
-        print(f"  Error: Invalid response '{raw}'. Please enter 'y' for yes or 'n' for no.")
+        print_message(f"  Error: Invalid response '{raw}'. Please enter 'y' for yes or 'n' for no.", "error")
 
 
 def ask_departure_preference(default_label: str = "profile default") -> Optional[str]:
@@ -75,7 +77,7 @@ def ask_departure_preference(default_label: str = "profile default") -> Optional
             return raw.capitalize()
         if is_valid_time(raw):
             return raw
-        print(f"  Error: '{raw}' is not recognised. Use Morning, Afternoon, Evening, Night or a time like 08:30.")
+        print_message(f"  Error: '{raw}' is not recognised. Use Morning, Afternoon, Evening, Night or a time like 08:30.", "error")
 
 
 def apply_user_constraints(req: TravellerRequest, limits: dict) -> None:
@@ -192,7 +194,7 @@ def choose_ranking(dest_name: str, d_from: str, d_to: str):
         choice = input(f"Select an option [{options}, Default: 1]: ").strip() or "1"
         if choice in profile_keys or (choice == "6" and HAS_PREFERENCE_QUIZ):
             break
-        print(f"  Error: Invalid selection '{choice}'. Please enter a number from {options}.")
+        print_message(f"  Error: Invalid selection '{choice}'. Please enter a number from {options}.", "error")
 
     if choice == "6":
         weights = ask_importance_ratings()
@@ -230,7 +232,7 @@ def run_search(offers, req: TravellerRequest, filter_engine: FilterEngine, ranke
 
     if refined:
         for note in uniform_criteria_notes(filter_result.accepted_offers, req):
-            print(f"Note: {note}")
+            print_message(f"Note: {note}", "note")
 
     explanation = RecommendationExplainer.explain_top_offer(ranked_offers, req)
     print("\n" + "=" * 70)
@@ -272,7 +274,7 @@ def interactive_session():
             if matched:
                 dest_name = matched[0]
                 break
-            print(f"  Error: Unknown destination '{choice}'. Please enter a number (1-{len(dest_list)}) or a city name from the list above.")
+            print_message(f"  Error: Unknown destination '{choice}'. Please enter a number (1-{len(dest_list)}) or a city name from the list above.", "error")
 
     print(f"Selected destination: {dest_name}")
 
@@ -281,18 +283,18 @@ def interactive_session():
         d_from = input("Travel start date (YYYY-MM-DD) [Default: 2026-07-12]: ").strip() or "2026-07-12"
         if is_valid_date(d_from):
             break
-        print(f"  Error: Invalid date format '{d_from}'. Please use YYYY-MM-DD (e.g. 2026-07-12).")
+        print_message(f"  Error: Invalid date format '{d_from}'. Please use YYYY-MM-DD (e.g. 2026-07-12).", "error")
 
     while True:
         d_to = input("Travel end date (YYYY-MM-DD) [Default: 2026-07-14]: ").strip() or "2026-07-14"
         if not is_valid_date(d_to):
-            print(f"  Error: Invalid date format '{d_to}'. Please use YYYY-MM-DD (e.g. 2026-07-14).")
+            print_message(f"  Error: Invalid date format '{d_to}'. Please use YYYY-MM-DD (e.g. 2026-07-14).", "error")
             continue
         # Verify logical date order
         dt_start = datetime.strptime(d_from, "%Y-%m-%d").date()
         dt_end = datetime.strptime(d_to, "%Y-%m-%d").date()
         if dt_end < dt_start:
-            print(f"  Error: Travel end date ({d_to}) cannot be earlier than start date ({d_from}).")
+            print_message(f"  Error: Travel end date ({d_to}) cannot be earlier than start date ({d_from}).", "error")
             continue
         break
 
@@ -305,7 +307,7 @@ def interactive_session():
     print("Showing all available offers for your dates.\n")
     ranked_offers = run_search(offers, req, filter_engine, ranker)
     if not ranked_offers:
-        print("No offers are available for this destination and these dates. Try another date window.")
+        print_message("No offers are available for this destination and these dates. Try another date window.", "note")
         return
     all_offers = [ro.offer for ro in ranked_offers]
 
@@ -332,17 +334,17 @@ def interactive_session():
         print("\nYour refined results (the remaining offers are ranked again):\n")
         refined = run_search(all_offers, req, filter_engine, ranker, refined=True)
         if refined:
-            print(f"{len(refined)} of {len(all_offers)} offers match your filters.\n")
+            print_message(f"{len(refined)} of {len(all_offers)} offers match your filters.\n", "success")
             ranked_offers = refined
         else:
-            print("No offers match these filters. You can still book from your earlier results.\n")
+            print_message("No offers match these filters. You can still book from your earlier results.\n", "note")
 
     # 6. Booking Simulation with strict input validation
     while True:
         book_opt = input("Would you like to book an offer? (y/n) [Default: y]: ").strip().lower()
         if book_opt in ("", "y", "yes", "n", "no"):
             break
-        print(f"  Error: Invalid response '{book_opt}'. Please enter 'y' for yes or 'n' for no.")
+        print_message(f"  Error: Invalid response '{book_opt}'. Please enter 'y' for yes or 'n' for no.", "error")
 
     if book_opt in ("", "y", "yes"):
         while True:
@@ -351,7 +353,7 @@ def interactive_session():
                 chosen_rank = int(rank_str)
                 target_ro = next(ro for ro in ranked_offers if ro.rank == chosen_rank)
                 break
-            print(f"  Error: Invalid rank '{rank_str}'. Please enter a whole number between 1 and {len(ranked_offers)}.")
+            print_message(f"  Error: Invalid rank '{rank_str}'. Please enter a whole number between 1 and {len(ranked_offers)}.", "error")
 
         passenger_name = input("Enter traveller full name [Default: Alex Smith]: ").strip() or "Alex Smith"
 
@@ -361,9 +363,9 @@ def interactive_session():
                 seats_num = int(seats_str)
                 if seats_num <= target_ro.offer.available_seats:
                     break
-                print(f"  Error: Cannot book {seats_num} seat(s). Only {target_ro.offer.available_seats} seat(s) available on this bus.")
+                print_message(f"  Error: Cannot book {seats_num} seat(s). Only {target_ro.offer.available_seats} seat(s) available on this bus.", "error")
             else:
-                print("  Error: Please enter a positive whole number of seats.")
+                print_message("  Error: Please enter a positive whole number of seats.", "error")
 
         try:
             record = booking_manager.create_booking(target_ro.offer, passenger_name=passenger_name, seats=seats_num)
@@ -371,6 +373,38 @@ def interactive_session():
             print(record.generate_ticket())
         except Exception as e:
             print(f"\nBooking failed: {e}\n")
+
+
+def cancel_session(reference: Optional[str] = None):
+    """Cancels a booking: shows the fee and simulated refund, and asks for confirmation."""
+    print_banner()
+    booking_manager = BookingManager()
+    if not reference:
+        reference = input("Enter your booking reference (ES-XXXXXX): ").strip()
+
+    # An invalid format raises InvalidBookingReferenceError, shown as a short message by main()
+    record = booking_manager.get_booking(reference)
+    if record is None:
+        print(f"\nNo booking found with reference {reference.strip().upper()}.")
+        return
+    if record.status == "CANCELLED":
+        print(f"\nBooking {record.booking_reference} is already cancelled.")
+        print(record.generate_ticket())
+        return
+
+    print("\n" + record.generate_ticket())
+    fee, refund = booking_manager.calculate_refund(record)
+    print(f"\nCancellation fee : EUR {fee:.2f}")
+    print(f"Refund (simulated): EUR {refund:.2f}")
+
+    if not ask_yes_no("Cancel this booking?", default=False):
+        print_message("Booking kept. Nothing was changed.", "info")
+        return
+
+    booking_manager.cancel_booking(record.booking_reference)
+    print(f"\nBooking {record.booking_reference} cancelled. EUR {refund:.2f} will be refunded (simulated).")
+    print_message(f"Its {record.seats_booked} seat(s) are available again from the next search.\n", "success")
+    print(record.generate_ticket())
 
 
 def show_quarantine():
@@ -392,29 +426,63 @@ def show_quarantine():
             print(f"  {idx}. Line {item.get('line_number')}: ID {item.get('offer_id')} -> Reason: {item.get('rejection_reason')}")
 
 
+def main_menu():
+    """Main menu shown by 'python main.py'. Each action returns here until the traveller exits."""
+    print_banner()
+    actions = {
+        "1": interactive_session,
+        "2": cancel_session,
+        "3": run_demonstration,
+        "4": show_quarantine,
+    }
+    while True:
+        display_main_menu()
+        choice = input("Choose an option [1-5, Default: 1]: ").strip() or "1"
+        if choice == "5":
+            print_message("Thank you for using BusBidder Spain. Goodbye!", "success")
+            return
+        if choice not in actions:
+            print_message(f"  Error: Invalid option '{choice}'. Please enter a number from 1 to 5.", "error")
+            continue
+        try:
+            actions[choice]()
+        except BusBidderError as err:
+            # In the menu an error ends only the current action, not the program
+            print_message(f"\nError: {err}", "error")
+        input("\nPress Enter to return to the main menu...")
+
+
 def main():
-    parser = argparse.ArgumentParser(description="BusBidder Spain - Multi-Criteria Booking & Ranking Platform")
+    parser = argparse.ArgumentParser(
+        description="BusBidder Spain - Multi-Criteria Booking & Ranking Platform. "
+                    "Run without options to open the main menu."
+    )
     parser.add_argument("--demo", action="store_true", help="Run automated sensitivity demonstration comparing all 4 traveller profiles")
     parser.add_argument("--interactive", action="store_true", help="Run interactive search, ranking, and booking prompt")
     parser.add_argument("--quarantine", action="store_true", help="Inspect quarantined corrupt records and rejection reasons")
+    parser.add_argument("--cancel", nargs="?", const="", metavar="REFERENCE",
+                        help="Cancel a booking and see the cancellation fee and simulated refund")
 
     args = parser.parse_args()
 
     # Known application errors (missing data files, invalid weights, booking problems)
     # are shown as a short message instead of a Python traceback.
     try:
-        if args.quarantine:
+        if args.cancel is not None:
+            cancel_session(args.cancel)
+        elif args.quarantine:
             show_quarantine()
         elif args.interactive:
             interactive_session()
-        else:
-            # --demo, and also the default when no option is given
+        elif args.demo:
             run_demonstration()
+        else:
+            main_menu()
     except BusBidderError as err:
-        print(f"\nError: {err}")
+        print_message(f"\nError: {err}", "error")
         sys.exit(1)
     except (KeyboardInterrupt, EOFError):
-        print("\nSession ended by user.")
+        print_message("\nSession ended by user.", "info")
         sys.exit(0)
 
 

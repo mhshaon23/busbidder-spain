@@ -40,8 +40,58 @@ except ImportError:
     HAS_RICH = False
 
 
+_banner_shown = False
+
+# Main menu entries: (key, action, short description)
+MENU_OPTIONS = [
+    ("1", "Search and book a journey", "Rank the offers for your trip, refine them and book a seat"),
+    ("2", "Cancel a booking", "See the cancellation fee and refund before you confirm"),
+    ("3", "Compare traveller profiles", "Demo: four profiles on Madrid to Malaga, 12-14 July"),
+    ("4", "Review rejected data", "Rows placed in quarantine and the reason for each"),
+    ("5", "Exit", ""),
+]
+
+# Colour per message kind. The text itself always says what kind of message it is,
+# so the meaning never depends on colour alone (and NO_COLOR turns colours off).
+MESSAGE_STYLES = {
+    "success": "bold green",
+    "error": "bold red",
+    "note": "yellow",
+    "heading": "bold magenta",
+    "info": "cyan",
+}
+
+
+def print_message(text: str, kind: str = "info"):
+    """Prints a message in the colour for its kind, or as plain text without Rich."""
+    if HAS_RICH:
+        console.print(text, style=MESSAGE_STYLES.get(kind, ""), highlight=False, markup=False)
+    else:
+        print(text)
+
+
+def display_main_menu():
+    """Shows the main menu as a coloured table."""
+    if HAS_RICH:
+        table = Table(box=box.ROUNDED, show_header=False, border_style="bright_blue", padding=(0, 1))
+        table.add_column("Key", style="bold yellow", justify="center")
+        table.add_column("Action", style="bold white")
+        table.add_column("Description", style="grey70")
+        for key, action, description in MENU_OPTIONS:
+            table.add_row(f"[{key}]", action, description)
+        console.print(Panel(table, title="[bold cyan]Main menu[/bold cyan]", border_style="bright_blue", expand=False))
+    else:
+        print("\nMAIN MENU")
+        for key, action, description in MENU_OPTIONS:
+            print(f"  [{key}] {action}" + (f" - {description}" if description else ""))
+
+
 def print_banner():
-    """Prints a friendly header banner."""
+    """Prints a friendly header banner, once per program run."""
+    global _banner_shown
+    if _banner_shown:
+        return
+    _banner_shown = True
     title = (
         "=========================================================================\n"
         "                  BUSBIDDER SPAIN - TRAVEL PLATFORM                      \n"

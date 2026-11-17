@@ -7,13 +7,14 @@ Tasks handled:
 - Generates a unique booking reference matching regex 'ES-[A-Z0-9]{6}'
 - Saves the booking record to data/bookings.json
 - Generates a formatted text confirmation ticket
+- Cancels bookings with a cancellation fee and a simulated refund
 """
 
 import json
 import random
 import string
 from pathlib import Path
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Tuple
 from datetime import datetime
 
 from src.models.offer import Offer
@@ -25,6 +26,9 @@ from src.validators.exceptions import (
 )
 from src.validators.regex_patterns import is_valid_booking_ref
 from src.loaders.logger import logger
+
+# Share of the price kept as a fee when a changeable but non-refundable fare is cancelled
+CHANGEABLE_ONLY_FEE_RATE = 0.25
 
 
 class BookingManager:
@@ -61,6 +65,9 @@ class BookingManager:
                     seats_booked=item.get("seats_booked", 1),
                     created_at=item.get("created_at"),
                     status=item.get("status", "CONFIRMED"),
+                    cancellation_fee=item.get("cancellation_fee", 0.0),
+                    refund_amount=item.get("refund_amount", 0.0),
+                    cancelled_at=item.get("cancelled_at"),
                 )
                 self.bookings[rec.booking_reference] = rec
             logger.info(f"Loaded {len(self.bookings)} existing bookings from {self.storage_path}")
@@ -169,9 +176,29 @@ class BookingManager:
             )
         return self.bookings.get(cleaned_ref)
 
+    @staticmethod
+    def calculate_refund(record: BookingRecord) -> Tuple[float, float]:
+        """
+        Returns (cancellation_fee, refund) for a booking, based on its stored fare conditions:
+        - refundable fare: no fee, full refund
+        - changeable but non-refundable fare: 25% fee, the rest is refunded
+        - neither: cancellation is not allowed (BookingError)
+        """
+        conditions = record.fare_conditions
+        if conditions.get("is_refundable"):
+            fee = 0.0
+        elif conditions.get("is_changeable"):
+            fee = round(record.price_paid * CHANGEABLE_ONLY_FEE_RATE, 2)
+        else:
+            raise BookingError(
+                f"Booking {record.booking_reference} has a non-refundable, non-changeable fare and cannot be cancelled."
+            )
+        return fee, round(record.price_paid - fee, 2)
+
     def cancel_booking(self, reference: str, offer: Optional[Offer] = None) -> bool:
         """
-        Cancels a booking if fare conditions allow it, and restores seat capacity.
+        Cancels a booking if fare conditions allow it, records the fee and simulated refund,
+        and restores seat capacity.
         """
         record = self.get_booking(reference)
         if not record:
@@ -180,14 +207,18 @@ class BookingManager:
         if record.status == "CANCELLED":
             return False
 
-        # Check if the ticket can be refunded or changed
-        if not record.fare_conditions.get("is_refundable") and not record.fare_conditions.get("is_changeable"):
-            raise BookingError(f"Booking {reference} has a non-refundable/non-changeable fare.")
+        # Raises BookingError if the fare allows neither refund nor change
+        fee, refund = self.calculate_refund(record)
 
         record.status = "CANCELLED"
+        record.cancellation_fee = fee
+        record.refund_amount = refund
+        record.cancelled_at = datetime.now().isoformat()
         if offer and offer.offer_id == record.offer_id:
             offer.available_seats += record.seats_booked
 
         self._persist()
-        logger.info(f"Booking {reference} cancelled. Seat capacity restored.")
+        logger.info(
+            f"Booking {reference} cancelled. Fee EUR {fee:.2f}, refund EUR {refund:.2f}. Seat capacity restored."
+        )
         return True

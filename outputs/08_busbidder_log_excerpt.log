@@ -179,3 +179,21 @@
 2026-11-09 23:51:25 [INFO] (busbidder) Ranked 15 offers. Top offer is OFF-VB-1055
 2026-11-09 23:51:25 [INFO] (busbidder) Ranked 2 offers. Top offer is OFF-CE-0002
 2026-11-09 23:51:25 [INFO] (busbidder) Loading destinations from data_folder_that_does_not_exist\destinations.json
+2026-11-10 00:55:34 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-11-10 00:55:34 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-11-10 00:55:34 [INFO] (busbidder) Loading companies from D:\Oslomet study\ACT4420\Final Project\data\companies.json
+2026-11-10 00:55:34 [INFO] (busbidder) Loaded 5 companies successfully.
+2026-11-10 00:55:34 [INFO] (busbidder) Loading offers from D:\Oslomet study\ACT4420\Final Project\data\offers.csv
+2026-11-10 00:55:34 [INFO] (busbidder) Finished loading: 225 valid offers, 0 quarantined.
+2026-11-10 00:55:34 [INFO] (busbidder) Loading destinations from D:\Oslomet study\ACT4420\Final Project\data\destinations.json
+2026-11-10 00:55:34 [INFO] (busbidder) Loaded 15 destinations successfully.
+2026-11-10 00:55:34 [INFO] (busbidder) Loaded 1 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json
+2026-11-10 00:55:34 [INFO] (busbidder) Applied 2 booked seat(s) from bookings.json to the offer catalogue
+2026-11-10 00:55:34 [INFO] (busbidder) Filtering complete for Malaga: 15 accepted from 225 initial offers.
+2026-11-10 00:55:34 [INFO] (busbidder) Ranked 15 offers. Top offer is OFF-VB-1055
+2026-11-10 00:55:34 [INFO] (busbidder) Filtering complete for Malaga: 9 accepted from 15 initial offers.
+2026-11-10 00:55:34 [INFO] (busbidder) Ranked 9 offers. Top offer is OFF-CL-1052
+2026-11-10 00:55:34 [INFO] (busbidder) Booking ES-048GX7 created for Test Traveller (OFF-CL-1052). Remaining seats on offer: 20
+2026-11-10 00:55:35 [INFO] (busbidder) Loaded 2 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json
+2026-11-10 00:55:35 [INFO] (busbidder) Booking ES-048GX7 cancelled. Fee EUR 18.02, refund EUR 54.06. Seat capacity restored.
+2026-11-10 00:55:36 [INFO] (busbidder) Loaded 2 existing bookings from D:\Oslomet study\ACT4420\Final Project\data\bookings.json

@@ -120,3 +120,51 @@ def test_cancelled_bookings_do_not_reduce_capacity_after_restart(tmp_path, test_
     restarted_manager.apply_existing_bookings([reloaded_offer])
 
     assert reloaded_offer.available_seats == 3
+
+
+def _offer_with_fare(test_offer, changeable, refundable):
+    return Offer(**{**test_offer.to_dict(), "is_changeable": changeable, "is_refundable": refundable})
+
+
+def test_refundable_fare_gets_full_refund(tmp_path, test_offer):
+    manager = BookingManager(storage_path=tmp_path / "b.json")
+    record = manager.create_booking(test_offer, passenger_name="Ana Lopez", seats=2)  # EUR 70.00
+
+    manager.cancel_booking(record.booking_reference, offer=test_offer)
+    assert record.cancellation_fee == 0.0
+    assert record.refund_amount == 70.0
+
+
+def test_changeable_only_fare_pays_cancellation_fee(tmp_path, test_offer):
+    offer = _offer_with_fare(test_offer, changeable=True, refundable=False)
+    manager = BookingManager(storage_path=tmp_path / "b.json")
+    record = manager.create_booking(offer, passenger_name="Ana Lopez", seats=2)  # EUR 70.00
+
+    manager.cancel_booking(record.booking_reference, offer=offer)
+    assert record.cancellation_fee == 17.5   # 25% fee
+    assert record.refund_amount == 52.5
+    assert "Refund (simulated): EUR 52.50" in record.generate_ticket()
+
+
+def test_rigid_fare_cannot_be_cancelled(tmp_path, test_offer):
+    offer = _offer_with_fare(test_offer, changeable=False, refundable=False)
+    manager = BookingManager(storage_path=tmp_path / "b.json")
+    record = manager.create_booking(offer, passenger_name="Ana Lopez", seats=1)
+
+    with pytest.raises(BookingError):
+        manager.cancel_booking(record.booking_reference, offer=offer)
+    assert record.status == "CONFIRMED"
+    assert offer.available_seats == 2
+
+
+def test_refund_is_saved_and_reloaded(tmp_path, test_offer):
+    offer = _offer_with_fare(test_offer, changeable=True, refundable=False)
+    storage_path = tmp_path / "b.json"
+    manager = BookingManager(storage_path=storage_path)
+    record = manager.create_booking(offer, passenger_name="Ana Lopez", seats=1)  # EUR 35.00
+    manager.cancel_booking(record.booking_reference)
+
+    reloaded = BookingManager(storage_path=storage_path).get_booking(record.booking_reference)
+    assert reloaded.status == "CANCELLED"
+    assert reloaded.cancellation_fee == 8.75 and reloaded.refund_amount == 26.25
+    assert reloaded.cancelled_at is not None

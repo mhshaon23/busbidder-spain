@@ -41,11 +41,22 @@ On systems where Python 3 is called `python3`, use `python3` instead of `python`
 
 The entry point is **`main.py`** in the project folder. Run all commands from that folder.
 
+The simplest way to use the program is the main menu:
+
+```bash
+python main.py
+```
+
+The menu offers: search and book a journey, cancel a booking, compare traveller profiles, review rejected data, and exit. After each action the program returns to the menu. Messages are coloured by type (errors red, confirmations green, notes yellow), but every message also states its type in words, so the colours are not needed to understand it. Colours are turned off automatically when the output is redirected to a file, or when the `NO_COLOR` environment variable is set.
+
+Each menu action can also be started directly, which is how the evidence in `outputs/` was produced:
+
 | Command | What it does |
 | :--- | :--- |
-| `python main.py --demo` | Compares four traveller profiles on Madrid–Malaga, 12–14 July 2026 (also the default with no option) |
-| `python main.py --interactive` | Interactive search: destination, dates, hard constraints, preferred departure, profile or questionnaire, ranking, explanation and booking |
+| `python main.py --demo` | Compares four traveller profiles on Madrid–Malaga, 12–14 July 2026 |
+| `python main.py --interactive` | Interactive search: destination, dates and a ranking choice; all offers are shown first, then optional filters, ranking again, explanation and booking |
 | `python main.py --quarantine` | Shows rejected rows and the reason for each rejection |
+| `python main.py --cancel ES-XXXXXX` | Cancels a booking after showing the cancellation fee and simulated refund (without a reference, the program asks for one) |
 
 ```bash
 python main.py --demo
@@ -59,9 +70,13 @@ python main.py --interactive
 python main.py --quarantine
 ```
 
-In interactive mode, pressing Enter accepts the default shown in brackets, and invalid input is rejected with a message and asked again. The traveller can either answer a five-question questionnaire (ratings 1–5 turned into weights) or choose one of five profiles: Budget Backpacker, Business Executive, Flexible Tourist, Eco-Conscious Traveller, or Balanced (the example weights from the specification). If a profile has its own hard constraints, the stricter of the profile's and the traveller's limits is used.
+```bash
+python main.py --cancel ES-XXXXXX
+```
 
-To reproduce the specification's example request (Madrid to Malaga, 12–14 July, max EUR 50, morning, max 1 transfer, changeable ticket), choose Malaga, keep the default dates, enter `50` as maximum price and `1` as maximum transfers, answer `y` to "changeable", enter `Morning`, answer `n` to the questionnaire and choose profile `5`.
+In interactive mode, pressing Enter accepts the default shown in brackets, and invalid input is rejected with a message and asked again. After the destination and dates, one menu decides how offers are ranked: one of five profiles (Budget Backpacker, Business Executive, Flexible Tourist, Eco-Conscious Traveller, or Balanced, which uses the example weights from the specification) or option 6, five 1–5 ratings that are turned into weights. The program first shows all available offers. It then asks "Refine your results?"; if the answer is yes, the traveller can apply the profile's suggested limits and set their own hard constraints (price, transfers, duration, luggage, changeable or refundable ticket). The stricter limit always wins, and the remaining offers are ranked again.
+
+To reproduce the specification's example request (Madrid to Malaga, 12–14 July, max EUR 50, morning, max 1 transfer, changeable ticket), press Enter for Malaga and the default dates, choose option `5` (Balanced, which prefers a morning departure), answer `y` to "Refine your results?", press Enter for the duration, enter `50` as maximum price and `1` as maximum transfers, press Enter for luggage, answer `y` to "changeable" and press Enter for "refundable".
 
 ## 4. Running the tests
 
@@ -69,7 +84,7 @@ To reproduce the specification's example request (Madrid to Malaga, 12–14 July
 python -m pytest -v
 ```
 
-The 38 tests in `tests/` cover normal cases, invalid data, missing data (missing file, empty fields) and boundary cases (equal values, departures around midnight, zero seats, seat exhaustion). Tests that book seats write to a temporary folder and never change `data/bookings.json`.
+The 48 tests in `tests/` cover normal cases, invalid data, missing data (missing file, empty fields) and boundary cases (equal values, departures around midnight, zero seats, seat exhaustion). Tests that book seats write to a temporary folder and never change `data/bookings.json`.
 
 ## 5. Input files and outputs
 
@@ -84,7 +99,7 @@ The 38 tests in `tests/` cover normal cases, invalid data, missing data (missing
 | `busbidder.log` | Timestamped log of loading, filtering, ranking and booking (written by the program) |
 | `outputs/` | Saved program output used as evidence in the report (see below) |
 
-**Seat capacity.** `offers.csv` is the original catalogue and is never rewritten. Each time the program starts, the seats in all confirmed bookings in `data/bookings.json` are subtracted from the loaded offers, so capacity stays consistent between sessions. Cancelled bookings are not subtracted. To reset all bookings, replace the content of `data/bookings.json` with `[]`.
+**Seat capacity.** `offers.csv` is the original catalogue and is never rewritten. Each time the program starts, the seats in all confirmed bookings in `data/bookings.json` are subtracted from the loaded offers, so capacity stays consistent between sessions. Cancelled bookings are not subtracted, so their seats become available again. To reset all bookings, replace the content of `data/bookings.json` with `[]`.
 
 **Evidence for the report** (`outputs/`):
 
@@ -98,6 +113,7 @@ The 38 tests in `tests/` cover normal cases, invalid data, missing data (missing
 | `06_test_results.txt` | Output of `python -m pytest -v` |
 | `07_missing_file_error.txt` | Behaviour when a data file is missing |
 | `08_busbidder_log_excerpt.log` | Log entries written while the evidence was produced |
+| `09_cancellation_and_refund.txt` | Cancelling a changeable-only booking (25% fee) and a refused cancellation of a rigid fare |
 
 ## 6. Project structure
 
@@ -140,7 +156,3 @@ python report/generate_pdf.py
 ## 8. Known limitations
 
 The data is simulated. Scores are relative to the offers in each search (min–max normalisation), so small price differences can be amplified and adding an offer can change the order of the others. NocheVia's overnight services never win under the current criteria. Bookings are stored in one JSON file and are not safe for simultaneous users. These points are discussed in Section 8 of the report.
-
-## 9. Use of generative AI
-
-Generative AI tools were used in this project. The tools, what they were used for and how the output was checked are declared in Section 10 of the report.

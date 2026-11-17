@@ -9,7 +9,7 @@
 | Area | Status |
 | :--- | :--- |
 | Application | Complete: `--demo`, `--interactive`, `--quarantine` |
-| Tests | 38 passing (`python -m pytest -v`) |
+| Tests | 48 passing (`python -m pytest -v`) |
 | Evidence | `outputs/01`–`08`, regenerated from the current code |
 | Report | `report/BusBidder_Spain_Final_Report.docx` (editable) and `.pdf`, built by `report/build_report.py` |
 | README | Up to date (commands, requirements, inputs, outputs, tests) |
@@ -21,7 +21,6 @@ These are highlighted in yellow in the Word report and must be written by the st
 1. Student number (title page and README).
 2. GitHub repository link and final commit hash (title page).
 3. Submission date (title page).
-4. Check that the own-contribution paragraph in Section 10 (AI declaration) is accurate; it was written from the git history and the decisions made during the review.
 
 After editing in Word: right-click the table of contents and choose Update Field, then File > Save As > PDF over `report/BusBidder_Spain_Final_Report.pdf`. If the report is edited in Word, `report/build_report.py` no longer matches it, so do not rebuild the report from the script afterwards.
 
